@@ -1,0 +1,212 @@
+﻿命令行生成模式
+
+DC 的TSQL生成格式调整　为换行对齐
+
+批量 INSERT 方法，SP 生成
+批量 MERGE 方法，SP 生成
+
+判断SQL版本，生成单行 MERGE 方法
+
+CheckExists 方法
+
+
+
+考虑将 OO, OB 整合 （实例属性，实例方法，静态方法）
+
+
+
+考虑修改方法命名规则，规划如下：
+
+
+解释，预定义：
+
+数据行	：DataRow			(DB特有)
+数据表	：DataTable			(DB特有)
+类实例	：Entity			(OB特有)
+类集合	：EntityCollection	(OB特有)
+Row		：用于指代 数据行 或 类实例
+RowEnum	：Row 枚举（Enum, List, Array, ...）
+Rows	：用于指代 数据表 或 类集合
+int		：受影响行数
+PK		：表的主键类值	(OB特有)
+PKs		：一组主键值
+FK		：表的一组外键字段值
+FKs		：表的多组外键字段值
+Col		：字段名
+Cols	：多个字段名
+Val		：字段值
+Vals	：多个字段值
+ColVal	：字段枚举+值 的键值对
+ColVals	：字段枚举+值 的字典
+Exp		：条件表达式对象
+Sort	：排序字典
+RowIndex：限定当次查询从起始行号开始返回
+PageSize：限定当次查询返回的数据行数
+Count	：数据总行数
+ref		：回写引用
+...		：零个或多个，变参
+可回写	：方法入参中引用了一个数据容器，可返回数据的变更内容并写入
+
+
+
+主方法：
+
+Select			（按主键取单条，按条件取多条，可选择部分字段，可回写）
+Insert			（插入一行，插入多行，可填充部分字段，可回写）
+Update			（按主键更新一行，按条件更新多行，可更新部分字段，可回写）
+Delete			（按主键删除一行，按条件删除多行，可回写）
+Merge			（以主键判定并入一行，以主键值判定并入多行，可填充部分字段，可回写)
+
+扩展方法1：
+
+Select_FKs		（以某外键值为查询基础，按条件取多条，可选择部分字段，可回写）
+
+扩展方法2：
+
+SelectNode		（按主键取一个节点的数据，可选择部分字段，可回写）
+InsertNode		（往表中插入一个树节点，可回写）
+DeleteNode		（按主键删一个树节点，可回写）
+UpdateNode		（按主键更新一个树节点，可选择部分字段，可回写）
+MergeNode		（按主键判定并入一个树节点，可选择部分字段，可回写）
+
+扩展方法3：
+
+Distinct		（返回指定的多个不重复的字段数据）
+Count			（判断并返回符合表达式条件或某字段不为空的记录条数）
+Exists			（判断并返回是否存在符合条件的记录）
+Sum				（根据条件，对某个数值字段进行求和运算并返回）
+Avg				（根据条件，对某个数值字段进行求平均值运算并返回）
+
+
+
+重载方法明细：
+
+SELECT
+
+Row		Select(Col...)
+Row		Select(PK，Col...)
+Row		Select(PKs，Col...)
+Rows	Select(Exp，Sort, RowIndex, PageSize，ref Count，Col...)
+
+int		Select(ref Rows, Col...)
+int		Select(ref Row, PK，Col...)
+int		Select(ref Row, PKs，Col...)
+int		Select(ref Rows, Exp，Sort, RowIndex, PageSize，ref Count，Col...)
+
+Rows	Select_FKs(FKs, Exp，Sort, RowIndex, PageSize，ref Count，Col...)
+int		Select_FKs(ref Rows, FKs, Exp，Sort, RowIndex, PageSize，ref Count，Col...)
+
+Rows	SelectNode(PK，Col...)
+Rows	SelectNode(PKs，Col...)
+int		SelectNode(ref Rows, PK，Col...)
+int		SelectNode(ref Rows, Ks，Col...)
+
+
+
+INSERT
+
+int		Insert(Vals)
+int		Insert(ColVals)
+int		Insert(ColVal...)
+
+int		Insert(Row，Col...)
+int		Insert(RowEnum，Col...)
+int		Insert(Rows，Col...)
+
+int		Insert(ref Row, Vals)
+int		Insert(ref Row, ColVal...)
+int		Insert(ref Row, ColVals)
+
+int		Insert(ref Row, Row，Col...)
+int		Insert(ref RowEnum, RowEnum，Col...)
+int		Insert(ref Rows, Rows，Col...)
+
+
+UPDATE
+
+int		Update(PK, Vals)
+int		Update(PK, ColVals)
+int		Update(PK, ColVal...)
+
+int		Update(PKs, Vals)
+int		Update(PKs, ColVals)
+int		Update(PKs, ColVal...)
+
+int		Update(Exp, Vals)
+int		Update(Exp, ColVals)
+int		Update(Exp, ColVal...)
+
+int		Update(Row, PK, Col...)
+int		Update(Row, PKs, Col...)
+int		Update(Row, Exp, Col...)
+
+int		Update(Row, Col...)
+int		Update(Rows, Col...)
+int		Update(RowEnum, Col...)
+
+
+int		Update(ref Row, Col...)
+int		Update(ref Rows, Col...)
+int		Update(ref RowEnum, Col...)
+int		Update(ref Row, PK, Col...)
+int		Update(ref Row, PKs, Col...)
+
+int		Update(ref Row, Row, Col...)
+int		Update(ref Rows, Rows, Col...)
+int		Update(ref RowEnum, RowEnum, Col...)
+int		Update(ref Row, Row, PK, Col...)
+int		Update(ref Row, Row, PKs, Col...)
+int		Update(ref Rows, Row, Exp, Col...)
+
+
+MERGE
+
+int		Merge(PK, Vals)
+int		Merge(PK, ColVals)
+int		Merge(PK, ColVal...)
+
+int		Merge(PKs, Vals)
+int		Merge(PKs, ColVals)
+int		Merge(PKs, ColVal...)
+
+int		Merge(Exp, Vals)
+int		Merge(Exp, ColVals)
+int		Merge(Exp, ColVal...)
+
+int		Merge(Row, PK, Col...)
+int		Merge(Row, PKs, Col...)
+int		Merge(Row, Exp, Col...)
+
+int		Merge(Row, Col...)
+int		Merge(Rows, Col...)
+int		Merge(RowEnum, Col...)
+
+int		Merge(ref Row, Col...)
+int		Merge(ref Rows, Col...)
+int		Merge(ref RowEnum, Col...)
+
+int		Merge(ref Row, PK, Col...)
+int		Merge(ref Row, PKs, Col...)
+
+int		Merge(ref Row, Row, Col...)
+int		Merge(ref Rows, Rows, Col...)
+int		Merge(ref RowEnum, RowEnum, Col...)
+
+int		Merge(ref Row, Row, PK, Col...)
+int		Merge(ref Row, Row, PKs, Col...)
+int		Merge(ref Rows, Row, Exp, Col...)
+
+
+DELETE
+
+int		Delete(PK)
+int		Delete(PKs)
+int		Delete(Exp)
+
+int		Delete(ref Row, PK)
+int		Delete(ref Row, PKs)
+int		Delete(ref Rows, Exp)
+
+
+
+（待续）
