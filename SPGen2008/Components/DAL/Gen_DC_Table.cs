@@ -991,7 +991,7 @@ WHERE ");
                 lock(_insert_cmd_sync)
                 {
 				    _insert_cmd = new SqlCommand(""");
-					if (db.CompatibilityLevel >= CompatibilityLevel.Version90)
+                    if (db.CompatibilityLevel >= CompatibilityLevel.Version90 && t.Triggers.Count == 0)
 					{
 						sb.Append(@"INSERT INTO [" + Utils.GetEscapeSqlObjectName(t.Schema) + @"].[" + Utils.GetEscapeSqlObjectName(t.Name) + @"] (");
 						for (int i = 0; i < wcs.Count; i++)
@@ -1079,7 +1079,7 @@ WHERE ");
 				SqlCommand cmd = new SqlCommand();
 				StringBuilder sb = new StringBuilder(""");
 
-				if (db.CompatibilityLevel >= CompatibilityLevel.Version90)
+                if (db.CompatibilityLevel >= CompatibilityLevel.Version90 && t.Triggers.Count == 0)
 				{
 					sb.Append(@"INSERT INTO [" + Utils.GetEscapeSqlObjectName(t.Schema) + @"].[" + Utils.GetEscapeSqlObjectName(t.Name) + @"] ("");
 				StringBuilder sb2 = new StringBuilder();");
@@ -1207,7 +1207,7 @@ WHERE ");
 						string cn = Utils.GetEscapeName(c);
 						sb.Append((i > 0 ? ", " : "") + "[" + Utils.GetEscapeSqlObjectName(c.Name) + @"] = @" + cn);
 					}
-					if (db.CompatibilityLevel >= CompatibilityLevel.Version90)
+                    if (db.CompatibilityLevel >= CompatibilityLevel.Version90 && t.Triggers.Count == 0)
 						sb.Append(@" OUTPUT Inserted.* WHERE ");
 					else
 						sb.Append(@" WHERE ");
@@ -1218,7 +1218,7 @@ WHERE ");
 						if (i > 0) sb.Append(@" AND ");
 						sb.Append(@"[" + Utils.GetEscapeSqlObjectName(c.Name) + @"] = @Original_" + cn);
 					}
-					if (db.CompatibilityLevel < CompatibilityLevel.Version90)
+					if (db.CompatibilityLevel < CompatibilityLevel.Version90 || t.Triggers.Count > 0)
 					{
 						sb.Append(@"; SELECT * FROM [" + Utils.GetEscapeSqlObjectName(t.Schema) + @"].[" + Utils.GetEscapeSqlObjectName(t.Name) + @"] WHERE ");
 						for (int i = 0; i < pks.Count; i++)
@@ -1278,7 +1278,7 @@ WHERE ");
 					isFirst = false;
 				}");
 					}
-					if (db.CompatibilityLevel >= CompatibilityLevel.Version90)
+                    if (db.CompatibilityLevel >= CompatibilityLevel.Version90 && t.Triggers.Count == 0)
 						sb.Append(@"
 				sb.Append(@"" OUTPUT Inserted.* WHERE ");
 					else
@@ -1291,7 +1291,7 @@ WHERE ");
 						if (i > 0) sb.Append(@" AND ");
 						sb.Append(@"[" + Utils.GetEscapeSqlObjectName(c.Name) + @"] = @Original_" + cn);
 					}
-					if (db.CompatibilityLevel < CompatibilityLevel.Version90)
+					if (db.CompatibilityLevel < CompatibilityLevel.Version90 || t.Triggers.Count > 0)
 					{
 						s = "";
 						for (int i = 0; i < pks.Count; i++)
