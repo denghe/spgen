@@ -237,10 +237,10 @@
     <Compile Include="Forms\FNameCheck.Designer.cs">
       <DependentUpon>FNameCheck.cs</DependentUpon>
     </Compile>
-    <Compile Include="Components\GenSchema\FFilter.cs">
+    <Compile Include="Components\Filter\FFilter.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Components\GenSchema\FFilter.Designer.cs">
+    <Compile Include="Components\Filter\FFilter.Designer.cs">
       <DependentUpon>FFilter.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\FOutput\FOutput2.cs">
@@ -355,7 +355,7 @@
       <DependentUpon>FConnector.cs</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Components\GenSchema\FFilter.resx">
+    <EmbeddedResource Include="Components\Filter\FFilter.resx">
       <SubType>Designer</SubType>
       <DependentUpon>FFilter.cs</DependentUpon>
     </EmbeddedResource>
@@ -566,9 +566,6 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="todo.txt" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Components\Filter\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
