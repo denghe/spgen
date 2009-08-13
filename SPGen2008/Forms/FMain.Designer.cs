@@ -87,13 +87,13 @@ namespace SPGen2008
             this.refreshToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.退出XToolStripMenuItem});
             this.refreshToolStripMenuItem.Name = "refreshToolStripMenuItem";
-            this.refreshToolStripMenuItem.Size = new System.Drawing.Size(59, 20);
+            this.refreshToolStripMenuItem.Size = new System.Drawing.Size(57, 20);
             this.refreshToolStripMenuItem.Text = "文件(&F)";
             // 
             // 退出XToolStripMenuItem
             // 
             this.退出XToolStripMenuItem.Name = "退出XToolStripMenuItem";
-            this.退出XToolStripMenuItem.Size = new System.Drawing.Size(112, 22);
+            this.退出XToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
             this.退出XToolStripMenuItem.Text = "退出(&X)";
             this.退出XToolStripMenuItem.Click += new System.EventHandler(this.退出XToolStripMenuItem_Click);
             // 
@@ -107,7 +107,7 @@ namespace SPGen2008
             // readmeToolStripMenuItem
             // 
             this.readmeToolStripMenuItem.Name = "readmeToolStripMenuItem";
-            this.readmeToolStripMenuItem.Size = new System.Drawing.Size(83, 20);
+            this.readmeToolStripMenuItem.Size = new System.Drawing.Size(84, 20);
             this.readmeToolStripMenuItem.Text = "简单说明(&H)";
             this.readmeToolStripMenuItem.Click += new System.EventHandler(this.readmeToolStripMenuItem_Click);
             // 
@@ -126,7 +126,7 @@ namespace SPGen2008
             this._Refresh_ToolStripButton.Image = global::SPGen2008.Properties.Resources.RefreshDocViewHS;
             this._Refresh_ToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this._Refresh_ToolStripButton.Name = "_Refresh_ToolStripButton";
-            this._Refresh_ToolStripButton.Size = new System.Drawing.Size(67, 22);
+            this._Refresh_ToolStripButton.Size = new System.Drawing.Size(66, 22);
             this._Refresh_ToolStripButton.Text = "刷新(&R)";
             this._Refresh_ToolStripButton.Click += new System.EventHandler(this._Refresh_ToolStripButton_Click);
             // 
@@ -155,7 +155,7 @@ namespace SPGen2008
             this.Controls.Add(this._SplitContainer);
             this.Controls.Add(this._ToolStrip);
             this.Controls.Add(this._MenuStrip);
-            this.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.MainMenuStrip = this._MenuStrip;
             this.Name = "FMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;

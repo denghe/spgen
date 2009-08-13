@@ -53,7 +53,7 @@ namespace SPGen2008
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(12, 89);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(89, 12);
+            this.label1.Size = new System.Drawing.Size(86, 17);
             this.label1.TabIndex = 1;
             this.label1.Text = "服务器类型(&T):";
             // 
@@ -65,7 +65,7 @@ namespace SPGen2008
             "Microsoft SQL Server v200x"});
             this._ServerType_ComboBox.Location = new System.Drawing.Point(185, 86);
             this._ServerType_ComboBox.Name = "_ServerType_ComboBox";
-            this._ServerType_ComboBox.Size = new System.Drawing.Size(325, 20);
+            this._ServerType_ComboBox.Size = new System.Drawing.Size(325, 25);
             this._ServerType_ComboBox.TabIndex = 2;
             // 
             // _ServerName_ComboBox
@@ -74,7 +74,7 @@ namespace SPGen2008
             this._ServerName_ComboBox.Location = new System.Drawing.Point(185, 115);
             this._ServerName_ComboBox.MaxLength = 255;
             this._ServerName_ComboBox.Name = "_ServerName_ComboBox";
-            this._ServerName_ComboBox.Size = new System.Drawing.Size(325, 20);
+            this._ServerName_ComboBox.Size = new System.Drawing.Size(325, 25);
             this._ServerName_ComboBox.TabIndex = 4;
             this._ServerName_ComboBox.Text = ".";
             this._ServerName_ComboBox.DropDown += new System.EventHandler(this._ServerName_ComboBox_DropDown);
@@ -84,7 +84,7 @@ namespace SPGen2008
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(13, 116);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(77, 12);
+            this.label2.Size = new System.Drawing.Size(74, 17);
             this.label2.TabIndex = 3;
             this.label2.Text = "服务器名(&S):";
             // 
@@ -97,7 +97,7 @@ namespace SPGen2008
             "SQL Server Authentication"});
             this._Authentication_ComboBox.Location = new System.Drawing.Point(185, 144);
             this._Authentication_ComboBox.Name = "_Authentication_ComboBox";
-            this._Authentication_ComboBox.Size = new System.Drawing.Size(325, 20);
+            this._Authentication_ComboBox.Size = new System.Drawing.Size(325, 25);
             this._Authentication_ComboBox.TabIndex = 6;
             this._Authentication_ComboBox.SelectedIndexChanged += new System.EventHandler(this._Authentication_ComboBox_SelectedIndexChanged);
             // 
@@ -106,7 +106,7 @@ namespace SPGen2008
             this.label3.AutoSize = true;
             this.label3.Location = new System.Drawing.Point(13, 145);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(77, 12);
+            this.label3.Size = new System.Drawing.Size(75, 17);
             this.label3.TabIndex = 5;
             this.label3.Text = "验证方式(&A):";
             // 
@@ -115,7 +115,7 @@ namespace SPGen2008
             this._Username_Label.AutoSize = true;
             this._Username_Label.Location = new System.Drawing.Point(31, 181);
             this._Username_Label.Name = "_Username_Label";
-            this._Username_Label.Size = new System.Drawing.Size(65, 12);
+            this._Username_Label.Size = new System.Drawing.Size(61, 17);
             this._Username_Label.TabIndex = 7;
             this._Username_Label.Text = "登录名(&L):";
             // 
@@ -124,7 +124,7 @@ namespace SPGen2008
             this._Password_Label.AutoSize = true;
             this._Password_Label.Location = new System.Drawing.Point(31, 211);
             this._Password_Label.Name = "_Password_Label";
-            this._Password_Label.Size = new System.Drawing.Size(53, 12);
+            this._Password_Label.Size = new System.Drawing.Size(50, 17);
             this._Password_Label.TabIndex = 8;
             this._Password_Label.Text = "密码(&P):";
             // 
@@ -134,7 +134,7 @@ namespace SPGen2008
             this._Username_ComboBox.Location = new System.Drawing.Point(201, 173);
             this._Username_ComboBox.MaxLength = 255;
             this._Username_ComboBox.Name = "_Username_ComboBox";
-            this._Username_ComboBox.Size = new System.Drawing.Size(309, 20);
+            this._Username_ComboBox.Size = new System.Drawing.Size(309, 25);
             this._Username_ComboBox.TabIndex = 9;
             // 
             // _Password_TextBox
@@ -143,7 +143,7 @@ namespace SPGen2008
             this._Password_TextBox.MaxLength = 255;
             this._Password_TextBox.Name = "_Password_TextBox";
             this._Password_TextBox.PasswordChar = '*';
-            this._Password_TextBox.Size = new System.Drawing.Size(309, 21);
+            this._Password_TextBox.Size = new System.Drawing.Size(309, 23);
             this._Password_TextBox.TabIndex = 10;
             // 
             // _RememberPassword_CheckBox
@@ -151,7 +151,7 @@ namespace SPGen2008
             this._RememberPassword_CheckBox.AutoSize = true;
             this._RememberPassword_CheckBox.Location = new System.Drawing.Point(201, 238);
             this._RememberPassword_CheckBox.Name = "_RememberPassword_CheckBox";
-            this._RememberPassword_CheckBox.Size = new System.Drawing.Size(90, 16);
+            this._RememberPassword_CheckBox.Size = new System.Drawing.Size(91, 21);
             this._RememberPassword_CheckBox.TabIndex = 11;
             this._RememberPassword_CheckBox.Text = "记住密码(&R)";
             this._RememberPassword_CheckBox.UseVisualStyleBackColor = true;
@@ -230,7 +230,7 @@ namespace SPGen2008
             this.Controls.Add(this._ServerType_ComboBox);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.pictureBox1);
-            this.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
