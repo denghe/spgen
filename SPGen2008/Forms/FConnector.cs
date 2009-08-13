@@ -48,13 +48,13 @@ namespace SPGen2008
 		{
 			if (_Authentication_ComboBox.SelectedIndex == 0)
 			{
-				_Username_Label.Text = "用户名(&U):";
+				_Username_Label.Text = "&Username:";
 				_Username_Label.Enabled = _Password_Label.Enabled = _Username_ComboBox.Enabled = _Password_TextBox.Enabled = _RememberPassword_CheckBox.Enabled = false;
 				_Username_ComboBox.Text = System.Environment.UserDomainName + "\\" + System.Environment.UserName;
 			}
 			else
 			{
-				_Username_Label.Text = "登录名(&L):";
+				_Username_Label.Text = "&Login:";
 				_Username_ComboBox.Text = "";
 				_Username_Label.Enabled = _Password_Label.Enabled = _Username_ComboBox.Enabled = _Password_TextBox.Enabled = _RememberPassword_CheckBox.Enabled = true;
 			}
@@ -64,7 +64,7 @@ namespace SPGen2008
 		{
 			if (_Authentication_ComboBox.SelectedIndex > 0 && _Username_ComboBox.Text.Trim().Length == 0)
 			{
-				MessageBox.Show("用户名不能为空！");
+				MessageBox.Show("The username can't be empty！");
 				return;
 			}
 
@@ -148,7 +148,7 @@ namespace SPGen2008
 				}
 				else
 				{
-					MessageBox.Show("Do not have any SQL Server found!");
+					MessageBox.Show("sql server was not found!");
 				}
 
 			}
