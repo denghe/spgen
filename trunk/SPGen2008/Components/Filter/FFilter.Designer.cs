@@ -105,7 +105,7 @@ namespace SPGen2008
             this.filtersBindingNavigator.MovePreviousItem = this.bindingNavigatorMovePreviousItem;
             this.filtersBindingNavigator.Name = "filtersBindingNavigator";
             this.filtersBindingNavigator.PositionItem = this.bindingNavigatorPositionItem;
-            this.filtersBindingNavigator.Size = new System.Drawing.Size(848, 25);
+            this.filtersBindingNavigator.Size = new System.Drawing.Size(950, 25);
             this.filtersBindingNavigator.TabIndex = 0;
             this.filtersBindingNavigator.Text = "bindingNavigator1";
             // 
@@ -122,7 +122,7 @@ namespace SPGen2008
             // bindingNavigatorCountItem
             // 
             this.bindingNavigatorCountItem.Name = "bindingNavigatorCountItem";
-            this.bindingNavigatorCountItem.Size = new System.Drawing.Size(41, 22);
+            this.bindingNavigatorCountItem.Size = new System.Drawing.Size(35, 22);
             this.bindingNavigatorCountItem.Text = "of {0}";
             this.bindingNavigatorCountItem.ToolTipText = "Total number of items";
             // 
@@ -164,7 +164,7 @@ namespace SPGen2008
             this.bindingNavigatorPositionItem.AccessibleName = "Position";
             this.bindingNavigatorPositionItem.AutoSize = false;
             this.bindingNavigatorPositionItem.Name = "bindingNavigatorPositionItem";
-            this.bindingNavigatorPositionItem.Size = new System.Drawing.Size(50, 21);
+            this.bindingNavigatorPositionItem.Size = new System.Drawing.Size(58, 23);
             this.bindingNavigatorPositionItem.Text = "0";
             this.bindingNavigatorPositionItem.ToolTipText = "Current position";
             // 
@@ -251,11 +251,12 @@ namespace SPGen2008
             this.filtersDataGridView.DataSource = this.filtersBindingSource;
             this.filtersDataGridView.Dock = System.Windows.Forms.DockStyle.Fill;
             this.filtersDataGridView.Location = new System.Drawing.Point(0, 25);
+            this.filtersDataGridView.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.filtersDataGridView.MultiSelect = false;
             this.filtersDataGridView.Name = "filtersDataGridView";
             this.filtersDataGridView.RowTemplate.Height = 23;
             this.filtersDataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.filtersDataGridView.Size = new System.Drawing.Size(848, 469);
+            this.filtersDataGridView.Size = new System.Drawing.Size(950, 587);
             this.filtersDataGridView.TabIndex = 2;
             // 
             // dataGridViewTextBoxColumn1
@@ -315,12 +316,13 @@ namespace SPGen2008
             // 
             // FFilter
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(848, 494);
+            this.ClientSize = new System.Drawing.Size(950, 612);
             this.Controls.Add(this.filtersDataGridView);
             this.Controls.Add(this.filtersBindingNavigator);
-            this.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "FFilter";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "过滤规则设定（从上到下，覆盖式生效）";

@@ -103,7 +103,7 @@
             // label16
             // 
             this.label16.AutoSize = true;
-            this.label16.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label16.Font = new System.Drawing.Font("SimSun", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.label16.Location = new System.Drawing.Point(87, 41);
             this.label16.Name = "label16";
             this.label16.Size = new System.Drawing.Size(278, 12);
@@ -113,7 +113,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("宋体", 12F);
+            this.label2.Font = new System.Drawing.Font("SimSun", 12F);
             this.label2.Location = new System.Drawing.Point(16, 15);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(288, 16);
@@ -470,7 +470,7 @@
             this.Controls.Add(this._namespace_textBox);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label1);
-            this.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.Font = new System.Drawing.Font("Microsoft YaHei", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
