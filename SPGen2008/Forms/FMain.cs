@@ -113,7 +113,7 @@ namespace SPGen2008
 		{
 			try
 			{
-				_TreeView.Nodes.Add("提示：请用“鼠标右键”点击相应节点将出现“生成菜单”").Tag = "Databases";
+				_TreeView.Nodes.Add("tips：mouse right click the nodes").Tag = "Databases";
 
 				foreach (Database db in _server.Databases)
 				{
@@ -196,7 +196,7 @@ namespace SPGen2008
 				{
 					using (FOutputText f = new FOutputText())
 					{
-						f.Text = "载入 Components 下的 *.cs 时发生错误";
+                        f.Text = "Load components (*.cs) ccurred some error:";
 						f.Width = 780;
 						f.Height = 550;
 						foreach (CompilerError ce in result.Errors)
