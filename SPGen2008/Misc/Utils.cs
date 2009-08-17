@@ -32,7 +32,7 @@ namespace SPGen2008
         public const string EP_Behavior = "SPGenSettings_Behavior";
         public const string EP_IsSingleLineResult = "SPGenSettings_IsSingleLineResult";
         public const string EP_ResultType = "SPGenSettings_ResultType";
-        public const string EP_ResultTypeSchema = "SPGenSettings_Schema";
+        public const string EP_ResultTypeSchema = "SPGenSettings_ResultTypeSchema";
         public const string EP_ResultType_Int = "int";
         public const string EP_ResultType_DataSet = "DataSet";
         public const string EP_ResultType_DataTable = "DataTable";
