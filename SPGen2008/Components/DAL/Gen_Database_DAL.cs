@@ -119,6 +119,7 @@ namespace SPGen2008.Components.DAL
 
 			using (FOutputText fw = new FOutputText("Gening...Plz Wait...", "", 350, 500, true))
 			{
+                fw.Text = "Generate Information";
 				fw.Show();
 				fw.Activate();
 
