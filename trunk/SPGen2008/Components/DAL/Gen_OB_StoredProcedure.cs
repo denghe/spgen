@@ -303,12 +303,12 @@ namespace " + ns + @"
                             if (j > 0) sb.Append(@", ");
                             if (c.Nullable)
                             {
-                                s1 = Utils.CheckIsValueType(c) ? ("new " + Utils.GetNullableDataType(c) + @"(sdr." + Utils.GetDataReaderMethod(c) + @"(" + j.ToString() + @"))") : ("sdr." + Utils.GetDataReaderMethod(c) + @"(" + j.ToString() + @")");
-                                sb.Append(@"sdr.IsDBNull(" + j.ToString() + @") ? null : " + s1);
+                                s1 = Utils.CheckIsBinaryType(c) ? ("sdr.GetSqlBinary(" + j + @").Value") : (Utils.CheckIsValueType(c) ? ("new " + Utils.GetNullableDataType(c) + @"(sdr." + Utils.GetDataReaderMethod(c) + @"(" + j + @"))") : ("sdr." + Utils.GetDataReaderMethod(c) + @"(" + j + @")"));
+                                sb.Append(@"sdr.IsDBNull(" + j + @") ? null : " + s1);
                             }
                             else
                             {
-                                sb.Append(@"sdr." + Utils.GetDataReaderMethod(c) + @"(" + j.ToString() + @")");
+                                sb.Append(@"sdr." + Utils.GetDataReaderMethod(c) + @"(" + j + @")");
                             }
                         }
                     }
@@ -321,12 +321,12 @@ namespace " + ns + @"
                             if (j > 0) sb.Append(@", ");
                             if (c.Nullable)
                             {
-                                s1 = Utils.CheckIsValueType(c) ? ("new " + Utils.GetNullableDataType(c) + @"(sdr." + Utils.GetDataReaderMethod(c) + @"(" + j.ToString() + @"))") : ("sdr." + Utils.GetDataReaderMethod(c) + @"(" + j.ToString() + @")");
-                                sb.Append(@"sdr.IsDBNull(" + j.ToString() + @") ? null : " + s1);
+                                s1 = Utils.CheckIsBinaryType(c) ? ("sdr.GetSqlBinary(" + j + @").Value") : (Utils.CheckIsValueType(c) ? ("new " + Utils.GetNullableDataType(c) + @"(sdr." + Utils.GetDataReaderMethod(c) + @"(" + j + @"))") : ("sdr." + Utils.GetDataReaderMethod(c) + @"(" + j + @")"));
+                                sb.Append(@"sdr.IsDBNull(" + j + @") ? null : " + s1);
                             }
                             else
                             {
-                                sb.Append(@"sdr." + Utils.GetDataReaderMethod(c) + @"(" + j.ToString() + @")");
+                                sb.Append(@"sdr." + Utils.GetDataReaderMethod(c) + @"(" + j + @")");
                             }
                         }
                     }
@@ -339,12 +339,12 @@ namespace " + ns + @"
                             if (j > 0) sb.Append(@", ");
                             if (c.Nullable)
                             {
-                                s1 = Utils.CheckIsValueType(c) ? ("new " + Utils.GetNullableDataType(c) + @"(sdr." + Utils.GetDataReaderMethod(c) + @"(" + j.ToString() + @"))") : ("sdr." + Utils.GetDataReaderMethod(c) + @"(" + j.ToString() + @")");
-                                sb.Append(@"sdr.IsDBNull(" + j.ToString() + @") ? null : " + s1);
+                                s1 = Utils.CheckIsBinaryType(c) ? ("sdr.GetSqlBinary(" + j + @").Value") : (Utils.CheckIsValueType(c) ? ("new " + Utils.GetNullableDataType(c) + @"(sdr." + Utils.GetDataReaderMethod(c) + @"(" + j + @"))") : ("sdr." + Utils.GetDataReaderMethod(c) + @"(" + j + @")"));
+                                sb.Append(@"sdr.IsDBNull(" + j + @") ? null : " + s1);
                             }
                             else
                             {
-                                sb.Append(@"sdr." + Utils.GetDataReaderMethod(c) + @"(" + j.ToString() + @")");
+                                sb.Append(@"sdr." + Utils.GetDataReaderMethod(c) + @"(" + j + @")");
                             }
                         }
                     }
@@ -579,12 +579,12 @@ namespace " + ns + @"
                             if (j > 0) sb.Append(@", ");
                             if (c.Nullable)
                             {
-                                s1 = Utils.CheckIsValueType(c) ? ("new " + Utils.GetNullableDataType(c) + @"(sdr." + Utils.GetDataReaderMethod(c) + @"(" + j.ToString() + @"))") : ("sdr." + Utils.GetDataReaderMethod(c) + @"(" + j.ToString() + @")");
-                                sb.Append(@"sdr.IsDBNull(" + j.ToString() + @") ? null : " + s1);
+                                s1 = Utils.CheckIsBinaryType(c) ? ("sdr.GetSqlBinary(" + j + @").Value") : (Utils.CheckIsValueType(c) ? ("new " + Utils.GetNullableDataType(c) + @"(sdr." + Utils.GetDataReaderMethod(c) + @"(" + j + @"))") : ("sdr." + Utils.GetDataReaderMethod(c) + @"(" + j + @")"));
+                                sb.Append(@"sdr.IsDBNull(" + j + @") ? null : " + s1);
                             }
                             else
                             {
-                                sb.Append(@"sdr." + Utils.GetDataReaderMethod(c) + @"(" + j.ToString() + @")");
+                                sb.Append(@"sdr." + Utils.GetDataReaderMethod(c) + @"(" + j + @")");
                             }
                         }
                     }
@@ -597,12 +597,12 @@ namespace " + ns + @"
                             if (j > 0) sb.Append(@", ");
                             if (c.Nullable)
                             {
-                                s1 = Utils.CheckIsValueType(c) ? ("new " + Utils.GetNullableDataType(c) + @"(sdr." + Utils.GetDataReaderMethod(c) + @"(" + j.ToString() + @"))") : ("sdr." + Utils.GetDataReaderMethod(c) + @"(" + j.ToString() + @")");
-                                sb.Append(@"sdr.IsDBNull(" + j.ToString() + @") ? null : " + s1);
+                                s1 = Utils.CheckIsBinaryType(c) ? ("sdr.GetSqlBinary(" + j + @").Value") : (Utils.CheckIsValueType(c) ? ("new " + Utils.GetNullableDataType(c) + @"(sdr." + Utils.GetDataReaderMethod(c) + @"(" + j + @"))") : ("sdr." + Utils.GetDataReaderMethod(c) + @"(" + j + @")"));
+                                sb.Append(@"sdr.IsDBNull(" + j + @") ? null : " + s1);
                             }
                             else
                             {
-                                sb.Append(@"sdr." + Utils.GetDataReaderMethod(c) + @"(" + j.ToString() + @")");
+                                sb.Append(@"sdr." + Utils.GetDataReaderMethod(c) + @"(" + j + @")");
                             }
                         }
                     }
@@ -615,12 +615,12 @@ namespace " + ns + @"
                             if (j > 0) sb.Append(@", ");
                             if (c.Nullable)
                             {
-                                s1 = Utils.CheckIsValueType(c) ? ("new " + Utils.GetNullableDataType(c) + @"(sdr." + Utils.GetDataReaderMethod(c) + @"(" + j.ToString() + @"))") : ("sdr." + Utils.GetDataReaderMethod(c) + @"(" + j.ToString() + @")");
-                                sb.Append(@"sdr.IsDBNull(" + j.ToString() + @") ? null : " + s1);
+                                s1 = Utils.CheckIsBinaryType(c) ? ("sdr.GetSqlBinary(" + j + @").Value") : (Utils.CheckIsValueType(c) ? ("new " + Utils.GetNullableDataType(c) + @"(sdr." + Utils.GetDataReaderMethod(c) + @"(" + j + @"))") : ("sdr." + Utils.GetDataReaderMethod(c) + @"(" + j + @")"));
+                                sb.Append(@"sdr.IsDBNull(" + j + @") ? null : " + s1);
                             }
                             else
                             {
-                                sb.Append(@"sdr." + Utils.GetDataReaderMethod(c) + @"(" + j.ToString() + @")");
+                                sb.Append(@"sdr." + Utils.GetDataReaderMethod(c) + @"(" + j + @")");
                             }
                         }
                     }
