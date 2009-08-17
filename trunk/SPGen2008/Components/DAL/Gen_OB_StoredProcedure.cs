@@ -308,7 +308,10 @@ namespace " + ns + @"
                             }
                             else
                             {
-                                sb.Append(@"sdr." + Utils.GetDataReaderMethod(c) + @"(" + j + @")");
+                                if (Utils.CheckIsBinaryType(c))
+                                    sb.Append(@"sdr.GetSqlBinary(" + j + @").Value");
+                                else
+                                    sb.Append(@"sdr." + Utils.GetDataReaderMethod(c) + @"(" + j + @")");
                             }
                         }
                     }
@@ -326,7 +329,10 @@ namespace " + ns + @"
                             }
                             else
                             {
-                                sb.Append(@"sdr." + Utils.GetDataReaderMethod(c) + @"(" + j + @")");
+                                if (Utils.CheckIsBinaryType(c))
+                                    sb.Append(@"sdr.GetSqlBinary(" + j + @").Value");
+                                else
+                                    sb.Append(@"sdr." + Utils.GetDataReaderMethod(c) + @"(" + j + @")");
                             }
                         }
                     }
@@ -344,7 +350,10 @@ namespace " + ns + @"
                             }
                             else
                             {
-                                sb.Append(@"sdr." + Utils.GetDataReaderMethod(c) + @"(" + j + @")");
+                                if (Utils.CheckIsBinaryType(c))
+                                    sb.Append(@"sdr.GetSqlBinary(" + j + @").Value");
+                                else
+                                    sb.Append(@"sdr." + Utils.GetDataReaderMethod(c) + @"(" + j + @")");
                             }
                         }
                     }
@@ -584,7 +593,10 @@ namespace " + ns + @"
                             }
                             else
                             {
-                                sb.Append(@"sdr." + Utils.GetDataReaderMethod(c) + @"(" + j + @")");
+                                if (Utils.CheckIsBinaryType(c))
+                                    sb.Append(@"sdr.GetSqlBinary(" + j + @").Value");
+                                else
+                                    sb.Append(@"sdr." + Utils.GetDataReaderMethod(c) + @"(" + j + @")");
                             }
                         }
                     }
@@ -602,7 +614,10 @@ namespace " + ns + @"
                             }
                             else
                             {
-                                sb.Append(@"sdr." + Utils.GetDataReaderMethod(c) + @"(" + j + @")");
+                                if (Utils.CheckIsBinaryType(c))
+                                    sb.Append(@"sdr.GetSqlBinary(" + j + @").Value");
+                                else
+                                    sb.Append(@"sdr." + Utils.GetDataReaderMethod(c) + @"(" + j + @")");
                             }
                         }
                     }
@@ -620,7 +635,10 @@ namespace " + ns + @"
                             }
                             else
                             {
-                                sb.Append(@"sdr." + Utils.GetDataReaderMethod(c) + @"(" + j + @")");
+                                if (Utils.CheckIsBinaryType(c))
+                                    sb.Append(@"sdr.GetSqlBinary(" + j + @").Value");
+                                else
+                                    sb.Append(@"sdr." + Utils.GetDataReaderMethod(c) + @"(" + j + @")");
                             }
                         }
                     }
