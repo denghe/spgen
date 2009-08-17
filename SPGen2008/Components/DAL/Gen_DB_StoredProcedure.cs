@@ -57,9 +57,6 @@ namespace " + ns + @"
             {
                 string spn = Utils.GetEscapeName(sp);
 
-                //结果集表名
-                string btn = "";
-
                 // 方法名
                 string mn = Utils.GetMethodName(sp);
                 if (string.IsNullOrEmpty(mn)) mn = spn;
@@ -71,36 +68,44 @@ namespace " + ns + @"
                 mn = (Utils._CurrrentDALGenSetting_CurrentScheme.IsSupportSchema ? (sn + "_") : ("")) + mn;
 
 
-                //结果集类型（表名或视图名）
+                // 结果集类型（表名或视图名）
                 string rt = Utils.GetResultType(sp);
-                //返回值是否为单行
+                // 结果集类型所属 Schema
+                string rts = Utils.GetResultTypeSchema(sp);
+
+                // 兼容老的设定（拆分 rt 的内容为 rt + rts）（rts 为空时 rt 的值应为 int, dt, ds, object 之一。。。以 “[” 开头必然为 [schema].[name] 结构）
+                if (string.IsNullOrEmpty(rts))
+                {
+                    if (rt.StartsWith("["))
+                    {
+                        rts = rt.Substring(1, rt.IndexOf("].[", 0) - 1);
+                        rt = rt.Substring(rts.Length + 3, rt.Length - rts.Length - 5);
+                    }
+                }
+
+                // 返回值是否为单行
                 bool isSingleLine = Utils.GetIsSingleLineResult(sp);
-                //返回值的描述
-                string rtn = (rt == Utils.EP_ResultType_Int
-                    || rt == Utils.EP_ResultType_DataSet
-                    || rt == Utils.EP_ResultType_DataTable
-                    || rt == Utils.EP_ResultType_Object ? rt : ((isSingleLine ? "单行" : "多行") + rt));
-                //所属行为
+
+                // 返回值的描述（如果不是 int, dt, ds, object 而是指向某个表或表类型，则在前面加上 单行或多行的描述性文字）
+                string rtn = isSingleLine ? "单行" : "多行";
+                if (!string.IsNullOrEmpty(rts)) rtn = rtn+rt;
+
+                // 所属行为
                 string behavior = Utils.GetBehavior(sp);
-                //单行的结果集类型名
+
+                // 单行的结果集类型名
                 string srt = "";
 
 
-                if (string.IsNullOrEmpty(rt))
+                if (!string.IsNullOrEmpty(rts))
                 {
-                    rt = Utils.EP_ResultType_DataSet;
-                }
-                else if (rt.Contains("."))
-                {
-                    string schemaname = rt.Substring(1, rt.IndexOf(']') - 1);
-                    string objectname = rt.Substring(rt.LastIndexOf('.') + 2).TrimEnd(']');
                     object o = uts.Find(delegate(Table t)
                     {
-                        return t.Name == objectname && t.Schema == schemaname;
+                        return t.Name == rt && t.Schema == rts;
                     });
                     if (o != null)
                     {
-                        btn = Utils.GetEscapeName((Table)o);
+                        string btn = Utils.GetEscapeName((Table)o);
                         rt = dsn + "." + btn + "DataTable";
                         srt = dsn + "." + btn + "Row";
                     }
@@ -108,11 +113,11 @@ namespace " + ns + @"
                     {
                         o = uvs.Find(delegate(View t)
                         {
-                            return t.Name == objectname && t.Schema == schemaname;
+                            return t.Name == rt && t.Schema == rts;
                         });
                         if (o != null)
                         {
-                            btn = Utils.GetEscapeName((View)o);
+                            string btn = Utils.GetEscapeName((View)o);
                             rt = dsn + "." + btn + "DataTable";
                             srt = dsn + "." + btn + "Row";
                         }
@@ -120,11 +125,15 @@ namespace " + ns + @"
                         {
                             o = udtts.Find(delegate(UserDefinedTableType t)
                             {
-                                return t.Name == objectname && t.Schema == schemaname;
+                                return t.Name == rt && t.Schema == rts;
                             });
-                            btn = Utils.GetEscapeName((UserDefinedTableType)o);
-                            rt = dsn2 + "." + btn + "DataTable";
-                            srt = dsn2 + "." + btn + "Row";
+                            if (o != null)
+                            {
+                                string btn = Utils.GetEscapeName((UserDefinedTableType)o);
+                                rt = dsn2 + "." + btn + "DataTable";
+                                srt = dsn2 + "." + btn + "Row";
+                            }
+                            else rt = Utils.EP_ResultType_DataTable;    // 如果指向的数据库对象未找到，则将结果设为 DataTable
                         }
                     }
                 }

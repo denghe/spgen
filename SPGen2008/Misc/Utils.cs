@@ -32,6 +32,7 @@ namespace SPGen2008
         public const string EP_Behavior = "SPGenSettings_Behavior";
         public const string EP_IsSingleLineResult = "SPGenSettings_IsSingleLineResult";
         public const string EP_ResultType = "SPGenSettings_ResultType";
+        public const string EP_ResultTypeSchema = "SPGenSettings_Schema";
         public const string EP_ResultType_Int = "int";
         public const string EP_ResultType_DataSet = "DataSet";
         public const string EP_ResultType_DataTable = "DataTable";
@@ -843,6 +844,41 @@ namespace SPGen2008
         {
             if (value == Utils.EP_ResultType_Int) Utils.SetDescription(sp, Utils.EP_ResultType, string.Empty);
             else Utils.SetDescription(sp, Utils.EP_ResultType, value);
+        }
+
+
+
+        /// <summary>
+        /// 取存储过程的返回结果类型所属Schema
+        /// </summary>
+        public static string GetResultTypeSchema(StoredProcedure sp)
+        {
+            return Utils.GetDescription(sp, Utils.EP_ResultTypeSchema);
+        }
+
+        /// <summary>
+        /// 设存储过程的返回结果类型所属Schema
+        /// </summary>
+        public static void SetResultTypeSchema(StoredProcedure sp, string value)
+        {
+            Utils.SetDescription(sp, Utils.EP_ResultTypeSchema, value);
+        }
+
+
+        /// <summary>
+        /// 取函数的返回结果类型所属Schema
+        /// </summary>
+        public static string GetResultTypeSchema(UserDefinedFunction sp)
+        {
+            return Utils.GetDescription(sp, Utils.EP_ResultTypeSchema);
+        }
+
+        /// <summary>
+        /// 设函数的返回结果类型所属Schema
+        /// </summary>
+        public static void SetResultTypeSchema(UserDefinedFunction sp, string value)
+        {
+            Utils.SetDescription(sp, Utils.EP_ResultTypeSchema, value);
         }
 
         #endregion

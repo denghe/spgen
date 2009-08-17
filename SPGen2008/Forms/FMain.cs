@@ -113,7 +113,7 @@ namespace SPGen2008
 		{
 			try
 			{
-				_TreeView.Nodes.Add("tips£ºmouse right click the nodes").Tag = "Databases";
+				_TreeView.Nodes.Add("tips: mouse right click the nodes").Tag = "Databases";
 
 				foreach (Database db in _server.Databases)
 				{

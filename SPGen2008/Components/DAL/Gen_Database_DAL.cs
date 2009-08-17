@@ -117,13 +117,13 @@ namespace SPGen2008.Components.DAL
 			gr = new GenResult(GenResultTypes.Files);
 			gr.Files = new List<KeyValuePair<string, byte[]>>();
 
-			using (FOutputText fw = new FOutputText("代码生成中，请稍后...", "", 350, 500, true))
+			using (FOutputText fw = new FOutputText("Gening...Plz Wait...", "", 350, 500, true))
 			{
 				fw.Show();
 				fw.Activate();
 
-				fw.Write("正在分析");
-				fw.Write(Color.Blue, "数据库结构");
+                fw.Write("Analysing");
+				fw.Write(Color.Blue, "Prefetch");
 				fw.WriteLine("...");
 
 				#region Prefetch
@@ -166,76 +166,76 @@ namespace SPGen2008.Components.DAL
 
 				#endregion
 
-				fw.WriteLine(Color.OrangeRed, "分析完成！");
+				fw.WriteLine(Color.OrangeRed, "Done!");
 
 
-				fw.Write("正在生成");
-				fw.Write(Color.Blue, "数据库对象结构信息描述枚举类");
+				fw.Write("Generating");
+				fw.Write(Color.Blue, " Database Informatin");
 				fw.WriteLine("...");
 
 				gr.Files.Add(new KeyValuePair<string, byte[]>("DI.cs", Encoding.UTF8.GetBytes(
 					Gen_DI.Gen(_db, ns, "DS2")
 				)));
 
-				fw.WriteLine(Color.OrangeRed, "代码创建成功！");
+				fw.WriteLine(Color.OrangeRed, "Done!");
 
 
 				if (_db.CompatibilityLevel >= CompatibilityLevel.Version100)
 				{
-					fw.Write("正在生成");
-					fw.Write(Color.Blue, "用户自定义表类型 结构信息描述枚举类");
+                    fw.Write("Generating");
+					fw.Write(Color.Blue, "UserDefinedTableType Information");
 					fw.WriteLine("...");
 
 					gr.Files.Add(new KeyValuePair<string, byte[]>("DI2.cs", Encoding.UTF8.GetBytes(
 						Gen_DI2.Gen(_db, ns, "DI2")
 					)));
 
-					fw.WriteLine(Color.OrangeRed, "代码创建成功！");
+					fw.WriteLine(Color.OrangeRed, "Done!");
 
 
 
-					fw.Write("正在生成");
-					fw.Write(Color.Blue, "用户自定义表类型 结构信息描述数据集");
+                    fw.Write("Generating");
+                    fw.Write(Color.Blue, "UserDefinedTableType DataSet Declare");
 					fw.WriteLine("...");
 
 					gr.Files.Add(new KeyValuePair<string, byte[]>("DS2.cs", Encoding.UTF8.GetBytes(
 						Gen_DS2.Gen(_db, ns, "DS2")
 					)));
 
-					fw.WriteLine(Color.OrangeRed, "代码创建成功！");
+					fw.WriteLine(Color.OrangeRed, "Done!");
 
 
 
-					fw.Write("正在生成");
-					fw.Write(Color.Blue, "用户自定义表类型 类实例声明");
+                    fw.Write("Generating");
+                    fw.Write(Color.Blue, "UserDefinedTableType Object Class Declare");
 					fw.WriteLine("...");
 
 					gr.Files.Add(new KeyValuePair<string, byte[]>("OO2.cs", Encoding.UTF8.GetBytes(
 						Gen_OO2.Gen(_db, ns, Utils._CurrrentDALGenSetting_CurrentScheme.IsSupportWCF, "DS2")
 					)));
 
-					fw.WriteLine(Color.OrangeRed, "代码创建成功！");
+					fw.WriteLine(Color.OrangeRed, "Done!");
 				}
 
 
 				if (Utils._CurrrentDALGenSetting_CurrentScheme.IsSupportDS)
 				{
-					fw.Write("正在生成");
-					fw.Write(Color.Blue, "强类型数据集");
+                    fw.Write("Generating");
+					fw.Write(Color.Blue, "DataSet");
 					fw.WriteLine("...");
 
 					gr.Files.Add(new KeyValuePair<string, byte[]>("DS.cs", Encoding.UTF8.GetBytes(
 						Gen_DS.Gen(_db, ns, "DS")
 					)));
 
-					fw.WriteLine(Color.OrangeRed, "代码创建成功！");
+					fw.WriteLine(Color.OrangeRed, "Done!");
 				}
 
 
 				if (isSupportDC)
 				{
-					fw.Write("正在生成");
-					fw.Write(Color.Blue, "数据库操作命令对象集合");
+                    fw.Write("Generating");
+					fw.Write(Color.Blue, "Data Command");
 					fw.WriteLine("...");
 
 					gr.Files.Add(new KeyValuePair<string, byte[]>("DC.cs", Encoding.UTF8.GetBytes(
@@ -267,7 +267,7 @@ namespace SPGen2008.Components.DAL
 						)));
 					}
 
-					fw.WriteLine(Color.OrangeRed, "代码创建成功！");
+					fw.WriteLine(Color.OrangeRed, "Done!");
 				}
 
 				if (Utils._CurrrentDALGenSetting_CurrentScheme.IsSupportDB_Table ||
@@ -275,8 +275,8 @@ namespace SPGen2008.Components.DAL
 					Utils._CurrrentDALGenSetting_CurrentScheme.IsSupportDB_Function ||
 					Utils._CurrrentDALGenSetting_CurrentScheme.IsSupportDB_SP)
 				{
-					fw.Write("正在生成");
-					fw.Write(Color.Blue, "强类型数据集操作方法集合");
+                    fw.Write("Generating");
+					fw.Write(Color.Blue, "DataSet Business");
 					fw.WriteLine("...");
 
 					gr.Files.Add(new KeyValuePair<string, byte[]>("DB.cs", Encoding.UTF8.GetBytes(
@@ -308,20 +308,20 @@ namespace SPGen2008.Components.DAL
 						)));
 					}
 
-					fw.WriteLine(Color.OrangeRed, "代码创建成功！");
+					fw.WriteLine(Color.OrangeRed, "Done!");
 				}
 
 				if (Utils._CurrrentDALGenSetting_CurrentScheme.IsSupportOO)
 				{
-					fw.Write("正在生成");
-					fw.Write(Color.Blue, "类实例数据库对象类声明");
+                    fw.Write("Generating");
+					fw.Write(Color.Blue, "Object Class Declare");
 					fw.WriteLine("...");
 
 					gr.Files.Add(new KeyValuePair<string, byte[]>("OO.cs", Encoding.UTF8.GetBytes(
 						Gen_OO.Gen(_db, ns, Utils._CurrrentDALGenSetting_CurrentScheme.IsSupportWCF)
 					)));
 
-					fw.WriteLine(Color.OrangeRed, "代码创建成功！");
+					fw.WriteLine(Color.OrangeRed, "Done!");
 				}
 
 				if (Utils._CurrrentDALGenSetting_CurrentScheme.IsSupportOB_Table ||
@@ -329,8 +329,8 @@ namespace SPGen2008.Components.DAL
 					Utils._CurrrentDALGenSetting_CurrentScheme.IsSupportOB_Function ||
 					Utils._CurrrentDALGenSetting_CurrentScheme.IsSupportOB_SP)
 				{
-					fw.Write("正在生成");
-					fw.Write(Color.Blue, "类实例数据库操作方法集合");
+                    fw.Write("Generating");
+					fw.Write(Color.Blue, "Object Business");
 					fw.WriteLine("...");
 
 					gr.Files.Add(new KeyValuePair<string, byte[]>("OB.cs", Encoding.UTF8.GetBytes(
@@ -362,15 +362,15 @@ namespace SPGen2008.Components.DAL
 						)));
 					}
 
-					fw.WriteLine(Color.OrangeRed, "代码创建成功！");
+					fw.WriteLine(Color.OrangeRed, "Done!");
 				}
 
 
 				if (isSupportDC)
 				{
 
-					fw.Write("正在生成");
-					fw.Write(Color.Blue, "数据库查询表达式辅助模块");
+                    fw.Write("Generating");
+					fw.Write(Color.Blue, "Object Expression");
 					fw.WriteLine("...");
 
 					gr.Files.Add(new KeyValuePair<string, byte[]>("OE.cs", Encoding.UTF8.GetBytes(
@@ -395,14 +395,14 @@ namespace SPGen2008.Components.DAL
 						)));
 					}
 
-					fw.WriteLine(Color.OrangeRed, "代码创建成功！");
+					fw.WriteLine(Color.OrangeRed, "Done!");
 				}
 
 				if (Utils._CurrrentDALGenSetting_CurrentScheme.IsSupportOB_Extend)
 				{
 
-					fw.Write("正在生成");
-					fw.Write(Color.Blue, "类实例扩展方法（ .net 3.5+　）");
+                    fw.Write("Generating");
+					fw.Write(Color.Blue, "Object Business Extension（ .net 3.5+　）");
 					fw.WriteLine("...");
 
 					gr.Files.Add(new KeyValuePair<string, byte[]>("OB_Extend.cs", Encoding.UTF8.GetBytes(
@@ -421,11 +421,11 @@ namespace SPGen2008.Components.DAL
 						)));
 					}
 
-					fw.WriteLine(Color.OrangeRed, "代码创建成功！");
+					fw.WriteLine(Color.OrangeRed, "Done!");
 				}
 
-				fw.Write("正在生成");
-				fw.Write(Color.Blue, "数据库操作辅助模块");
+                fw.Write("Generating");
+				fw.Write(Color.Blue, "SQLHelper");
 				fw.WriteLine("...");
 
 
@@ -433,10 +433,10 @@ namespace SPGen2008.Components.DAL
 					Gen_SQLHelper.Gen(ns)
 				)));
 
-				fw.WriteLine(Color.OrangeRed, "代码创建成功！");
+				fw.WriteLine(Color.OrangeRed, "Done!");
 
 				fw.WriteLine();
-				fw.WriteLine(Color.Red, "所有代码生成完毕！");
+				fw.WriteLine(Color.Red, "All Done!");
 			}
 
 			//gr = new GenResult(GenResultTypes.CodeSegment);
