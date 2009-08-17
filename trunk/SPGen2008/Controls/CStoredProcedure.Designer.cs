@@ -32,6 +32,14 @@ namespace SPGen2008
             this.label1 = new System.Windows.Forms.Label();
             this._SPName_TextBox = new System.Windows.Forms.TextBox();
             this._dataGridView = new System.Windows.Forms.DataGridView();
+            this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.directionDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.defaultValueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.descDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataTypeNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.lengthDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.precisionDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.scaleDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.parmsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.dS = new SPGen2008.Misc.DS();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
@@ -50,14 +58,6 @@ namespace SPGen2008
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this._SPHead_richTextBox = new System.Windows.Forms.RichTextBox();
             this._SPBody_richTextBox = new System.Windows.Forms.RichTextBox();
-            this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.directionDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.defaultValueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.descDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.dataTypeNameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.lengthDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.precisionDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.scaleDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this._dataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.parmsBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dS)).BeginInit();
@@ -120,6 +120,76 @@ namespace SPGen2008
             this._dataGridView.Size = new System.Drawing.Size(643, 136);
             this._dataGridView.TabIndex = 2;
             this._dataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this._dataGridView_CellValueChanged);
+            // 
+            // nameDataGridViewTextBoxColumn
+            // 
+            this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
+            this.nameDataGridViewTextBoxColumn.Frozen = true;
+            this.nameDataGridViewTextBoxColumn.HeaderText = "ParameterName";
+            this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
+            this.nameDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // directionDataGridViewTextBoxColumn
+            // 
+            this.directionDataGridViewTextBoxColumn.DataPropertyName = "IsOutput";
+            this.directionDataGridViewTextBoxColumn.FillWeight = 70F;
+            this.directionDataGridViewTextBoxColumn.HeaderText = "IsOutput";
+            this.directionDataGridViewTextBoxColumn.Name = "directionDataGridViewTextBoxColumn";
+            this.directionDataGridViewTextBoxColumn.ReadOnly = true;
+            this.directionDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.directionDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.directionDataGridViewTextBoxColumn.Width = 70;
+            // 
+            // defaultValueDataGridViewTextBoxColumn
+            // 
+            this.defaultValueDataGridViewTextBoxColumn.DataPropertyName = "DefaultValue";
+            this.defaultValueDataGridViewTextBoxColumn.HeaderText = "DefaultValue";
+            this.defaultValueDataGridViewTextBoxColumn.Name = "defaultValueDataGridViewTextBoxColumn";
+            this.defaultValueDataGridViewTextBoxColumn.ReadOnly = true;
+            // 
+            // descDataGridViewTextBoxColumn
+            // 
+            this.descDataGridViewTextBoxColumn.DataPropertyName = "Desc";
+            this.descDataGridViewTextBoxColumn.FillWeight = 200F;
+            this.descDataGridViewTextBoxColumn.HeaderText = "Description(Changeable)";
+            this.descDataGridViewTextBoxColumn.Name = "descDataGridViewTextBoxColumn";
+            this.descDataGridViewTextBoxColumn.Width = 200;
+            // 
+            // dataTypeNameDataGridViewTextBoxColumn
+            // 
+            this.dataTypeNameDataGridViewTextBoxColumn.DataPropertyName = "DataTypeName";
+            this.dataTypeNameDataGridViewTextBoxColumn.FillWeight = 90F;
+            this.dataTypeNameDataGridViewTextBoxColumn.HeaderText = "DataType";
+            this.dataTypeNameDataGridViewTextBoxColumn.Name = "dataTypeNameDataGridViewTextBoxColumn";
+            this.dataTypeNameDataGridViewTextBoxColumn.ReadOnly = true;
+            this.dataTypeNameDataGridViewTextBoxColumn.Width = 90;
+            // 
+            // lengthDataGridViewTextBoxColumn
+            // 
+            this.lengthDataGridViewTextBoxColumn.DataPropertyName = "Length";
+            this.lengthDataGridViewTextBoxColumn.FillWeight = 40F;
+            this.lengthDataGridViewTextBoxColumn.HeaderText = "Length";
+            this.lengthDataGridViewTextBoxColumn.Name = "lengthDataGridViewTextBoxColumn";
+            this.lengthDataGridViewTextBoxColumn.ReadOnly = true;
+            this.lengthDataGridViewTextBoxColumn.Width = 40;
+            // 
+            // precisionDataGridViewTextBoxColumn
+            // 
+            this.precisionDataGridViewTextBoxColumn.DataPropertyName = "Precision";
+            this.precisionDataGridViewTextBoxColumn.FillWeight = 40F;
+            this.precisionDataGridViewTextBoxColumn.HeaderText = "Precision";
+            this.precisionDataGridViewTextBoxColumn.Name = "precisionDataGridViewTextBoxColumn";
+            this.precisionDataGridViewTextBoxColumn.ReadOnly = true;
+            this.precisionDataGridViewTextBoxColumn.Width = 40;
+            // 
+            // scaleDataGridViewTextBoxColumn
+            // 
+            this.scaleDataGridViewTextBoxColumn.DataPropertyName = "Scale";
+            this.scaleDataGridViewTextBoxColumn.FillWeight = 40F;
+            this.scaleDataGridViewTextBoxColumn.HeaderText = "Scale";
+            this.scaleDataGridViewTextBoxColumn.Name = "scaleDataGridViewTextBoxColumn";
+            this.scaleDataGridViewTextBoxColumn.ReadOnly = true;
+            this.scaleDataGridViewTextBoxColumn.Width = 40;
             // 
             // parmsBindingSource
             // 
@@ -344,76 +414,6 @@ namespace SPGen2008
             this._SPBody_richTextBox.Size = new System.Drawing.Size(649, 115);
             this._SPBody_richTextBox.TabIndex = 1;
             this._SPBody_richTextBox.Text = "";
-            // 
-            // nameDataGridViewTextBoxColumn
-            // 
-            this.nameDataGridViewTextBoxColumn.DataPropertyName = "Name";
-            this.nameDataGridViewTextBoxColumn.Frozen = true;
-            this.nameDataGridViewTextBoxColumn.HeaderText = "ParameterName";
-            this.nameDataGridViewTextBoxColumn.Name = "nameDataGridViewTextBoxColumn";
-            this.nameDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // directionDataGridViewTextBoxColumn
-            // 
-            this.directionDataGridViewTextBoxColumn.DataPropertyName = "IsOutput";
-            this.directionDataGridViewTextBoxColumn.FillWeight = 70F;
-            this.directionDataGridViewTextBoxColumn.HeaderText = "IsOutput";
-            this.directionDataGridViewTextBoxColumn.Name = "directionDataGridViewTextBoxColumn";
-            this.directionDataGridViewTextBoxColumn.ReadOnly = true;
-            this.directionDataGridViewTextBoxColumn.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.directionDataGridViewTextBoxColumn.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.directionDataGridViewTextBoxColumn.Width = 70;
-            // 
-            // defaultValueDataGridViewTextBoxColumn
-            // 
-            this.defaultValueDataGridViewTextBoxColumn.DataPropertyName = "DefaultValue";
-            this.defaultValueDataGridViewTextBoxColumn.HeaderText = "DefaultValue";
-            this.defaultValueDataGridViewTextBoxColumn.Name = "defaultValueDataGridViewTextBoxColumn";
-            this.defaultValueDataGridViewTextBoxColumn.ReadOnly = true;
-            // 
-            // descDataGridViewTextBoxColumn
-            // 
-            this.descDataGridViewTextBoxColumn.DataPropertyName = "Desc";
-            this.descDataGridViewTextBoxColumn.FillWeight = 200F;
-            this.descDataGridViewTextBoxColumn.HeaderText = "Description(Changeable)";
-            this.descDataGridViewTextBoxColumn.Name = "descDataGridViewTextBoxColumn";
-            this.descDataGridViewTextBoxColumn.Width = 200;
-            // 
-            // dataTypeNameDataGridViewTextBoxColumn
-            // 
-            this.dataTypeNameDataGridViewTextBoxColumn.DataPropertyName = "DataTypeName";
-            this.dataTypeNameDataGridViewTextBoxColumn.FillWeight = 90F;
-            this.dataTypeNameDataGridViewTextBoxColumn.HeaderText = "DataType";
-            this.dataTypeNameDataGridViewTextBoxColumn.Name = "dataTypeNameDataGridViewTextBoxColumn";
-            this.dataTypeNameDataGridViewTextBoxColumn.ReadOnly = true;
-            this.dataTypeNameDataGridViewTextBoxColumn.Width = 90;
-            // 
-            // lengthDataGridViewTextBoxColumn
-            // 
-            this.lengthDataGridViewTextBoxColumn.DataPropertyName = "Length";
-            this.lengthDataGridViewTextBoxColumn.FillWeight = 40F;
-            this.lengthDataGridViewTextBoxColumn.HeaderText = "Length";
-            this.lengthDataGridViewTextBoxColumn.Name = "lengthDataGridViewTextBoxColumn";
-            this.lengthDataGridViewTextBoxColumn.ReadOnly = true;
-            this.lengthDataGridViewTextBoxColumn.Width = 40;
-            // 
-            // precisionDataGridViewTextBoxColumn
-            // 
-            this.precisionDataGridViewTextBoxColumn.DataPropertyName = "Precision";
-            this.precisionDataGridViewTextBoxColumn.FillWeight = 40F;
-            this.precisionDataGridViewTextBoxColumn.HeaderText = "Precision";
-            this.precisionDataGridViewTextBoxColumn.Name = "precisionDataGridViewTextBoxColumn";
-            this.precisionDataGridViewTextBoxColumn.ReadOnly = true;
-            this.precisionDataGridViewTextBoxColumn.Width = 40;
-            // 
-            // scaleDataGridViewTextBoxColumn
-            // 
-            this.scaleDataGridViewTextBoxColumn.DataPropertyName = "Scale";
-            this.scaleDataGridViewTextBoxColumn.FillWeight = 40F;
-            this.scaleDataGridViewTextBoxColumn.HeaderText = "Scale";
-            this.scaleDataGridViewTextBoxColumn.Name = "scaleDataGridViewTextBoxColumn";
-            this.scaleDataGridViewTextBoxColumn.ReadOnly = true;
-            this.scaleDataGridViewTextBoxColumn.Width = 40;
             // 
             // CStoredProcedure
             // 
