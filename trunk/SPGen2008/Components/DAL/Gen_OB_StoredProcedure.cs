@@ -72,7 +72,7 @@ namespace " + ns + @"
                     if (rt.StartsWith("["))
                     {
                         rts = rt.Substring(1, rt.IndexOf("].[", 0) - 1);
-                        rt = rt.Substring(rts.Length + 3, rt.Length - rts.Length - 5);
+                        rt = rt.Substring(rts.Length + 4, rt.Length - rts.Length - 5);
                     }
                 }
 
