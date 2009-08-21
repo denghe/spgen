@@ -837,7 +837,7 @@ namespace " + ns + @"
 					if (Utils.CheckIsStringType(c))
 					{
 						sb.Append(@"
-				this.column" + cn + @".MaxLength = " + c.DataType.MaximumLength.ToString() + @";");
+				this.column" + cn + @".MaxLength = " + Utils.GetDbTypeLength(c) + @";");
 					}
 				}
 				sb.Append(@"
