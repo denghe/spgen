@@ -972,7 +972,7 @@ namespace " + ns + @"
 					if (c.Identity)
 					{
 						string seed = c.IdentitySeed.ToString();
-						string incr = c.IdentityIncrement.ToString();
+						string incr = c.IdentityIncrement == 0 ? "1" : c.IdentityIncrement.ToString();
 						sb.Append(@"
 				this.column" + cn + @".AutoIncrement = true;
 				this.column" + cn + @".AutoIncrementSeed = " + seed + @";
@@ -1811,7 +1811,7 @@ namespace " + ns + @"
 					if (c.Identity)
 					{
 						string seed = c.IdentitySeed.ToString();
-						string incr = c.IdentityIncrement.ToString();
+                        string incr = c.IdentityIncrement == 0 ? "1" : c.IdentityIncrement.ToString();
 						sb.Append(@"
 				this.column" + cn + @".AutoIncrement = true;
 				this.column" + cn + @".AutoIncrementSeed = " + seed + @";
