@@ -75,7 +75,7 @@ namespace SPGen2008.Components.UI.ASPX
 			{
 				if (Utils.CheckIsStringType(c))
 				{
-					if (c.DataType.MaximumLength < 0)
+					if (c.DataType.MaximumLength >= 100)
 					{
 						sb.Append(@"
 			<asp:TextBox ID=""_" + Utils.GetEscapeName(c) + @"_TextBox"" runat=""server""
@@ -88,7 +88,7 @@ namespace SPGen2008.Components.UI.ASPX
 					{
 						sb.Append(@"
 			<asp:TextBox ID=""_" + Utils.GetEscapeName(c) + @"_TextBox"" runat=""server""
-				MaxLength=""" + c.DataType.MaximumLength.ToString() + @"""
+				MaxLength=""" + Utils.GetDbTypeLength(c) + @"""
 				Text=""""
 				CssClass=""LI_FIELD_CONTENT_TB""
 			/>");
@@ -143,7 +143,7 @@ namespace SPGen2008.Components.UI.ASPX
 			{
 				if (Utils.CheckIsStringType(c))
 				{
-					if (c.DataType.MaximumLength < 0)
+					if (c.DataType.MaximumLength >= 100)
 					{
 						sb.Append(@"
 			<asp:TextBox ID=""_" + Utils.GetEscapeName(c) + @"_TextBox"" runat=""server""
@@ -156,7 +156,7 @@ namespace SPGen2008.Components.UI.ASPX
 					{
 						sb.Append(@"
 			<asp:TextBox ID=""_" + Utils.GetEscapeName(c) + @"_TextBox"" runat=""server""
-				MaxLength=""" + c.DataType.MaximumLength.ToString() + @"""
+				MaxLength=""" + Utils.GetDbTypeLength(c) + @"""
 				Text=""""
 				CssClass=""LI_FIELD_CONTENT_TB""
 			/>");
