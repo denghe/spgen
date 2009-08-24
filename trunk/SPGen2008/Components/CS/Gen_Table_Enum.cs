@@ -122,7 +122,7 @@ namespace SPGen2008.Components.BLL
 /// </summary>
 public enum " + tbn + @"
 {");
-            DataSet ds = _db.ExecuteWithResults("SELECT [" + Utils.GetEscapeSqlObjectName(vc.Name) + "], [" + Utils.GetEscapeSqlObjectName(nc.Name) + "] FROM [" + Utils.GetEscapeSqlObjectName(t.Schema) + "].[" + Utils.GetEscapeSqlObjectName(t.Name) + @"]");
+            DataSet ds = _db.ExecuteWithResults("SELECT [" + Utils.GetEscapeSqlObjectName(vc.Name) + "], [" + Utils.GetEscapeSqlObjectName(nc.Name) + "] FROM [" + Utils.GetEscapeSqlObjectName(t.Schema) + "].[" + Utils.GetEscapeSqlObjectName(t.Name) + @"] ORDER BY [" + Utils.GetEscapeSqlObjectName(nc.Name) + "]");
             if (ds.Tables.Count == 0 || ds.Tables[0].Rows.Count == 0)
             {
                 gr = new GenResult(GenResultTypes.Message);
