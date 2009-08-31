@@ -1,38 +1,11 @@
-﻿
-
-打算做的事情。。。。。：
-
-
-
-命令行生成模式
-
-DC 的TSQL生成格式调整　为换行对齐
-
-批量 INSERT 方法，SP 生成
-批量 MERGE 方法，SP 生成
-
-判断SQL版本，生成单行 MERGE 方法
-
-CheckExists 方法
-
-
-
-考虑将 OO, OB 整合 （实例属性，实例方法，静态方法）
-
-
-
-考虑修改方法命名规则，规划如下：
+﻿考虑修改方法命名规则，规划如下：
 
 
 解释，预定义：
 
-数据行	：DataRow			(DB特有)
-数据表	：DataTable			(DB特有)
-类实例	：Entity			(OB特有)
-类集合	：EntityCollection	(OB特有)
-Row		：用于指代 数据行 或 类实例
-RowEnum	：Row 枚举（Enum, List, Array, ...）
-Rows	：用于指代 数据表 或 类集合
+Row		：类实例
+RowEnum	：类实例枚举 IEnumerable　型（Enum, List, Array, ...）
+Rows	：类实例集合 ICollection
 int		：受影响行数
 PK		：表的主键类值	(OB特有)
 PKs		：一组主键值
