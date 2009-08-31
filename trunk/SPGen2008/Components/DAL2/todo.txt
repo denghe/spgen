@@ -38,7 +38,7 @@ Merge			（以主键判定并入一行，以主键值判定并入多行，可填
 
 其他方法1：
 
-Select_FKs		（以某外键值为查询基础，按条件取多条，可选择部分字段）
+SelectByFKs		（以某外键值为查询基础，按条件取多条，可选择部分字段）
 
 其他方法2：
 
@@ -72,13 +72,13 @@ int		Select(ref Row, PK，Col...)
 int		Select(ref Row, PKs，Col...)
 int		Select(ref Rows, Exp，Sort, RowIndex, PageSize，ref Count，Col...)
 
-Rows	Select_FKs(FKs, Exp，Sort, RowIndex, PageSize，ref Count，Col...)
-int		Select_FKs(ref Rows, FKs, Exp，Sort, RowIndex, PageSize，ref Count，Col...)
+Rows	SelectByFKs(FKs, Exp，Sort, RowIndex, PageSize，ref Count，Col...)
+int		SelectByFKs(ref Rows, FKs, Exp，Sort, RowIndex, PageSize，ref Count，Col...)
 
 Rows	SelectNode(PK，Col...)
 Rows	SelectNode(PKs，Col...)
 int		SelectNode(ref Rows, PK，Col...)
-int		SelectNode(ref Rows, Ks，Col...)
+int		SelectNode(ref Rows, PKs，Col...)
 
 
 
