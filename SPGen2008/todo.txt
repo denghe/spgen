@@ -1,0 +1,14 @@
+﻿打算做的事情。。。。。：
+
+
+
+命令行生成模式
+
+DC 的TSQL生成格式调整　为换行对齐
+
+批量 INSERT 方法，SP 生成
+批量 MERGE 方法，SP 生成
+
+判断SQL版本，生成单行 MERGE 方法
+
+CheckExists 方法
