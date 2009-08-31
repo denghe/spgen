@@ -1,12 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Text;
 
+// SMO
+using Microsoft.SqlServer;
+using Microsoft.SqlServer.Management.Common;
 using Microsoft.SqlServer.Management.Smo;
 
 namespace SPGen2008.Components.BLL
 {
-    class Gen_Table_UserDefinedTableType : IGenComponent
+    public class Gen_Table_UserDefinedTableType : IGenComponent
     {
         #region Init
 
@@ -14,7 +19,7 @@ namespace SPGen2008.Components.BLL
         {
             this._properties.Add(GenProperties.Name, "Gen_Table_UserDefinedTableType");
             this._properties.Add(GenProperties.Caption, "生成 用户定义表类型 创建脚本");
-            this._properties.Add(GenProperties.Group, "Script");
+            this._properties.Add(GenProperties.Group, "生成TSQL脚本");
             this._properties.Add(GenProperties.Tips, "根据 Table 结构生成 用户定义表类型 创建脚本");
         }
         public SqlElementTypes TargetSqlElementType
