@@ -7,7 +7,7 @@ DR		：数据集行对象
 DRs		：数据集行对象集合 ICollection
 DT		：数据表对象
 Row		：类实例
-RowEnum	：类实例枚举 IEnumerable　型（Enum, List, Array, ...）
+RowEnum	：类实例枚举 IEnumerable 型（Enum, List, Array, ...）
 Rows	：类实例集合 ICollection
 int		：受影响行数
 PK		：表的主键类值	或指代一组主键字段值
@@ -69,18 +69,18 @@ Avg				（根据条件, 对某个数值字段进行求平均值运算并返回�
 SELECT
 
 DT		Select(Col...)																		// 返回含有 整个表的数据 部分字段 的数据表
-Row		Select(PK)																			// 根据主键值 返回 一行数据
-Row		Select(PK, Col...)																	// 根据主键值 返回　填充部分字段值　的一行数据
-Rows	Select(PKs)																			// 根据主键枚举　返回 多行数据
-DT		Select(PKs, Col...)																	// 根据主键枚举　返回 含有部分字段　的数据表
-Rows	Select(Exp, Sort, RowIndex, PageSize, ref Count)									// 分页返回含有 整个表的数据 部分字段 的多行数据
-DT		Select(Exp, Sort, RowIndex, PageSize, ref Count, Col...)							// 分页返回含有 整个表的数据 部分字段 的数据表
+Row		Select(PK)																			// 根据主键值 返回 单行数据
+Row		Select(PK, Col...)																	// 根据主键值 返回 部分字段的 单行数据
+Rows	Select(PKs)																			// 根据主键枚举 返回 数据集
+DT		Select(PKs, Col...)																	// 根据主键枚举 返回 部分字段的 数据表
+Rows	Select(Exp, Sort, RowIndex, PageSize, ref Count)									// 分页返回含有 整个表的 部分字段的 数据集
+DT		Select(Exp, Sort, RowIndex, PageSize, ref Count, Col...)							// 分页返回含有 整个表的 部分字段的 数据表
 
-Rows	SelectByFKs(FK, Exp, Sort, RowIndex, PageSize, ref Count)							// 根据外键值 返回　一组数据
-DT		SelectByFKs(FK, Exp, Sort, RowIndex, PageSize, ref Count, Col...)					// 根据外键值 返回 含有部分字段　的数据表
+Rows	SelectByFKs(FK, Exp, Sort, RowIndex, PageSize, ref Count)							// 根据外键值 返回 数据集
+DT		SelectByFKs(FK, Exp, Sort, RowIndex, PageSize, ref Count, Col...)					// 根据外键值 返回 部分字段的 数据表
 
-Rows	SelectNode(PK, Col...)
-Rows	SelectNode(PKs, Col...)
+Rows	SelectNode(PK)																		// 根据节点主键值 返回 整个节点的 数据集
+DT		SelectNode(PK, Col...)																// 根据节点主键值 返回 整个节点的 部分字段的 数据表
 
 （下一步的。。。填充型重载，返回填充行数）
 
