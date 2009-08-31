@@ -1,7 +1,7 @@
-﻿考虑修改方法命名规则，规划如下：
+﻿考虑修改方法命名规则, 规划如下：
 
 
-解释，预定义：
+解释, 预定义：
 
 DR		：数据集行对象
 DRs		：数据集行对象集合 ICollection
@@ -26,70 +26,65 @@ RowIndex：限定当次查询从起始行号开始返回
 PageSize：限定当次查询返回的数据行数
 Count	：数据总行数
 ref		：回写引用
-...		：零个或多个，变参
-可回写	：方法入参中引用了一个数据容器，可返回数据的变更内容并写入
+...		：零个或多个, 变参
+可回写	：方法入参中引用了一个数据容器, 可返回数据的变更内容并写入
 
 
-注： DR, DRs, DT 这个并非指代 DataRow, DataRows, DataTable 。而是 DR<t1, t2, t3, ...>, List<DR>, DC<t1, t2, t3, ...> + List<List<DR>>
-DR 声明的字段个数，按所有表中字段个数最多的表来衡量
 
 
 
 
 主方法：
 
-Select			（按主键取单条，按条件取多条，可选择部分字段）
-Insert			（插入一行，插入多行，可填充部分字段，可回写）
-Update			（按主键更新一行，按条件更新多行，可更新部分字段，可回写）
-Delete			（按主键删除一行，按条件删除多行，可回写）
-Merge			（以主键判定并入一行，以主键值判定并入多行，可填充部分字段，可回写)
+Select			（按主键取单条, 按条件取多条, 可选择部分字段）
+Insert			（插入一行, 插入多行, 可填充部分字段, 可回写）
+Update			（按主键更新一行, 按条件更新多行, 可更新部分字段, 可回写）
+Delete			（按主键删除一行, 按条件删除多行, 可回写）
+Merge			（以主键判定并入一行, 以主键值判定并入多行, 可填充部分字段, 可回写)
 
 其他方法1：
 
-SelectByFKs		（以某外键值为查询基础，按条件取多条，可选择部分字段）
+SelectByFKs		（以某外键值为查询基础, 按条件取多条, 可选择部分字段）
 
 其他方法2：
 
-SelectNode		（按主键取一个节点的数据，可选择部分字段）
-InsertNode		（往表中插入一个树节点，可回写）
-DeleteNode		（按主键删一个树节点，可回写）
-UpdateNode		（按主键更新一个树节点，可选择部分字段，可回写）
-MergeNode		（按主键判定并入一个树节点，可选择部分字段，可回写）
+SelectNode		（按主键取一个节点的数据, 可选择部分字段）
+InsertNode		（往表中插入一个树节点, 可回写）
+DeleteNode		（按主键删一个树节点, 可回写）
+UpdateNode		（按主键更新一个树节点, 可选择部分字段, 可回写）
+MergeNode		（按主键判定并入一个树节点, 可选择部分字段, 可回写）
 
 其他方法3：
 
 Distinct		（返回指定的多个不重复的字段数据）
 Count			（判断并返回符合表达式条件或某字段不为空的记录条数）
 Exists			（判断并返回是否存在符合条件的记录）
-Sum				（根据条件，对某个数值字段进行求和运算并返回）
-Avg				（根据条件，对某个数值字段进行求平均值运算并返回）
+Sum				（根据条件, 对某个数值字段进行求和运算并返回）
+Avg				（根据条件, 对某个数值字段进行求平均值运算并返回）
 
 
 
-重载方法明细：
+重载方法明细：（首批要做的）
 
 SELECT
 
 DT		Select(Col...)																		// 返回含有 整个表的数据 部分字段 的数据表
+Row		Select(PK)																			// 根据主键值 返回 一行数据
+Row		Select(PK, Col...)																	// 根据主键值 返回　填充部分字段值　的一行数据
+Rows	Select(PKs)																			// 根据主键枚举　返回 多行数据
+DT		Select(PKs, Col...)																	// 根据主键枚举　返回 含有部分字段　的数据表
+Rows	Select(Exp, Sort, RowIndex, PageSize, ref Count)									// 分页返回含有 整个表的数据 部分字段 的多行数据
 DT		Select(Exp, Sort, RowIndex, PageSize, ref Count, Col...)							// 分页返回含有 整个表的数据 部分字段 的数据表
 
-DR		Select(PK，Col...)																	// 根据主键值 返回　含有部分字段　的数据行
-DT		Select(PKs，Col...)																	// 
-Rows	Select(Exp，Sort, RowIndex, PageSize，ref Count，Col...)
+Rows	SelectByFKs(FK, Exp, Sort, RowIndex, PageSize, ref Count)							// 根据外键值 返回　一组数据
+DT		SelectByFKs(FK, Exp, Sort, RowIndex, PageSize, ref Count, Col...)					// 根据外键值 返回 含有部分字段　的数据表
 
-int		Select(ref Rows, Col...)
-int		Select(ref Row, PK，Col...)
-int		Select(ref Row, PKs，Col...)
-int		Select(ref Rows, Exp，Sort, RowIndex, PageSize，ref Count，Col...)
+Rows	SelectNode(PK, Col...)
+Rows	SelectNode(PKs, Col...)
 
-Rows	SelectByFKs(FKs, Exp，Sort, RowIndex, PageSize，ref Count，Col...)
-int		SelectByFKs(ref Rows, FKs, Exp，Sort, RowIndex, PageSize，ref Count，Col...)
+（下一步的。。。填充型重载，返回填充行数）
 
-Rows	SelectNode(PK，Col...)
-Rows	SelectNode(PKs，Col...)
-int		SelectNode(ref Rows, PK，Col...)
-int		SelectNode(ref Rows, PKs，Col...)
-
+int		Select(ref Rows, ...................)
 
 
 INSERT
@@ -98,17 +93,17 @@ int		Insert(Vals)
 int		Insert(ColVals)
 int		Insert(ColVal...)
 
-int		Insert(Row，Col...)
-int		Insert(RowEnum，Col...)
-int		Insert(Rows，Col...)
+int		Insert(Row, Col...)
+int		Insert(RowEnum, Col...)
+int		Insert(Rows, Col...)
 
 int		Insert(ref Row, Vals)
 int		Insert(ref Row, ColVal...)
 int		Insert(ref Row, ColVals)
 
-int		Insert(ref Row, Row，Col...)
-int		Insert(ref RowEnum, RowEnum，Col...)
-int		Insert(ref Rows, Rows，Col...)
+int		Insert(ref Row, Row, Col...)
+int		Insert(ref RowEnum, RowEnum, Col...)
+int		Insert(ref Rows, Rows, Col...)
 
 
 UPDATE
