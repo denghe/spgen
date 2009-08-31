@@ -3,12 +3,15 @@
 
 解释，预定义：
 
+DR		：数据集行对象
+DRs		：数据集行对象集合 ICollection
+DT		：数据表对象
 Row		：类实例
 RowEnum	：类实例枚举 IEnumerable　型（Enum, List, Array, ...）
 Rows	：类实例集合 ICollection
 int		：受影响行数
-PK		：表的主键类值	(OB特有)
-PKs		：一组主键值
+PK		：表的主键类值	或指代一组主键字段值
+PKs		：主键类值枚举 IEnumerable	或指代多组主键字段值
 FK		：表的一组外键字段值
 FKs		：表的多组外键字段值
 Col		：字段名
@@ -25,6 +28,11 @@ Count	：数据总行数
 ref		：回写引用
 ...		：零个或多个，变参
 可回写	：方法入参中引用了一个数据容器，可返回数据的变更内容并写入
+
+
+注： DR, DRs, DT 这个并非指代 DataRow, DataRows, DataTable 。而是 DR<t1, t2, t3, ...>, List<DR>, DC<t1, t2, t3, ...> + List<List<DR>>
+DR 声明的字段个数，按所有表中字段个数最多的表来衡量
+
 
 
 
@@ -62,9 +70,11 @@ Avg				（根据条件，对某个数值字段进行求平均值运算并返回�
 
 SELECT
 
-Row		Select(Col...)
-Row		Select(PK，Col...)
-Row		Select(PKs，Col...)
+DT		Select(Col...)																		// 返回含有 整个表的数据 部分字段 的数据表
+DT		Select(Exp, Sort, RowIndex, PageSize, ref Count, Col...)							// 分页返回含有 整个表的数据 部分字段 的数据表
+
+DR		Select(PK，Col...)																	// 根据主键值 返回　含有部分字段　的数据行
+DT		Select(PKs，Col...)																	// 
 Rows	Select(Exp，Sort, RowIndex, PageSize，ref Count，Col...)
 
 int		Select(ref Rows, Col...)
