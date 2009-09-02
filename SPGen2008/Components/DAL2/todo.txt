@@ -1,6 +1,7 @@
 ﻿考虑修改方法命名规则, 规划如下：
 
 
+
 解释, 预定义：
 
 DR		：数据集行对象
@@ -32,9 +33,26 @@ ref		：回写引用
 
 
 
+命名规则相关：
+
+表						: Schema.TableName
+表主键					: Schema.TableName_PK
+表外键					: Schema.TableName_FK_FKCols...
+
+视图					: Schema.ViewName
+视图主键				: Schema.ViewName_PK
+
+表值函数				: Schema.FunctionName
+表值函数主键			: Schema.FunctionName_PK
+
+用户定义表类型		: Schema.UDTT_UserDefinedTableTypeName
+用户定义表类型主键	: Schema.UDTT_UserDefinedTableTypeName_PK
 
 
-主方法：
+
+
+
+主体方法：
 
 Select			（按主键取单条, 按条件取多条, 可选择部分字段）
 Insert			（插入一行, 插入多行, 可填充部分字段, 可回写）
@@ -42,9 +60,11 @@ Update			（按主键更新一行, 按条件更新多行, 可更新部分字段,
 Delete			（按主键删除一行, 按条件删除多行, 可回写）
 Merge			（以主键判定并入一行, 以主键值判定并入多行, 可填充部分字段, 可回写)
 
+
 其他方法1：
 
 SelectByFKs		（以某外键值为查询基础, 按条件取多条, 可选择部分字段）
+
 
 其他方法2：
 
@@ -53,6 +73,7 @@ InsertNode		（往表中插入一个树节点, 可回写）
 DeleteNode		（按主键删一个树节点, 可回写）
 UpdateNode		（按主键更新一个树节点, 可选择部分字段, 可回写）
 MergeNode		（按主键判定并入一个树节点, 可选择部分字段, 可回写）
+
 
 其他方法3：
 
@@ -64,27 +85,63 @@ Avg				（根据条件, 对某个数值字段进行求平均值运算并返回�
 
 
 
+
+
+
+
 重载方法明细：（首批要做的）
 
 SELECT
 
-DT		Select(Col...)																		// 返回含有 整个表的数据 部分字段 的数据表
+Rows	Select()																			// 返回含有 所有数据行的 数据集
+Rows	Select(Col...)																		// 返回含有 所有数据行的 只填充部分字段的 数据集
+
 Row		Select(PK)																			// 根据主键值 返回 单行数据
-Row		Select(PK, Col...)																	// 根据主键值 返回 部分字段的 单行数据
+Row		Select(PK, Col...)																	// 根据主键值 返回 只填充部分字段的 单行数据
 Rows	Select(PKs)																			// 根据主键枚举 返回 数据集
-DT		Select(PKs, Col...)																	// 根据主键枚举 返回 部分字段的 数据表
-Rows	Select(Exp, Sort, RowIndex, PageSize, ref Count)									// 分页返回含有 整个表的 部分字段的 数据集
-DT		Select(Exp, Sort, RowIndex, PageSize, ref Count, Col...)							// 分页返回含有 整个表的 部分字段的 数据表
+Rows	Select(PKs, Col...)																	// 根据主键枚举 返回 只填充部分字段的 数据集
 
-Rows	SelectByFKs(FK, Exp, Sort, RowIndex, PageSize, ref Count)							// 根据外键值 返回 数据集
-DT		SelectByFKs(FK, Exp, Sort, RowIndex, PageSize, ref Count, Col...)					// 根据外键值 返回 部分字段的 数据表
+Rows	Select(Exp)																			// 根据条件 返回 数据集
+Rows	Select(Exp, RowCount)																// 根据条件 返回 限定行数的 数据集
+Rows	Select(Exp, Sort)																	// 根据条件 排序 返回 数据集
+Rows	Select(Exp, Sort, RowCount)															// 根据条件 排序 返回 限定行数的 数据集
+Rows	Select(Exp, Sort, RowIndex, PageSize, ref Count)									// 根据条件 分页 排序 返回 整个表的 只填充部分字段的 数据集
+Rows	Select(Exp, Sort, RowIndex, PageSize, ref Count, Col...)							// 根据条件 分页 排序 返回 整个表的 只填充部分字段的 数据集
+Rows	Select(Exp, Sort, RowIndex, PageSize, ref Count, IsExcept, Col...)					// 根据条件 分页 排序 返回 整个表的 排除部分字段不填充的 数据集
 
-Rows	SelectNode(PK)																		// 根据节点主键值 返回 整个节点的 数据集
-DT		SelectNode(PK, Col...)																// 根据节点主键值 返回 整个节点的 部分字段的 数据表
+Rows	Select(FK, Exp, Sort, RowIndex, PageSize, ref Count)								// 根据外键值和条件 分页返回 数据集
+Rows	Select(FKs, Exp, Sort, RowIndex, PageSize, ref Count)								// 根据多个外键值和条件 分页返回 数据集
+Rows	Select(FK, Exp, Sort, RowIndex, PageSize, ref Count, Col...)						// 根据外键值和条件 分页返回 只填充部分字段的 数据集
+Rows	Select(FKs, Exp, Sort, RowIndex, PageSize, ref Count, Col...)						// 根据多个外键值和条件 分页返回 只填充部分字段的 数据集
 
-（下一步的。。。填充型重载，返回填充行数）
+Rows	Select(PK)																			// 根据节点主键值 返回 整个节点的 数据集
+Rows	Select(PK, Deep)																	// 根据节点主键值 返回 整个节点的 只含指定深度的 数据集
+Rows	Select(PK, Col...)																	// 根据节点主键值 返回 整个节点的 只填充部分字段的 数据集
+Rows	Select(PK, Deep, Col...)															// 根据节点主键值 返回 整个节点的 只填充部分字段的 只含指定深度的 数据集
+
+
+总结：参数可考虑为 5个大类：
+All, PK, Exp, FK, Node
+
+其中: All 表现为无查询参数 或仅含字段列表 或仅含排除字段列表。具体为：
+
+Select(Bool isExcept, param dbo.Table.Columns[] columns);									// 这个是基本的
+Select(param dbo.Table.Columns[] columns);
+Select(); 
+
+PK 主要分为单行，多行，主键字段s，或主键字段对象：
+
+
+
+
+（以后来实现的部分。。。填充型重载，返回填充行数）
 
 int		Select(ref Rows, ...................)
+
+
+
+
+
 
 
 INSERT
