@@ -123,13 +123,113 @@ Rows	Select(PK, Deep, Col...)															// 根据节点主键值 返回 整�
 总结：参数可考虑为 5个大类：
 All, PK, Exp, FK, Node
 
-其中: All 表现为无查询参数 或仅含字段列表 或仅含排除字段列表。具体为：
+All 表现为无查询参数 或仅含字段列表 或仅含排除字段列表。具体为：
 
-Select(Bool isExcept, param dbo.Table.Columns[] columns);									// 这个是基本的
+Select(Bool isExcept, param dbo.Table.Columns[] columns);									// 基本
 Select(param dbo.Table.Columns[] columns);
 Select(); 
 
-PK 主要分为单行，多行，主键字段s，或主键字段对象：
+PK 主要分为 单行，多行，主键字段s，或主键字段对象。
+
+主键单行：
+Select(T1 col1, T2 col2, ..., bool isExcept, param dbo.Table.Columns[] columns);
+Select(T1 col1, T2 col2, ..., param dbo.Table.Columns[] columns);
+Select(T1 col1, T2 col2, ...);
+
+主键多行：（针对最常见的单字段主键）
+Select(List<T1> col, List<Pair<int, bool>> sorts, bool isExcept, param dbo.Table.Columns[] columns);
+Select(List<T1> col, List<Pair<int, bool>> sorts, param dbo.Table.Columns[] columns);
+Select(List<T1> col, List<Pair<int, bool>> sorts);
+Select(List<T1> col);
+
+主键类单行：
+Select(dbo.Table_PK pk, bool isExcept, param dbo.Table.Columns[] columns);
+Select(dbo.Table_PK pk, param dbo.Table.Columns[] columns);
+Select(dbo.Table_PK pk);
+
+主键类多行：
+Select(List<dbo.Table_PK> pks, bool isExcept, param dbo.Table.Columns[] columns);			// 基本
+Select(List<dbo.Table_PK> pks, param dbo.Table.Columns[] columns);
+Select(List<dbo.Table_PK> pks);
+
+
+...todo
+
+
+
+
+
+
+
+
+
+
+
+生成物实际使用中，一些代码的长像：
+
+
+var row = dbo.Table1.Select( 3 );														// 单主键查单行
+var row = dbo.Table1.Query( 3 ).Select();												// 单主键查单行
+
+var pk = new dbo.Table1.PrimaryKey( 3, 5 );
+...
+var row = dbo.Table1.Select( pk );														// 主键对象查单行
+var row = dbo.Table1.Query( pk ).Select();												// 主键对象查单行
+
+var pks = new List<dbo.Table1.PrimaryKey>();
+...
+var rows = dbo.Table1.Select( pks );													// 主键对象集合查多行
+var rows = dbo.Table1.Query( pks ).Select();											// 主键对象集合查多行
+var rows = dbo.Table1.Query( pks ).ColumnExcept( o=>o.Col1.Col2.Col3 ).Select();		// 主键对象集合查多行（除了 Col1, Col2, Col3 这几个字段不填充）
+var rows = dbo.Table1.Query( pks ).Column( o=>o.Col1.Col2.Col3 ).Select();				// 主键对象集合查多行（只填充 Col1, Col2, Col3 这几个字段）
+var rows = dbo.Table1.Query( pks ).Column( o=>o.Col1.Col2.Col3 )
+                                  .OrderBy( o=>Col1.Asc().Col2.Desc() ).Select();		// 主键对象集合查多行（只填充 Col1, Col2, Col3 这几个字段）（按 Col1 正排且按 Col2 反排）
+
+
+var rows = dbo.Table1.Query(
+                             o=>o.Col1.Equals( 5 )
+                                 .Col2.Like( "xxx" )
+                                 .Or(
+									Col3.In ( 3,5,6,7 ) 
+                                 ) 
+                     )
+                     .Column( ... )
+                     .OrderBy( ... )
+                     .RowIndex( ... )
+                     .PageSize( ... )
+                     .Select();
+
+
+
+
+var row = dbo.usp_User_Create( "xxx", "eee" );
+var row = dbo.usp_User_Create( o=>o.Username("xxx").Password("eee") );
+var row = dbo.usp_User_Create( Username:"xxx", Password:"eee" );
+
+create proc dbo.usp_User_Find( @where nvarchar(max) ) as begin
+   declare @sql nvarchar(max);
+   set @sql = 'select * from dbo.User where ' + @where;
+   exec @sql;
+end
+
+
+var query = dbo.User.Query( o=>o.Username.Like( "admin" ).CreateTime.LessThan( DateTime.Now ) );
+...
+var rows = dbo.usp_User_Find( query.ToString() );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
