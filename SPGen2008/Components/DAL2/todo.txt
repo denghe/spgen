@@ -186,12 +186,12 @@ var rows = dbo.Table1.Query( pks ).Column( o=>o.Col1.Col2.Col3 )
                                   .OrderBy( o=>Col1.Asc().Col2.Desc() ).Select();		// 主键对象集合查多行（只填充 Col1, Col2, Col3 这几个字段）（按 Col1 正排且按 Col2 反排）
 
 
-var rows = dbo.Table1.Query(
-                             o=>o.Col1.Equals( 5 )
-                                 .Col2.Like( "xxx" )
-                                 .Or(
-									Col3.In ( 3,5,6,7 ) 
-                                 ) 
+var rows = dbo.Table1.Query( o=>o
+                         .Col1.Equals( 5 )
+                         .Col2.Like( "xxx" )
+                         .Or(
+						     Col3.In ( 3,5,6,7 ) 
+                         ) 
                      )
                      .Column( ... )
                      .OrderBy( ... )
