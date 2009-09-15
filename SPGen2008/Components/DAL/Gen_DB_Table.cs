@@ -1843,7 +1843,7 @@ namespace " + ns + @"
 			{
 				Array.Sort(__cols);
                 int idx = 0;
-				SqlCommand cmd = DC." + tn + @".NewCmd_InsertPart(cols);");
+				SqlCommand cmd = DC." + tn + @".NewCmd_InsertPart(__cols);");
                     foreach (Column c in wcs)
                     {
                         if (pks.Contains(c) && c.DataType.SqlDataType == SqlDataType.UniqueIdentifier && c.DefaultConstraint != null) continue;
