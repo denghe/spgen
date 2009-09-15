@@ -206,7 +206,7 @@ namespace " + ns + @"
 					{
 						string cn = Utils.GetEscapeName(c);
 						sb.Append(@"
-					if (__cols[idx] == DI." + tn + @"." + cn + @")
+					if (idx < __cols.Length && __cols[idx] == DI." + tn + @"." + cn + @")
 					{
 						r[""" + cn + @"""] = row[""" + cn + @"""];
                         idx++;
