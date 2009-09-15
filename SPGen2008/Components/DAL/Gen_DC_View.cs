@@ -228,7 +228,7 @@ namespace " + ns + @"
                     {
                         string cn = Utils.GetEscapeName(c);
                         sb.Append(@"
-				if (__cols[idx] == DI." + tbn + @"." + cn + @")
+				if (idx < __cols.Length && __cols[idx] == DI." + tbn + @"." + cn + @")
 					sb.Append((idx++ == 0 ? """" : "", "") + ""[" + Utils.GetEscapeSqlObjectName(c.Name) + @"]"");
 ");
                     }
@@ -277,7 +277,7 @@ namespace " + ns + @"
                 {
                     string cn = Utils.GetEscapeName(c);
                     sb.Append(@"
-				if (__cols[idx] == DI." + tbn + @"." + cn + @")
+				if (idx < __cols.Length && __cols[idx] == DI." + tbn + @"." + cn + @")
 					sb.Append((idx++ == 0 ? """" : "", "") + ""[" + Utils.GetEscapeSqlObjectName(c.Name) + @"]"");
 ");
                 }
@@ -308,7 +308,7 @@ namespace " + ns + @"
                 {
                     string cn = Utils.GetEscapeName(c);
                     sb.Append(@"
-				if (__cols[idx] == DI." + tbn + @"." + cn + @")
+				if (idx < __cols.Length && __cols[idx] == DI." + tbn + @"." + cn + @")
 					sb.Append((idx++ == 0 ? """" : "", "") + ""[" + Utils.GetEscapeSqlObjectName(c.Name) + @"]"");
 ");
                 }
@@ -338,7 +338,7 @@ namespace " + ns + @"
                 {
                     string cn = Utils.GetEscapeName(c);
                     sb.Append(@"
-				if (__cols[idx] == DI." + tbn + @"." + cn + @")
+				if (idx < __cols.Length && __cols[idx] == DI." + tbn + @"." + cn + @")
 					sb.Append((idx++ == 0 ? """" : "", "") + ""[" + Utils.GetEscapeSqlObjectName(c.Name) + @"]"");
 ");
                 }
@@ -466,7 +466,7 @@ SELECT A.* FROM [" + Utils.GetEscapeSqlObjectName(v.Schema) + @"].[" + Utils.Get
                     {
                         string cn = Utils.GetEscapeName(c);
                         sb.Append(@"
-				if (__cols[idx] == DI." + tbn + @"." + cn + @")
+				if (idx < __cols.Length && __cols[idx] == DI." + tbn + @"." + cn + @")
 					sb.Append((idx++ == 0 ? """" : "", "") + ""A.[" + Utils.GetEscapeSqlObjectName(c.Name) + @"]"");
 ");
                     }
@@ -628,7 +628,7 @@ SELECT "" + sb.ToString() + @"" FROM [" + Utils.GetEscapeSqlObjectName(v.Schema)
 				{
 					string cn = Utils.GetEscapeName(c);
 					sb.Append(@"
-				if (__cols[idx] == DI." + tbn + @"." + cn + @")
+				if (idx < __cols.Length && __cols[idx] == DI." + tbn + @"." + cn + @")
 					sb_cols.Append((idx++ == 0 ? """" : "", "") + ""[" + Utils.GetEscapeSqlObjectName(c.Name) + @"]"");
 				if (sortDict.ContainsKey(DI." + tbn + @"." + cn + @"))
 				{
