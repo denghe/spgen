@@ -177,20 +177,17 @@ namespace " + ns + @"
 			/// </summary>
 			public static SqlCommand NewCmd_SelectPart(params DI." + tbn + @"[] __cols)
 			{
-				bool isFirst = true;
+                Array.Sort(__cols);
+                int idx = 0;
 				SqlCommand cmd = new SqlCommand();
 				StringBuilder sb = new StringBuilder(""SELECT "");
-				List<DI." + tbn + @"> cols = new List<DI." + tbn + @">(__cols);
 ");
 					foreach (Column c in t.Columns)
 					{
 						string cn = Utils.GetEscapeName(c);
 						sb.Append(@"
-				if (cols.Contains(DI." + tbn + @"." + cn + @"))
-				{
-					sb.Append((isFirst ? """" : "", "") + ""[" + Utils.GetEscapeSqlObjectName(c.Name) + @"]"");
-					isFirst = false;
-				}
+				if (__cols[idx] == DI." + tbn + @"." + cn + @")
+                    sb.Append((idx++ == 0 ? """" : "", "") + ""[" + Utils.GetEscapeSqlObjectName(c.Name) + @"]"");
 ");
 					}
 					sb.Append(@"
@@ -229,20 +226,17 @@ namespace " + ns + @"
 			/// </summary>
 			public static SqlCommand NewCmd_SelectPart_Custom(string where, params DI." + tbn + @"[] __cols)
 			{
-				bool isFirst = true;
 				SqlCommand cmd = new SqlCommand();
 				StringBuilder sb = new StringBuilder(""SELECT TOP 1 "");
-				List<DI." + tbn + @"> cols = new List<DI." + tbn + @">(__cols);
+                Array.Sort(__cols);
+                int idx = 0;
 ");
 				foreach (Column c in t.Columns)
 				{
 					string cn = Utils.GetEscapeName(c);
 					sb.Append(@"
-				if (cols.Contains(DI." + tbn + @"." + cn + @"))
-				{
-					sb.Append((isFirst ? """" : "", "") + ""[" + Utils.GetEscapeSqlObjectName(c.Name) + @"]"");
-					isFirst = false;
-				}
+				if (__cols[idx] == DI." + tbn + @"." + cn + @")
+					sb.Append((idx++ == 0 ? """" : "", "") + ""[" + Utils.GetEscapeSqlObjectName(c.Name) + @"]"");
 ");
 				}
 				sb.Append(@"
@@ -373,19 +367,16 @@ namespace " + ns + @"
 			/// </summary>
 			public static SqlCommand NewCmd_SelectAllPart(params DI." + tbn + @"[] __cols)
 			{
-				bool isFirst = true;
+                Array.Sort(__cols);
+                int idx = 0;
 				StringBuilder sb = new StringBuilder(""SELECT "");
-				List<DI." + tbn + @"> cols = new List<DI." + tbn + @">(__cols);
 ");
 				foreach (Column c in t.Columns)
 				{
 					string cn = Utils.GetEscapeName(c);
 					sb.Append(@"
-				if (cols.Contains(DI." + tbn + @"." + cn + @"))
-				{
-					sb.Append((isFirst ? """" : "", "") + ""[" + Utils.GetEscapeSqlObjectName(c.Name) + @"]"");
-					isFirst = false;
-				}
+				if (__cols[idx] == DI." + tbn + @"." + cn + @")
+					sb.Append((idx++ == 0 ? """" : "", "") + ""[" + Utils.GetEscapeSqlObjectName(c.Name) + @"]"");
 ");
 				}
 				sb.Append(@"
@@ -406,19 +397,16 @@ namespace " + ns + @"
 			/// </summary>
 			public static SqlCommand NewCmd_SelectAllPart_Custom(string s1, string s2, params DI." + tbn + @"[] __cols)
 			{
-				bool isFirst = true;
+				Array.Sort(__cols);
+                int idx = 0;
 				StringBuilder sb = new StringBuilder(""SELECT "" + s1 + "" "");
-				List<DI." + tbn + @"> cols = new List<DI." + tbn + @">(__cols);
 ");
 				foreach (Column c in t.Columns)
 				{
 					string cn = Utils.GetEscapeName(c);
 					sb.Append(@"
-				if (cols.Contains(DI." + tbn + @"." + cn + @"))
-				{
-					sb.Append((isFirst ? """" : "", "") + ""[" + Utils.GetEscapeSqlObjectName(c.Name) + @"]"");
-					isFirst = false;
-				}
+				if (__cols[idx] == DI." + tbn + @"." + cn + @")
+					sb.Append((idx++ == 0 ? """" : "", "") + ""[" + Utils.GetEscapeSqlObjectName(c.Name) + @"]"");
 ");
 				}
 				sb.Append(@"
@@ -455,19 +443,16 @@ namespace " + ns + @"
 			/// </summary>
 			public static SqlCommand NewCmd_SelectAllPart_By_" + s + @"(params DI." + tbn + @"[] __cols)
 			{
-				bool isFirst = true;
+				Array.Sort(__cols);
+                int idx = 0;
 				StringBuilder sb = new StringBuilder(""SELECT "");
-				List<DI." + tbn + @"> cols = new List<DI." + tbn + @">(__cols);
 ");
 						foreach (Column c in t.Columns)
 						{
 							string cn = Utils.GetEscapeName(c);
 							sb.Append(@"
-				if (cols.Contains(DI." + tbn + @"." + cn + @"))
-				{
-					sb.Append((isFirst ? """" : "", "") + ""[" + Utils.GetEscapeSqlObjectName(c.Name) + @"]"");
-					isFirst = false;
-				}
+				if (__cols[idx] == DI." + tbn + @"." + cn + @")
+					sb.Append((idx++ == 0 ? """" : "", "") + ""[" + Utils.GetEscapeSqlObjectName(c.Name) + @"]"");
 ");
 						}
 						sb.Append(@"
@@ -618,19 +603,16 @@ SELECT A.* FROM [" + Utils.GetEscapeSqlObjectName(t.Schema) + @"].[" + Utils.Get
 			/// </summary>
 			public static SqlCommand NewCmd_SelectNodePart(params DI." + tbn + @"[] __cols)
 			{
-				bool isFirst = true;
+				Array.Sort(__cols);
+                int idx = 0;
 				StringBuilder sb = new StringBuilder();
-				List<DI." + tbn + @"> cols = new List<DI." + tbn + @">(__cols);
 ");
 					foreach (Column c in t.Columns)
 					{
 						string cn = Utils.GetEscapeName(c);
 						sb.Append(@"
-				if (cols.Contains(DI." + tbn + @"." + cn + @"))
-				{
-					sb.Append((isFirst ? """" : "", "") + ""A.[" + Utils.GetEscapeSqlObjectName(c.Name) + @"]"");
-					isFirst = false;
-				}
+				if (__cols[idx] == DI." + tbn + @"." + cn + @")
+					sb.Append((idx++ == 0 ? """" : "", "") + ""A.[" + Utils.GetEscapeSqlObjectName(c.Name) + @"]"");
 ");
 					}
 					sb.Append(@"
@@ -781,21 +763,18 @@ SELECT "" + sb.ToString() + @"" FROM [" + Utils.GetEscapeSqlObjectName(t.Schema)
 			/// </summary>
 			public static SqlCommand NewCmd_SelectAllPartPage_Custom(string prefix, string where, DI." + tbn + @"SortDictionary sortDict, params DI." + tbn + @"[] __cols)
 			{
-				bool isFirstCol = true;
+				Array.Sort(__cols);
+                int idx = 0;
 				bool isFirstOB = true;
 				StringBuilder sb_cols = new StringBuilder();
 				StringBuilder sb_obs = new StringBuilder();
-				List<DI." + tbn + @"> cols = new List<DI." + tbn + @">(__cols);
 ");
 				foreach (Column c in t.Columns)
 				{
 					string cn = Utils.GetEscapeName(c);
 					sb.Append(@"
-				if (cols.Contains(DI." + tbn + @"." + cn + @"))
-				{
-					sb_cols.Append((isFirstCol ? """" : "", "") + ""[" + Utils.GetEscapeSqlObjectName(c.Name) + @"]"");
-					isFirstCol = false;
-				}
+				if (__cols[idx] == DI." + tbn + @"." + cn + @")
+					sb_cols.Append((idx++ == 0 ? """" : "", "") + ""[" + Utils.GetEscapeSqlObjectName(c.Name) + @"]"");
 				if (sortDict.ContainsKey(DI." + tbn + @"." + cn + @"))
 				{
 					sb_obs.Append((isFirstOB ? """" : "", "") + ""[" + Utils.GetEscapeSqlObjectName(c.Name) + @"]"" + (sortDict[DI." + tbn + @"." + cn + @"] ? """" : "" DESC""));

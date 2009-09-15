@@ -204,6 +204,7 @@ namespace " + ns + @"
 			/// </summary>
 			public static bool FillPart(OO." + tn + @" o, params DI." + tn + @"[] __cols)
 			{
+				Array.Sort(__cols);
 				SqlCommand cmd = DC." + tn + @".NewCmd_SelectPart(__cols);");
 					for (int i = 0; i < pks.Count; i++)
 					{
@@ -213,32 +214,35 @@ namespace " + ns + @"
 				cmd.Parameters[""" + cn + @"""].Value = o." + cn + @";");
 					}
 					sb.Append(@"
-                List<DI." + tn + @"> cols = new List<DI." + tn + @">(__cols);
 				using(SqlDataReader sdr = SQLHelper.ExecuteDataReader(cmd))
 				{
 					while(sdr.Read())
-					{");
+					{
+                        int idx = 0;");
 					for (int i = 0; i < t.Columns.Count; i++)
 					{
 						Column c = t.Columns[i];
 						string cn = Utils.GetEscapeName(c);
-						string istr = "cols.FindIndex(delegate(DI." + tn + @" c) { return c == DI." + tn + @"." + cn + @"; })";
 						if (c.Nullable)
 						{
-							s1 = Utils.CheckIsBinaryType(c) ? (@"sdr.GetSqlBinary(" + istr + @").Value") : (Utils.CheckIsValueType(c) ? ("new " + Utils.GetNullableDataType(c) + @"(sdr." + Utils.GetDataReaderMethod(c) + @"(" + istr + @"))") : ("sdr." + Utils.GetDataReaderMethod(c) + @"(" + istr + @")"));
+							s1 = Utils.CheckIsBinaryType(c) ? (@"sdr.GetSqlBinary(idx).Value") : (Utils.CheckIsValueType(c) ? ("new " + Utils.GetNullableDataType(c) + @"(sdr." + Utils.GetDataReaderMethod(c) + @"(idx))") : ("sdr." + Utils.GetDataReaderMethod(c) + @"(idx)"));
 							sb.Append(@"
-						if (cols.Contains(DI." + tn + @"." + cn + @")) o." + cn + @" = sdr.IsDBNull(" + istr + @") ? null : " + s1 + @";");
+						if (__cols[idx] == DI." + tn + @"." + cn + @")
+                        {
+                            o." + cn + @" = sdr.IsDBNull(idx) ? null : " + s1 + @";
+                            idx++;
+                        }");
 						}
 						else
 						{
 							if (Utils.CheckIsBinaryType(c))
 							{
 								sb.Append(@"
-						if (cols.Contains(DI." + tn + @"." + cn + @")) o." + cn + @" = sdr.GetSqlBinary(" + istr + @").Value;");
+						if (__cols[idx] == DI." + tn + @"." + cn + @") o." + cn + @" = sdr.GetSqlBinary(idx++).Value;");
 							}
 							else
 								sb.Append(@"
-						if (cols.Contains(DI." + tn + @"." + cn + @")) o." + cn + @" = sdr." + Utils.GetDataReaderMethod(c) + @"(" + istr + @");");
+						if (__cols[idx] == DI." + tn + @"." + cn + @") o." + cn + @" = sdr." + Utils.GetDataReaderMethod(c) + @"(idx++);");
 						}
 					}
 					sb.Append(@"
@@ -732,6 +736,7 @@ namespace " + ns + @"
 					}
 					sb.Append(@", params DI." + tn + @"[] __cols)
 			{
+                Array.Sort(__cols);
 				SqlCommand cmd = DC." + tn + @".NewCmd_SelectPart(__cols);");
 					for (int i = 0; i < pks.Count; i++)
 					{
@@ -741,33 +746,36 @@ namespace " + ns + @"
 				cmd.Parameters[""" + cn + @"""].Value = " + cn + @";");
 					}
 					sb.Append(@"
-                List<DI." + tn + @"> cols = new List<DI." + tn + @">(__cols);
 				using(SqlDataReader sdr = SQLHelper.ExecuteDataReader(cmd))
 				{
 					while(sdr.Read())
 					{
+                        int idx = 0;
 						OO." + tn + @" o = new OO." + tn + @"();");
 					for (int i = 0; i < t.Columns.Count; i++)
 					{
 						Column c = t.Columns[i];
 						string cn = Utils.GetEscapeName(c);
-						string istr = "cols.FindIndex(delegate(DI." + tn + @" c) { return c == DI." + tn + @"." + cn + @"; })";
 						if (c.Nullable)
 						{
-							s1 = Utils.CheckIsBinaryType(c) ? (@"sdr.GetSqlBinary(" + istr + @").Value") : (Utils.CheckIsValueType(c) ? ("new " + Utils.GetNullableDataType(c) + @"(sdr." + Utils.GetDataReaderMethod(c) + @"(" + istr + @"))") : ("sdr." + Utils.GetDataReaderMethod(c) + @"(" + istr + @")"));
+							s1 = Utils.CheckIsBinaryType(c) ? (@"sdr.GetSqlBinary(idx).Value") : (Utils.CheckIsValueType(c) ? ("new " + Utils.GetNullableDataType(c) + @"(sdr." + Utils.GetDataReaderMethod(c) + @"(idx))") : ("sdr." + Utils.GetDataReaderMethod(c) + @"(idx)"));
 							sb.Append(@"
-						if (cols.Contains(DI." + tn + @"." + cn + @")) o." + cn + @" = sdr.IsDBNull(" + istr + @") ? null : " + s1 + @";");
+						if (__cols[idx] == DI." + tn + @"." + cn + @")
+                        {
+                            o." + cn + @" = sdr.IsDBNull(idx) ? null : " + s1 + @";
+                            idx++;
+                        }");
 						}
 						else
 						{
 							if (Utils.CheckIsBinaryType(c))
 							{
 								sb.Append(@"
-						if (cols.Contains(DI." + tn + @"." + cn + @")) o." + cn + @" = sdr.GetSqlBinary(" + istr + @").Value;");
+						if (__cols[idx] == DI." + tn + @"." + cn + @") o." + cn + @" = sdr.GetSqlBinary(idx++).Value;");
 							}
 							else
 								sb.Append(@"
-						if (cols.Contains(DI." + tn + @"." + cn + @")) o." + cn + @" = sdr." + Utils.GetDataReaderMethod(c) + @"(" + istr + @");");
+						if (__cols[idx] == DI." + tn + @"." + cn + @") o." + cn + @" = sdr." + Utils.GetDataReaderMethod(c) + @"(idx++);");
 						}
 					}
 					sb.Append(@"
@@ -783,6 +791,7 @@ namespace " + ns + @"
 			[System.ComponentModel.DataObjectMethodAttribute(System.ComponentModel.DataObjectMethodType.Select)]
 			public static OO." + tn + @" SelectPart(OO." + tn + @".PrimaryKeys pk, params DI." + tn + @"[] __cols)
 			{
+                Array.Sort(__cols);
 				SqlCommand cmd = DC." + tn + @".NewCmd_SelectPart(__cols);");
 					for (int i = 0; i < pks.Count; i++)
 					{
@@ -792,33 +801,36 @@ namespace " + ns + @"
 				cmd.Parameters[""" + cn + @"""].Value = pk." + cn + @";");
 					}
 					sb.Append(@"
-                List<DI." + tn + @"> cols = new List<DI." + tn + @">(__cols);
 				using(SqlDataReader sdr = SQLHelper.ExecuteDataReader(cmd))
 				{
 					while(sdr.Read())
 					{
+                        int idx = 0;
 						OO." + tn + @" o = new OO." + tn + @"();");
 					for (int i = 0; i < t.Columns.Count; i++)
 					{
 						Column c = t.Columns[i];
 						string cn = Utils.GetEscapeName(c);
-						string istr = "cols.FindIndex(delegate(DI." + tn + @" c) { return c == DI." + tn + @"." + cn + @"; })";
 						if (c.Nullable)
 						{
-							s1 = Utils.CheckIsBinaryType(c) ? (@"sdr.GetSqlBinary(" + istr + @").Value") : (Utils.CheckIsValueType(c) ? ("new " + Utils.GetNullableDataType(c) + @"(sdr." + Utils.GetDataReaderMethod(c) + @"(" + istr + @"))") : ("sdr." + Utils.GetDataReaderMethod(c) + @"(" + istr + @")"));
+                            s1 = Utils.CheckIsBinaryType(c) ? (@"sdr.GetSqlBinary(idx).Value") : (Utils.CheckIsValueType(c) ? ("new " + Utils.GetNullableDataType(c) + @"(sdr." + Utils.GetDataReaderMethod(c) + @"(idx))") : ("sdr." + Utils.GetDataReaderMethod(c) + @"(idx)"));
 							sb.Append(@"
-						if (cols.Contains(DI." + tn + @"." + cn + @")) o." + cn + @" = sdr.IsDBNull(" + istr + @") ? null : " + s1 + @";");
+						if (__cols[idx] == DI." + tn + @"." + cn + @")
+                        {
+                            o." + cn + @" = sdr.IsDBNull(idx) ? null : " + s1 + @";
+                            idx++;
+                        }");
 						}
 						else
 						{
 							if (Utils.CheckIsBinaryType(c))
 							{
 								sb.Append(@"
-						if (cols.Contains(DI." + tn + @"." + cn + @")) o." + cn + @" = sdr.GetSqlBinary(" + istr + @").Value;");
+						if (__cols[idx] == DI." + tn + @"." + cn + @") o." + cn + @" = sdr.GetSqlBinary(idx++).Value;");
 							}
 							else
 								sb.Append(@"
-						if (cols.Contains(DI." + tn + @"." + cn + @")) o." + cn + @" = sdr." + Utils.GetDataReaderMethod(c) + @"(" + istr + @");");
+						if (__cols[idx] == DI." + tn + @"." + cn + @") o." + cn + @" = sdr." + Utils.GetDataReaderMethod(c) + @"(idx++);");
 						}
 					}
 					sb.Append(@"
@@ -842,34 +854,38 @@ namespace " + ns + @"
 			[System.ComponentModel.DataObjectMethodAttribute(System.ComponentModel.DataObjectMethodType.Select)]
 			public static OO." + tn + @" SelectPart_Custom(string where, params DI." + tn + @"[] __cols)
 			{
+                Array.Sort(__cols);
 				SqlCommand cmd = DC." + tn + @".NewCmd_SelectPart_Custom(where, __cols);
-                List<DI." + tn + @"> cols = new List<DI." + tn + @">(__cols);
 				using(SqlDataReader sdr = SQLHelper.ExecuteDataReader(cmd))
 				{
 					while(sdr.Read())
 					{
+                        int idx = 0;
 						OO." + tn + @" o = new OO." + tn + @"();");
 				for (int i = 0; i < t.Columns.Count; i++)
 				{
 					Column c = t.Columns[i];
 					string cn = Utils.GetEscapeName(c);
-					string istr = "cols.FindIndex(delegate(DI." + tn + @" c) { return c == DI." + tn + @"." + cn + @"; })";
 					if (c.Nullable)
 					{
-						s1 = Utils.CheckIsBinaryType(c) ? (@"sdr.GetSqlBinary(" + istr + @").Value") : (Utils.CheckIsValueType(c) ? ("new " + Utils.GetNullableDataType(c) + @"(sdr." + Utils.GetDataReaderMethod(c) + @"(" + istr + @"))") : ("sdr." + Utils.GetDataReaderMethod(c) + @"(" + istr + @")"));
+						s1 = Utils.CheckIsBinaryType(c) ? (@"sdr.GetSqlBinary(idx).Value") : (Utils.CheckIsValueType(c) ? ("new " + Utils.GetNullableDataType(c) + @"(sdr." + Utils.GetDataReaderMethod(c) + @"(idx))") : ("sdr." + Utils.GetDataReaderMethod(c) + @"(idx)"));
 						sb.Append(@"
-						if (cols.Contains(DI." + tn + @"." + cn + @")) o." + cn + @" = sdr.IsDBNull(" + istr + @") ? null : " + s1 + @";");
+						if (__cols[idx] == DI." + tn + @"." + cn + @")
+                        {
+                            o." + cn + @" = sdr.IsDBNull(idx) ? null : " + s1 + @";
+                            idx++;
+                        }");
 					}
 					else
 					{
 						if (Utils.CheckIsBinaryType(c))
 						{
 							sb.Append(@"
-						if (cols.Contains(DI." + tn + @"." + cn + @")) o." + cn + @" = sdr.GetSqlBinary(" + istr + @").Value;");
+						if (__cols[idx] == DI." + tn + @"." + cn + @") o." + cn + @" = sdr.GetSqlBinary(idx++).Value;");
 						}
 						else
 							sb.Append(@"
-						if (cols.Contains(DI." + tn + @"." + cn + @")) o." + cn + @" = sdr." + Utils.GetDataReaderMethod(c) + @"(" + istr + @");");
+						if (__cols[idx] == DI." + tn + @"." + cn + @") o." + cn + @" = sdr." + Utils.GetDataReaderMethod(c) + @"(idx++);");
 					}
 				}
 				sb.Append(@"
@@ -1208,35 +1224,39 @@ namespace " + ns + @"
 			[System.ComponentModel.DataObjectMethodAttribute(System.ComponentModel.DataObjectMethodType.Select)]
 			public static OO." + tn + @"Collection SelectAllPart(params DI." + tn + @"[] __cols)
 			{
+                Array.Sort(__cols);
 				SqlCommand cmd = DC." + tn + @".NewCmd_SelectAllPart(__cols);
-                List<DI." + tn + @"> cols = new List<DI." + tn + @">(__cols);
 				OO." + tn + @"Collection os = new OO." + tn + @"Collection();
 				using(SqlDataReader sdr = SQLHelper.ExecuteDataReader(cmd))
 				{
 					while(sdr.Read())
 					{
+                        int idx = 0;
 						OO." + tn + @" o = new OO." + tn + @"();");
 				for (int i = 0; i < t.Columns.Count; i++)
 				{
 					Column c = t.Columns[i];
 					string cn = Utils.GetEscapeName(c);
-					string istr = "cols.FindIndex(delegate(DI." + tn + @" c) { return c == DI." + tn + @"." + cn + @"; })";
 					if (c.Nullable)
 					{
-						s1 = Utils.CheckIsBinaryType(c) ? (@"sdr.GetSqlBinary(" + istr + @").Value") : (Utils.CheckIsValueType(c) ? ("new " + Utils.GetNullableDataType(c) + @"(sdr." + Utils.GetDataReaderMethod(c) + @"(" + istr + @"))") : ("sdr." + Utils.GetDataReaderMethod(c) + @"(" + istr + @")"));
+						s1 = Utils.CheckIsBinaryType(c) ? (@"sdr.GetSqlBinary(idx).Value") : (Utils.CheckIsValueType(c) ? ("new " + Utils.GetNullableDataType(c) + @"(sdr." + Utils.GetDataReaderMethod(c) + @"(idx))") : ("sdr." + Utils.GetDataReaderMethod(c) + @"(idx)"));
 						sb.Append(@"
-						if (cols.Contains(DI." + tn + @"." + cn + @")) o." + cn + @" = sdr.IsDBNull(" + istr + @") ? null : " + s1 + @";");
+						if (__cols[idx] == DI." + tn + @"." + cn + @")
+                        {
+                            o." + cn + @" = sdr.IsDBNull(idx) ? null : " + s1 + @";
+                            idx++;
+                        }");
 					}
 					else
 					{
 						if (Utils.CheckIsBinaryType(c))
 						{
 							sb.Append(@"
-						if (cols.Contains(DI." + tn + @"." + cn + @")) o." + cn + @" = sdr.GetSqlBinary(" + istr + @").Value;");
+						if (__cols[idx] == DI." + tn + @"." + cn + @") o." + cn + @" = sdr.GetSqlBinary(idx++).Value;");
 						}
 						else
 							sb.Append(@"
-						if (cols.Contains(DI." + tn + @"." + cn + @")) o." + cn + @" = sdr." + Utils.GetDataReaderMethod(c) + @"(" + istr + @");");
+						if (__cols[idx] == DI." + tn + @"." + cn + @") o." + cn + @" = sdr." + Utils.GetDataReaderMethod(c) + @"(idx++);");
 					}
 				}
 				sb.Append(@"
@@ -1277,35 +1297,39 @@ namespace " + ns + @"
 			[System.ComponentModel.DataObjectMethodAttribute(System.ComponentModel.DataObjectMethodType.Select)]
 			public static OO." + tn + @"Collection SelectAllPart_Custom(string s1, string s2, params DI." + tn + @"[] __cols)
 			{
+                Array.Sort(__cols);
 				SqlCommand cmd = DC." + tn + @".NewCmd_SelectAllPart_Custom(s1, s2, __cols);
-                List<DI." + tn + @"> cols = new List<DI." + tn + @">(__cols);
 				OO." + tn + @"Collection os = new OO." + tn + @"Collection();
 				using(SqlDataReader sdr = SQLHelper.ExecuteDataReader(cmd))
 				{
 					while(sdr.Read())
 					{
+                        int idx = 0;
 						OO." + tn + @" o = new OO." + tn + @"();");
 				for (int i = 0; i < t.Columns.Count; i++)
 				{
 					Column c = t.Columns[i];
 					string cn = Utils.GetEscapeName(c);
-					string istr = "cols.FindIndex(delegate(DI." + tn + @" c) { return c == DI." + tn + @"." + cn + @"; })";
 					if (c.Nullable)
 					{
-						s1 = Utils.CheckIsBinaryType(c) ? (@"sdr.GetSqlBinary(" + istr + @").Value") : (Utils.CheckIsValueType(c) ? ("new " + Utils.GetNullableDataType(c) + @"(sdr." + Utils.GetDataReaderMethod(c) + @"(" + istr + @"))") : ("sdr." + Utils.GetDataReaderMethod(c) + @"(" + istr + @")"));
+						s1 = Utils.CheckIsBinaryType(c) ? (@"sdr.GetSqlBinary(idx).Value") : (Utils.CheckIsValueType(c) ? ("new " + Utils.GetNullableDataType(c) + @"(sdr." + Utils.GetDataReaderMethod(c) + @"(idx))") : ("sdr." + Utils.GetDataReaderMethod(c) + @"(idx)"));
 						sb.Append(@"
-						if (cols.Contains(DI." + tn + @"." + cn + @")) o." + cn + @" = sdr.IsDBNull(" + istr + @") ? null : " + s1 + @";");
+						if (__cols[idx] == DI." + tn + @"." + cn + @")
+                        {
+                            o." + cn + @" = sdr.IsDBNull(idx) ? null : " + s1 + @";
+                            idx++;
+                        }");
 					}
 					else
 					{
 						if (Utils.CheckIsBinaryType(c))
 						{
 							sb.Append(@"
-						if (cols.Contains(DI." + tn + @"." + cn + @")) o." + cn + @" = sdr.GetSqlBinary(" + istr + @").Value;");
+						if (__cols[idx] == DI." + tn + @"." + cn + @") o." + cn + @" = sdr.GetSqlBinary(idx++).Value;");
 						}
 						else
 							sb.Append(@"
-						if (cols.Contains(DI." + tn + @"." + cn + @")) o." + cn + @" = sdr." + Utils.GetDataReaderMethod(c) + @"(" + istr + @");");
+						if (__cols[idx] == DI." + tn + @"." + cn + @") o." + cn + @" = sdr." + Utils.GetDataReaderMethod(c) + @"(idx++);");
 					}
 				}
 				sb.Append(@"
@@ -1393,6 +1417,7 @@ namespace " + ns + @"
 						}
 						sb.Append(@", params DI." + tn + @"[] __cols)
 			{
+                Array.Sort(__cols);
 				SqlCommand cmd = DC." + tn + @".NewCmd_SelectAllPart_By_" + s + @"(__cols);");
 						for (int i = 0; i < fk.Columns.Count; i++)
 						{
@@ -1414,34 +1439,37 @@ namespace " + ns + @"
 				cmd.Parameters[""" + cn + @"""].Value = " + cn + @";");
 						}
 						sb.Append(@"
-                List<DI." + tn + @"> cols = new List<DI." + tn + @">(__cols);
 				OO." + tn + @"Collection os = new OO." + tn + @"Collection();
 				using(SqlDataReader sdr = SQLHelper.ExecuteDataReader(cmd))
 				{
 					while(sdr.Read())
 					{
+                        int idx = 0;
 						OO." + tn + @" o = new OO." + tn + @"();");
 						for (int i = 0; i < t.Columns.Count; i++)
 						{
 							Column c = t.Columns[i];
 							string cn = Utils.GetEscapeName(c);
-							string istr = "cols.FindIndex(delegate(DI." + tn + @" c) { return c == DI." + tn + @"." + cn + @"; })";
 							if (c.Nullable)
 							{
-								s1 = Utils.CheckIsBinaryType(c) ? (@"sdr.GetSqlBinary(" + istr + @").Value") : (Utils.CheckIsValueType(c) ? ("new " + Utils.GetNullableDataType(c) + @"(sdr." + Utils.GetDataReaderMethod(c) + @"(" + istr + @"))") : ("sdr." + Utils.GetDataReaderMethod(c) + @"(" + istr + @")"));
+								s1 = Utils.CheckIsBinaryType(c) ? (@"sdr.GetSqlBinary(idx).Value") : (Utils.CheckIsValueType(c) ? ("new " + Utils.GetNullableDataType(c) + @"(sdr." + Utils.GetDataReaderMethod(c) + @"(idx))") : ("sdr." + Utils.GetDataReaderMethod(c) + @"(idx)"));
 								sb.Append(@"
-						if (cols.Contains(DI." + tn + @"." + cn + @")) o." + cn + @" = sdr.IsDBNull(" + istr + @") ? null : " + s1 + @";");
+						if (__cols[idx] == DI." + tn + @"." + cn + @")
+                        {
+                            o." + cn + @" = sdr.IsDBNull(idx) ? null : " + s1 + @";
+                            idx++;
+                        }");
 							}
 							else
 							{
 								if (Utils.CheckIsBinaryType(c))
 								{
 									sb.Append(@"
-						if (cols.Contains(DI." + tn + @"." + cn + @")) o." + cn + @" = sdr.GetSqlBinary(" + istr + @").Value;");
+						if (__cols[idx] == DI." + tn + @"." + cn + @") o." + cn + @" = sdr.GetSqlBinary(idx++).Value;");
 								}
 								else
 									sb.Append(@"
-						if (cols.Contains(DI." + tn + @"." + cn + @")) o." + cn + @" = sdr." + Utils.GetDataReaderMethod(c) + @"(" + istr + @");");
+						if (__cols[idx] == DI." + tn + @"." + cn + @") o." + cn + @" = sdr." + Utils.GetDataReaderMethod(c) + @"(idx++);");
 							}
 						}
 						sb.Append(@"
@@ -1590,6 +1618,7 @@ namespace " + ns + @"
 					}
 					sb.Append(@", params DI." + tn + @"[] __cols)
 			{
+                Array.Sort(__cols);
 				SqlCommand cmd = DC." + tn + @".NewCmd_SelectNodePart(__cols);");
 					for (int i = 0; i < pks.Count; i++)
 					{
@@ -1601,33 +1630,36 @@ namespace " + ns + @"
 					}
 					sb.Append(@"
 				OO." + tn + @"Collection os = new OO." + tn + @"Collection();
-                List<DI." + tn + @"> cols = new List<DI." + tn + @">(__cols);
 				using(SqlDataReader sdr = SQLHelper.ExecuteDataReader(cmd))
 				{
 					while(sdr.Read())
 					{
+                        int idx = 0;
 						OO." + tn + @" o = new OO." + tn + @"();");
 					for (int i = 0; i < t.Columns.Count; i++)
 					{
 						Column c = t.Columns[i];
 						string cn = Utils.GetEscapeName(c);
-						string istr = "cols.FindIndex(delegate(DI." + tn + @" c) { return c == DI." + tn + @"." + cn + @"; })";
 						if (c.Nullable)
 						{
-							s1 = Utils.CheckIsBinaryType(c) ? (@"sdr.GetSqlBinary(" + istr + @").Value") : (Utils.CheckIsValueType(c) ? ("new " + Utils.GetNullableDataType(c) + @"(sdr." + Utils.GetDataReaderMethod(c) + @"(" + istr + @"))") : ("sdr." + Utils.GetDataReaderMethod(c) + @"(" + istr + @")"));
+							s1 = Utils.CheckIsBinaryType(c) ? (@"sdr.GetSqlBinary(idx).Value") : (Utils.CheckIsValueType(c) ? ("new " + Utils.GetNullableDataType(c) + @"(sdr." + Utils.GetDataReaderMethod(c) + @"(idx))") : ("sdr." + Utils.GetDataReaderMethod(c) + @"(idx)"));
 							sb.Append(@"
-						if (cols.Contains(DI." + tn + @"." + cn + @")) o." + cn + @" = sdr.IsDBNull(" + istr + @") ? null : " + s1 + @";");
+						if (__cols[idx] == DI." + tn + @"." + cn + @")
+                        {
+                            o." + cn + @" = sdr.IsDBNull(idx) ? null : " + s1 + @";
+                            idx++;
+                        }");
 						}
 						else
 						{
 							if (Utils.CheckIsBinaryType(c))
 							{
 								sb.Append(@"
-						if (cols.Contains(DI." + tn + @"." + cn + @")) o." + cn + @" = sdr.GetSqlBinary(" + istr + @").Value;");
+						if (__cols[idx] == DI." + tn + @"." + cn + @") o." + cn + @" = sdr.GetSqlBinary(idx++).Value;");
 							}
 							else
 								sb.Append(@"
-						if (cols.Contains(DI." + tn + @"." + cn + @")) o." + cn + @" = sdr." + Utils.GetDataReaderMethod(c) + @"(" + istr + @");");
+						if (__cols[idx] == DI." + tn + @"." + cn + @") o." + cn + @" = sdr." + Utils.GetDataReaderMethod(c) + @"(idx++);");
 						}
 					}
 					sb.Append(@"
@@ -1811,37 +1843,41 @@ namespace " + ns + @"
 			[System.ComponentModel.DataObjectMethodAttribute(System.ComponentModel.DataObjectMethodType.Select)]
 			public static OO." + tn + @"Collection SelectAllPartPage_Custom(string prefix, string where, DI." + tn + @"SortDictionary sortDict, int rowIndexStart, int pageSize, params DI." + tn + @"[] __cols)
 			{
+                Array.Sort(__cols);
 				SqlCommand cmd = DC." + tn + @".NewCmd_SelectAllPartPage_Custom(prefix, string.IsNullOrEmpty(where) ? """" : ("" WHERE "" + where), sortDict, __cols);
 				cmd.Parameters[""__RN_BEGIN""].Value = rowIndexStart + 1;
 				cmd.Parameters[""__RN_END""].Value = rowIndexStart + pageSize;
-                List<DI." + tn + @"> cols = new List<DI." + tn + @">(__cols);
 				OO." + tn + @"Collection os = new OO." + tn + @"Collection();
 				using(SqlDataReader sdr = SQLHelper.ExecuteDataReader(cmd))
 				{
 					while(sdr.Read())
 					{
+                        int idx = 0;
 						OO." + tn + @" o = new OO." + tn + @"();");
 					for (int i = 0; i < t.Columns.Count; i++)
 					{
 						Column c = t.Columns[i];
 						string cn = Utils.GetEscapeName(c);
-						string istr = "cols.FindIndex(delegate(DI." + tn + @" c) { return c == DI." + tn + @"." + cn + @"; })";
 						if (c.Nullable)
 						{
-							s1 = Utils.CheckIsBinaryType(c) ? (@"sdr.GetSqlBinary(" + istr + @").Value") : (Utils.CheckIsValueType(c) ? ("new " + Utils.GetNullableDataType(c) + @"(sdr." + Utils.GetDataReaderMethod(c) + @"(" + istr + @"))") : ("sdr." + Utils.GetDataReaderMethod(c) + @"(" + istr + @")"));
+							s1 = Utils.CheckIsBinaryType(c) ? (@"sdr.GetSqlBinary(idx).Value") : (Utils.CheckIsValueType(c) ? ("new " + Utils.GetNullableDataType(c) + @"(sdr." + Utils.GetDataReaderMethod(c) + @"(idx))") : ("sdr." + Utils.GetDataReaderMethod(c) + @"(idx)"));
 							sb.Append(@"
-						if (cols.Contains(DI." + tn + @"." + cn + @")) o." + cn + @" = sdr.IsDBNull(" + istr + @") ? null : " + s1 + @";");
+						if (__cols[idx] == DI." + tn + @"." + cn + @")
+                        {
+                            o." + cn + @" = sdr.IsDBNull(idx) ? null : " + s1 + @";
+                            idx++;
+                        }");
 						}
 						else
 						{
 							if (Utils.CheckIsBinaryType(c))
 							{
 								sb.Append(@"
-						if (cols.Contains(DI." + tn + @"." + cn + @")) o." + cn + @" = sdr.GetSqlBinary(" + istr + @").Value;");
+						if (__cols[idx] == DI." + tn + @"." + cn + @") o." + cn + @" = sdr.GetSqlBinary(idx++).Value;");
 							}
 							else
 								sb.Append(@"
-						if (cols.Contains(DI." + tn + @"." + cn + @")) o." + cn + @" = sdr." + Utils.GetDataReaderMethod(c) + @"(" + istr + @");");
+						if (__cols[idx] == DI." + tn + @"." + cn + @") o." + cn + @" = sdr." + Utils.GetDataReaderMethod(c) + @"(idx++);");
 						}
 					}
 					sb.Append(@"
@@ -2446,14 +2482,15 @@ namespace " + ns + @"
 			[System.ComponentModel.DataObjectMethodAttribute(System.ComponentModel.DataObjectMethodType.Insert)]
 			public static OO." + tn + @" InsertPart(OO." + tn + @" o, params DI." + tn + @"[] __cols)
 			{
-				List<DI." + tn + @"> cols = new List<DI." + tn + @">(__cols);
+				Array.Sort(__cols);
+                int idx = 0;
 				SqlCommand cmd = DC." + tn + @".NewCmd_InsertPart(cols);");
 					foreach (Column c in wcs)
 					{
 						if (pks.Contains(c) && c.DataType.SqlDataType == SqlDataType.UniqueIdentifier && c.DefaultConstraint != null) continue;
 						string cn = Utils.GetEscapeName(c);
 						sb.Append(@"
-				if (cols.Contains(DI." + tn + @"." + cn + @"))
+				if (__cols[idx] == DI." + tn + @"." + cn + @")
 				{");
 						if (c.Nullable)
 						{
@@ -2469,6 +2506,8 @@ namespace " + ns + @"
 						}
 						sb.Append(@"
 					cmd.Parameters[""" + cn + @"""].Value = o." + cn + @";
+
+                    idx++;
 				}");
 					}
 					sb.Append(@"
@@ -2545,14 +2584,15 @@ namespace " + ns + @"
 			[System.ComponentModel.DataObjectMethodAttribute(System.ComponentModel.DataObjectMethodType.Insert)]
 			public static int InsertPart(OO." + tn + @" o, params DI." + tn + @"[] __cols)
 			{
-				List<DI." + tn + @"> cols = new List<DI." + tn + @">(__cols);
+                Array.Sort(__cols);
+                int idx = 0;
 				SqlCommand cmd = DC." + tn + @".NewCmd_InsertPart(cols);");
 					foreach (Column c in wcs)
 					{
 						if (pks.Contains(c) && c.DataType.SqlDataType == SqlDataType.UniqueIdentifier && c.DefaultConstraint != null) continue;
 						string cn = Utils.GetEscapeName(c);
 						sb.Append(@"
-				if (cols.Contains(DI." + tn + @"." + cn + @"))
+				if (__cols[idx] == DI." + tn + @"." + cn + @")
 				{");
 						if (c.Nullable)
 						{
@@ -2568,6 +2608,8 @@ namespace " + ns + @"
 						}
 						sb.Append(@"
 					cmd.Parameters[""" + cn + @"""].Value = o." + cn + @";
+
+                    idx++;
 				}");
 					}
 					sb.Append(@"

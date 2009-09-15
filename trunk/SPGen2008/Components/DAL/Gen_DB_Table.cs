@@ -184,6 +184,7 @@ namespace " + ns + @"
 			/// </summary>
 			public static bool SelectPart(" + dsn + "." + tn + @"Row r, params DI." + tn + @"[] __cols)
 			{
+                Array.Sort(__cols);
 				SqlCommand cmd = DC." + tn + @".NewCmd_SelectPart(__cols);");
                     for (int i = 0; i < pks.Count; i++)
                     {
@@ -197,16 +198,17 @@ namespace " + ns + @"
 				if (dt.Rows.Count > 0)
 				{
 					DataRow row = dt.Rows[0];
-					List<DI." + tn + @"> cols = new List<DI." + tn + @">(__cols);
+                    int idx = 0;
 ");
                     foreach (Column c in t.Columns)
                     {
                         string cn = Utils.GetEscapeName(c);
                         sb.Append(@"
-					if (cols.Contains(DI." + tn + @"." + cn + @"))
-					{
-						r[""" + cn + @"""] = row[""" + cn + @"""];
-					}
+					if (__cols[idx] == DI." + tn + @"." + cn + @")
+                    {
+                        r[""" + cn + @"""] = row[""" + cn + @"""];
+                        idx++;
+                    }
 ");
                     }
                     sb.Append(@"
@@ -1757,14 +1759,15 @@ namespace " + ns + @"
 			[System.ComponentModel.DataObjectMethodAttribute(System.ComponentModel.DataObjectMethodType.Insert)]
 			public static " + dsn + @"." + tn + @"Row InsertPart(" + dsn + @"." + tn + @"Row row, params DI." + tn + @"[] __cols)
 			{
-				List<DI." + tn + @"> cols = new List<DI." + tn + @">(__cols);
+				Array.Sort(__cols);
+                int idx = 0;
 				SqlCommand cmd = DC." + tn + @".NewCmd_InsertPart(cols);");
                     foreach (Column c in wcs)
                     {
                         if (pks.Contains(c) && c.DataType.SqlDataType == SqlDataType.UniqueIdentifier && c.DefaultConstraint != null) continue;
                         string cn = Utils.GetEscapeName(c);
                         sb.Append(@"
-				if (cols.Contains(DI." + tn + @"." + cn + @"))
+				if (__cols[idx] == DI." + tn + @"." + cn + @")
 				{");
                         if (c.Nullable)
                         {
@@ -1780,6 +1783,8 @@ namespace " + ns + @"
                         }
                         sb.Append(@"
 					cmd.Parameters[""" + cn + @"""].Value = row." + cn + @";
+
+                    idx++;
 				}
 ");
                     }
@@ -1836,14 +1841,15 @@ namespace " + ns + @"
 			[System.ComponentModel.DataObjectMethodAttribute(System.ComponentModel.DataObjectMethodType.Insert)]
 			public static int InsertPart(" + dsn + @"." + tn + @"Row row, params DI." + tn + @"[] __cols)
 			{
-				List<DI." + tn + @"> cols = new List<DI." + tn + @">(__cols);
+				Array.Sort(__cols);
+                int idx = 0;
 				SqlCommand cmd = DC." + tn + @".NewCmd_InsertPart(cols);");
                     foreach (Column c in wcs)
                     {
                         if (pks.Contains(c) && c.DataType.SqlDataType == SqlDataType.UniqueIdentifier && c.DefaultConstraint != null) continue;
                         string cn = Utils.GetEscapeName(c);
                         sb.Append(@"
-				if (cols.Contains(DI." + tn + @"." + cn + @"))
+				if (__cols[idx] == DI." + tn + @"." + cn + @")
 				{");
                         if (c.Nullable)
                         {
@@ -1859,6 +1865,8 @@ namespace " + ns + @"
                         }
                         sb.Append(@"
 					cmd.Parameters[""" + cn + @"""].Value = row." + cn + @";
+
+                    idx++;
 				}
 ");
                     }

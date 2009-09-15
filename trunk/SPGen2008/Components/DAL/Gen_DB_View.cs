@@ -186,6 +186,7 @@ namespace " + ns + @"
 			/// </summary>
 			public static bool FillPart(" + dsn + "." + tn + @"Row r, params DI." + tn + @"[] __cols)
 			{
+				Array.Sort(__cols);
 				SqlCommand cmd = DC." + tn + @".NewCmd_SelectPart(__cols);");
 					for (int i = 0; i < pks.Count; i++)
 					{
@@ -199,15 +200,16 @@ namespace " + ns + @"
 				if (dt.Rows.Count > 0)
 				{
 					DataRow row = dt.Rows[0];
-					List<DI." + tn + @"> cols = new List<DI." + tn + @">(__cols);
+                    int idx = 0;
 ");
 					foreach (Column c in v.Columns)
 					{
 						string cn = Utils.GetEscapeName(c);
 						sb.Append(@"
-					if (cols.Contains(DI." + tn + @"." + cn + @"))
+					if (__cols[idx] == DI." + tn + @"." + cn + @")
 					{
 						r[""" + cn + @"""] = row[""" + cn + @"""];
+                        idx++;
 					}
 ");
 					}
