@@ -6,106 +6,106 @@ using Microsoft.SqlServer.Management.Smo;
 
 namespace SPGen2008.Components.UI.ASPX
 {
-	class Gen_Table_Detail : IGenComponent
-	{
-		#region Init
+    class Gen_Table_Detail : IGenComponent
+    {
+        #region Init
 
-		public Gen_Table_Detail()
-		{
-			this._properties.Add(GenProperties.Name, "Gen_Table_Detail");
-			this._properties.Add(GenProperties.Caption, "GridDetail");
-			this._properties.Add(GenProperties.Group, "ASP.NET");
-			this._properties.Add(GenProperties.Tips, "为 Table 生成 asp.net 的数据行明细 UI 相关代码");
-		}
-		public SqlElementTypes TargetSqlElementType
-		{
-			get { return SqlElementTypes.Table; }
-		}
+        public Gen_Table_Detail()
+        {
+            this._properties.Add(GenProperties.Name, "Gen_Table_Detail");
+            this._properties.Add(GenProperties.Caption, "GridDetail");
+            this._properties.Add(GenProperties.Group, "ASP.NET");
+            this._properties.Add(GenProperties.Tips, "为 Table 生成 asp.net 的数据行明细 UI 相关代码");
+        }
+        public SqlElementTypes TargetSqlElementType
+        {
+            get { return SqlElementTypes.Table; }
+        }
 
-		#endregion
+        #endregion
 
-		#region Misc
+        #region Misc
 
-		Dictionary<GenProperties, object> _properties = new Dictionary<GenProperties, object>();
-		public Dictionary<GenProperties, object> Properties
-		{
-			get
-			{
-				return this._properties;
-			}
-		}
+        Dictionary<GenProperties, object> _properties = new Dictionary<GenProperties, object>();
+        public Dictionary<GenProperties, object> Properties
+        {
+            get
+            {
+                return this._properties;
+            }
+        }
 
-		public event System.ComponentModel.CancelEventHandler OnProcessing;
+        public event System.ComponentModel.CancelEventHandler OnProcessing;
 
-		private Server _server;
-		public Server Server
-		{
-			set { _server = value; }
-		}
+        private Server _server;
+        public Server Server
+        {
+            set { _server = value; }
+        }
 
-		private Database _db;
-		public Database Database
-		{
-			set { _db = value; }
-		}
+        private Database _db;
+        public Database Database
+        {
+            set { _db = value; }
+        }
 
-		#endregion
+        #endregion
 
-		public bool Validate(params object[] sqlElements)
-		{
-			Table t = (Table)sqlElements[0];
+        public bool Validate(params object[] sqlElements)
+        {
+            Table t = (Table)sqlElements[0];
 
-			return Utils.GetPrimaryKeyColumns(t).Count > 0;
-		}
+            return Utils.GetPrimaryKeyColumns(t).Count > 0;
+        }
 
-		#region Gen ASPX methods
+        #region Gen ASPX methods
 
-		private string GenTD1(Column c)
-		{
-			return @"
+        private string GenTD1(Column c)
+        {
+            return @"
 			<asp:Label runat=""server""
 				ID=""_" + Utils.GetEscapeName(c) + @"_Label""
 				Text=""" + Utils.GetCaption(c) + @"""
 			/>";
-		}
-		private string GenTD2(Column c)
-		{
-			StringBuilder sb = new StringBuilder();
-			if (c.Nullable)
-			{
-				if (Utils.CheckIsStringType(c))
-				{
-					if (c.DataType.MaximumLength >= 100)
-					{
-						sb.Append(@"
+        }
+        private string GenTD2(Column c)
+        {
+            StringBuilder sb = new StringBuilder();
+            if (c.Nullable)
+            {
+                if (Utils.CheckIsStringType(c))
+                {
+                    if (c.DataType.MaximumLength >= 100)
+                    {
+                        sb.Append(@"
 			<asp:TextBox ID=""_" + Utils.GetEscapeName(c) + @"_TextBox"" runat=""server""
 				TextMode=""MultiLine""
 				Text=""""
 				CssClass=""LI_FIELD_CONTENT_TA""
 			/>");
-					}
-					else
-					{
-						sb.Append(@"
+                    }
+                    else
+                    {
+                        sb.Append(@"
 			<asp:TextBox ID=""_" + Utils.GetEscapeName(c) + @"_TextBox"" runat=""server""
 				MaxLength=""" + Utils.GetDbTypeLength(c) + @"""
 				Text=""""
 				CssClass=""LI_FIELD_CONTENT_TB""
 			/>");
-					}
-				}
-				else if (Utils.CheckIsNumericType(c))
-				{
-					sb.Append(@"
+                    }
+                }
+                else if (Utils.CheckIsNumericType(c))
+                {
+                    sb.Append(@"
 			<asp:TextBox ID=""_" + Utils.GetEscapeName(c) + @"_TextBox"" runat=""server""
 				MaxLength=""24""
 				Text=""""
 				CssClass=""LI_FIELD_CONTENT_TB""
 			/>");
-				}
-				else if (Utils.CheckIsBooleanType(c))
-				{
-					sb.Append(@"
+                }
+                else if (Utils.CheckIsBooleanType(c))
+                {
+                    sb.Append(@"
 			<asp:RadioButtonList runat=""server""
 				ID=""_" + Utils.GetEscapeName(c) + @"_RadioButtonList""
 				RepeatDirection=""Horizontal""
@@ -115,101 +115,101 @@ namespace SPGen2008.Components.UI.ASPX
 				<asp:ListItem Text=""是"" Value=""1"" />
 				<asp:ListItem Text=""否"" Value=""0"" />
 			</asp:RadioButtonList>");
-				}
-				else if (Utils.CheckIsDateTimeType(c))
-				{
-					sb.Append(@"
+                }
+                else if (Utils.CheckIsDateTimeType(c))
+                {
+                    sb.Append(@"
 			<asp:TextBox ID=""_" + Utils.GetEscapeName(c) + @"_TextBox"" runat=""server""
 				MaxLength=""24""
 				Text=""""
 				CssClass=""LI_FIELD_CONTENT_TB""
 			/>");
-				}
-				else if (Utils.CheckIsGuidType(c))
-				{
-					sb.Append(@"
+                }
+                else if (Utils.CheckIsGuidType(c))
+                {
+                    sb.Append(@"
 			<asp:TextBox ID=""_" + Utils.GetEscapeName(c) + @"_TextBox"" runat=""server""
 				MaxLength=""36""
 				Text=""""
 				CssClass=""LI_FIELD_CONTENT_TB""
 			/>");
-				}
-				else if (Utils.CheckIsBinaryType(c))
-				{
-					// todo
-				}
-			}
-			else
-			{
-				if (Utils.CheckIsStringType(c))
-				{
-					if (c.DataType.MaximumLength >= 100)
-					{
-						sb.Append(@"
+                }
+                else if (Utils.CheckIsBinaryType(c))
+                {
+                    // todo
+                }
+            }
+            else
+            {
+                if (Utils.CheckIsStringType(c))
+                {
+                    if (c.DataType.MaximumLength >= 100)
+                    {
+                        sb.Append(@"
 			<asp:TextBox ID=""_" + Utils.GetEscapeName(c) + @"_TextBox"" runat=""server""
 				TextMode=""MultiLine""
 				Text=""""
 				CssClass=""LI_FIELD_CONTENT_TA""
 			/>");
-					}
-					else
-					{
-						sb.Append(@"
+                    }
+                    else
+                    {
+                        sb.Append(@"
 			<asp:TextBox ID=""_" + Utils.GetEscapeName(c) + @"_TextBox"" runat=""server""
 				MaxLength=""" + Utils.GetDbTypeLength(c) + @"""
 				Text=""""
 				CssClass=""LI_FIELD_CONTENT_TB""
 			/>");
-					}
-				}
-				else if (Utils.CheckIsNumericType(c))
-				{
-					sb.Append(@"
+                    }
+                }
+                else if (Utils.CheckIsNumericType(c))
+                {
+                    sb.Append(@"
 			<asp:TextBox ID=""_" + Utils.GetEscapeName(c) + @"_TextBox"" runat=""server""
 				ToolTip=""必填""
 				MaxLength=""24""
 				Text=""""
 				CssClass=""LI_FIELD_CONTENT_TB""
 			/>");
-				}
-				else if (Utils.CheckIsBooleanType(c))
-				{
-					sb.Append(@"
+                }
+                else if (Utils.CheckIsBooleanType(c))
+                {
+                    sb.Append(@"
 			<asp:CheckBox runat=""server""
 				ID=""_" + Utils.GetEscapeName(c) + @"_CheckBox""
 				Text=""是"" 
 				CssClass=""LI_FIELD_CONTENT_CB""
 			/>");
-				}
-				else if (Utils.CheckIsDateTimeType(c))
-				{
-					sb.Append(@"
+                }
+                else if (Utils.CheckIsDateTimeType(c))
+                {
+                    sb.Append(@"
 			<asp:TextBox ID=""_" + Utils.GetEscapeName(c) + @"_TextBox"" runat=""server""
 				ToolTip=""必填""
 				MaxLength=""24""
 				Text=""""
 				CssClass=""LI_FIELD_CONTENT_TB""
 			/>");
-				}
-				else if (Utils.CheckIsGuidType(c))
-				{
-					sb.Append(@"
+                }
+                else if (Utils.CheckIsGuidType(c))
+                {
+                    sb.Append(@"
 			<asp:TextBox ID=""_" + Utils.GetEscapeName(c) + @"_TextBox"" runat=""server""
 				ToolTip=""必填""
 				MaxLength=""36""
 				Text=""""
 				CssClass=""LI_FIELD_CONTENT_TB""
 			/>");
-				}
-				else if (Utils.CheckIsBinaryType(c))
-				{
-				}
-			}
-			return sb.ToString();
-		}
-		private string GenTD3(Column c)
-		{
-			return @"
+                }
+                else if (Utils.CheckIsBinaryType(c))
+                {
+                }
+            }
+            return sb.ToString();
+        }
+        private string GenTD3(Column c)
+        {
+            return @"
 			<asp:Label runat=""server""
 				ID=""_" + Utils.GetEscapeName(c) + @"_Warning_Label""
 				Text=""" + (c.Nullable ? "" : "*") + @"""
@@ -219,35 +219,35 @@ namespace SPGen2008.Components.UI.ASPX
 				ID=""_" + Utils.GetEscapeName(c) + @"_Message_Label""
 				Text=""" + Utils.GetDescription(c) + @"""
 			/>";
-		}
+        }
 
-		#endregion
+        #endregion
 
-		public GenResult Gen(params object[] sqlElements)
-		{
-			#region Init
+        public GenResult Gen(params object[] sqlElements)
+        {
+            #region Init
 
-			GenResult gr;
-			Table t = (Table)sqlElements[0];
+            GenResult gr;
+            Table t = (Table)sqlElements[0];
 
-			List<Column> pks = Utils.GetPrimaryKeyColumns(t);
+            List<Column> pks = Utils.GetPrimaryKeyColumns(t);
 
-			if (pks.Count == 0)
-			{
-				gr = new GenResult(GenResultTypes.Message);
-				gr.Message = "无法为没有主键字段的表生成该UI代码！";
-				return gr;
-			}
+            if (pks.Count == 0)
+            {
+                gr = new GenResult(GenResultTypes.Message);
+                gr.Message = "无法为没有主键字段的表生成该UI代码！";
+                return gr;
+            }
 
-			List<Column> wcs = Utils.GetWriteableColumns(t);
+            List<Column> wcs = Utils.GetWriteableColumns(t);
 
-			StringBuilder sb = new StringBuilder();
+            StringBuilder sb = new StringBuilder();
 
-			#endregion
+            #endregion
 
-			#region Gen CSS
+            #region Gen CSS
 
-			sb.Append(@"
+            sb.Append(@"
 
 <style type=""text/css"">
 
@@ -312,26 +312,26 @@ namespace SPGen2008.Components.UI.ASPX
 </style>
 ");
 
-			string result_css = sb.ToString();
-			sb.Remove(0, sb.Length);
+            string result_css = sb.ToString();
+            sb.Remove(0, sb.Length);
 
-			#endregion
+            #endregion
 
-			#region Gen ASPX
+            #region Gen ASPX
 
-			string tn = t.Name;
-			string tc = Utils.GetCaption(t);
+            string tn = Utils.GetEscapeName(t);
+            string tc = Utils.GetCaption(t);
 
-			sb.Append(@"
+            sb.Append(@"
 <!-- " + tn + " (" + tc + ")" + @" -->
 <ul class=""UL_DETAIL"">");
 
-			int i = 0;
-			int maxIdx = t.Columns.Count;
-			while (i < maxIdx)
-			{
-				Column c = t.Columns[i++];
-				sb.Append(@"
+            int i = 0;
+            int maxIdx = t.Columns.Count;
+            while (i < maxIdx)
+            {
+                Column c = t.Columns[i++];
+                sb.Append(@"
 	<li class=""LI_FIELD"">
 		<ul class=""UL_FIELD"">
 			<li class=""LI_FIELD_LABEL"">" + GenTD1(c) + @"			
@@ -343,9 +343,9 @@ namespace SPGen2008.Components.UI.ASPX
 		</ul>
 	</li>
 ");
-			}
+            }
 
-			sb.Append(@"
+            sb.Append(@"
 	<li class=""LI_BUTTON"">
 		<table class=""TABLE_BUTTON"" cellpadding=""0"" cellspacing=""0"" border=""0"">
 			<tr>
@@ -361,15 +361,15 @@ namespace SPGen2008.Components.UI.ASPX
 </ul>
 ");
 
-			string result_aspx = sb.ToString();
-			sb.Remove(0, sb.Length);
+            string result_aspx = sb.ToString();
+            sb.Remove(0, sb.Length);
 
-			#endregion
+            #endregion
 
-			#region Gen CS
+            #region Gen CS
 
 
-			sb.Append(@"
+            sb.Append(@"
 protected override void OnInit(EventArgs e)
 {
 	base.OnInit(e);
@@ -418,75 +418,75 @@ void _Submit_Button_ServerClick(object sender, EventArgs e)
 
 void SetData(DAL.OO." + tn + @" o)
 {");
-			foreach (Column c in t.Columns)
-			{
-				sb.Append(@"
+            foreach (Column c in t.Columns)
+            {
+                sb.Append(@"
 ");
 
-				string cn = Utils.GetEscapeName(c);
+                string cn = Utils.GetEscapeName(c);
 
-				if (c.Nullable)
-				{
-					if (Utils.CheckIsStringType(c))
-					{
-						sb.Append(@"
+                if (c.Nullable)
+                {
+                    if (Utils.CheckIsStringType(c))
+                    {
+                        sb.Append(@"
 	if (o." + cn + @" == null) _" + cn + @"_TextBox.Text = """";
 	else _" + cn + @"_TextBox.Text = o." + cn + @";");
-					}
-					else if (Utils.CheckIsNumericType(c) || Utils.CheckIsDateTimeType(c) || Utils.CheckIsGuidType(c))
-					{
-						sb.Append(@"
+                    }
+                    else if (Utils.CheckIsNumericType(c) || Utils.CheckIsDateTimeType(c) || Utils.CheckIsGuidType(c))
+                    {
+                        sb.Append(@"
 	if (o." + cn + @" == null) _" + cn + @"_TextBox.Text = """";
 	else _" + cn + @"_TextBox.Text = o." + cn + @".ToString();");
-					}
-					else if (Utils.CheckIsBooleanType(c))
-					{
-						sb.Append(@"
+                    }
+                    else if (Utils.CheckIsBooleanType(c))
+                    {
+                        sb.Append(@"
 	if (o." + cn + @" == null) _" + cn + @"_RadioButtonList.SelectedIndex = 0;
 	else _" + cn + @"_RadioButtonList.SelectedIndex = o." + cn + @".value ? 1 : 2;");
-					}
-					else if (Utils.CheckIsBinaryType(c))
-					{
-						// todo
-					}
-				}
-				else
-				{
-					if (Utils.CheckIsStringType(c))
-					{
-						sb.Append(@"
+                    }
+                    else if (Utils.CheckIsBinaryType(c))
+                    {
+                        // todo
+                    }
+                }
+                else
+                {
+                    if (Utils.CheckIsStringType(c))
+                    {
+                        sb.Append(@"
 	_" + cn + @"_TextBox.Text = o." + cn + @";");
-					}
-					else if (Utils.CheckIsNumericType(c))
-					{
-						sb.Append(@"
+                    }
+                    else if (Utils.CheckIsNumericType(c))
+                    {
+                        sb.Append(@"
 	_" + cn + @"_TextBox.Text = o." + cn + @".ToString();");
-					}
-					else if (Utils.CheckIsGuidType(c))
-					{
-						sb.Append(@"
+                    }
+                    else if (Utils.CheckIsGuidType(c))
+                    {
+                        sb.Append(@"
 	if (o." + cn + @" == Guid.Empty) _" + cn + @"_TextBox.Text = """";
 	else _" + cn + @"_TextBox.Text = o." + cn + @".ToString();");
-					}
-					else if (Utils.CheckIsDateTimeType(c))
-					{
-						sb.Append(@"
+                    }
+                    else if (Utils.CheckIsDateTimeType(c))
+                    {
+                        sb.Append(@"
 	if (o." + cn + @" == DateTime.MinValue) _" + cn + @"_TextBox.Text = """";
 	else _" + cn + @"_TextBox.Text = o." + cn + @".ToString();");
-					}
-					else if (Utils.CheckIsBooleanType(c))
-					{
-						sb.Append(@"
+                    }
+                    else if (Utils.CheckIsBooleanType(c))
+                    {
+                        sb.Append(@"
 	_" + cn + @"_CheckBox.Checked = o." + cn + @";");
-					}
-					else if (Utils.CheckIsBinaryType(c))
-					{
-						// todo
-					}
-				}
+                    }
+                    else if (Utils.CheckIsBinaryType(c))
+                    {
+                        // todo
+                    }
+                }
 
-			}
-			sb.Append(@"
+            }
+            sb.Append(@"
 
 	// todo: more control init here
 }
@@ -497,24 +497,24 @@ DAL.OO." + tn + @" GetData()
 	DAL.OO." + tn + @" o = new DAL.OO." + tn + @"();
 ");
 
-			foreach (Column c in t.Columns)
-			{
-				sb.Append(@"
+            foreach (Column c in t.Columns)
+            {
+                sb.Append(@"
 ");
-				string cn = Utils.GetEscapeName(c);
+                string cn = Utils.GetEscapeName(c);
 
-				if (c.Nullable)
-				{
-					if (Utils.CheckIsStringType(c))
-					{
-						sb.Append(@"
+                if (c.Nullable)
+                {
+                    if (Utils.CheckIsStringType(c))
+                    {
+                        sb.Append(@"
 	_" + cn + @"_TextBox.Text = _" + cn + @"_TextBox.Text.Trim();
 	if (_" + cn + @"_TextBox.Text == """") o." + cn + @" = null;
 	else o." + cn + @" = _" + cn + @"_TextBox.Text;");
-					}
-					else if (Utils.CheckIsNumericType(c) || Utils.CheckIsDateTimeType(c))
-					{
-						sb.Append(@"
+                    }
+                    else if (Utils.CheckIsNumericType(c) || Utils.CheckIsDateTimeType(c))
+                    {
+                        sb.Append(@"
 	_" + cn + @"_TextBox.Text = _" + cn + @"_TextBox.Text.Trim();
 	if (_" + cn + @"_TextBox.Text == """") o." + cn + @" = null;
 	else
@@ -530,20 +530,20 @@ DAL.OO." + tn + @" GetData()
 			_" + cn + @"_Warning_Label.Text = ""*"";
 		}
 	}");
-					}
-					else if (Utils.CheckIsBooleanType(c))
-					{
-						sb.Append(@"
+                    }
+                    else if (Utils.CheckIsBooleanType(c))
+                    {
+                        sb.Append(@"
 	if (_" + cn + @"_RadioButtonList.SelectedValue == """") o." + cn + @" = null;
 	else o." + cn + @" = _" + cn + @"_RadioButtonList.SelectedValue == ""1"";
 	_" + cn + @"_Warning_Label.Text = """";");
-					}
-					//else if (Utils.CheckIsDateTimeType(c))
-					//{
-					//}
-					else if (Utils.CheckIsGuidType(c))
-					{
-						sb.Append(@"
+                    }
+                    //else if (Utils.CheckIsDateTimeType(c))
+                    //{
+                    //}
+                    else if (Utils.CheckIsGuidType(c))
+                    {
+                        sb.Append(@"
 	_" + cn + @"_TextBox.Text = _" + cn + @"_TextBox.Text.Trim();
 	if (_" + cn + @"_TextBox.Text == """") o." + cn + @" = null;
 	else
@@ -559,17 +559,17 @@ DAL.OO." + tn + @" GetData()
 			_" + cn + @"_Warning_Label.Text = ""*"";
 		}
 	}");
-					}
-					else if (Utils.CheckIsBinaryType(c))
-					{
-						// todo
-					}
-				}
-				else
-				{
-					if (Utils.CheckIsStringType(c))
-					{
-						sb.Append(@"
+                    }
+                    else if (Utils.CheckIsBinaryType(c))
+                    {
+                        // todo
+                    }
+                }
+                else
+                {
+                    if (Utils.CheckIsStringType(c))
+                    {
+                        sb.Append(@"
 	// _" + cn + @"_TextBox.Text = _" + cn + @"_TextBox.Text.Trim();
 	// if (_" + cn + @"_TextBox.Text == """")
 	// {
@@ -581,10 +581,10 @@ DAL.OO." + tn + @" GetData()
 	o." + cn + @" = _" + cn + @"_TextBox.Text;
 	_" + cn + @"_Warning_Label.Text = """";
 	// }");
-					}
-					else if (Utils.CheckIsNumericType(c) || Utils.CheckIsDateTimeType(c))
-					{
-						sb.Append(@"
+                    }
+                    else if (Utils.CheckIsNumericType(c) || Utils.CheckIsDateTimeType(c))
+                    {
+                        sb.Append(@"
 	_" + cn + @"_TextBox.Text = _" + cn + @"_TextBox.Text.Trim();
 	try
 	{
@@ -596,19 +596,19 @@ DAL.OO." + tn + @" GetData()
 		OP(""必须正确输入" + Utils.GetCaption(c) + @"！"");
 		_" + cn + @"_Warning_Label.Text = ""*"";
 	}");
-					}
-					else if (Utils.CheckIsBooleanType(c))
-					{
-						sb.Append(@"
+                    }
+                    else if (Utils.CheckIsBooleanType(c))
+                    {
+                        sb.Append(@"
 	o." + cn + @" = _" + cn + @"_CheckBox.Checked;
 	_" + cn + @"_Warning_Label.Text = """";");
-					}
-					//else if (Utils.CheckIsDateTimeType(c))
-					//{
-					//}
-					else if (Utils.CheckIsGuidType(c))
-					{
-						sb.Append(@"
+                    }
+                    //else if (Utils.CheckIsDateTimeType(c))
+                    //{
+                    //}
+                    else if (Utils.CheckIsGuidType(c))
+                    {
+                        sb.Append(@"
 	_" + cn + @"_TextBox.Text = _" + cn + @"_TextBox.Text.Trim();
 	try
 	{
@@ -620,15 +620,15 @@ DAL.OO." + tn + @" GetData()
 		OP(""必须正确输入" + Utils.GetCaption(c) + @"！"");
 		_" + cn + @"_Warning_Label.Text = ""*"";
 	}");
-					}
-					else if (Utils.CheckIsBinaryType(c))
-					{
-						// todo
-					}
-				}
+                    }
+                    else if (Utils.CheckIsBinaryType(c))
+                    {
+                        // todo
+                    }
+                }
 
-			}
-			sb.Append(@"
+            }
+            sb.Append(@"
 
 	if (!HasErrors)
 	{
@@ -653,98 +653,98 @@ bool HasErrors
 
 void EnableControls(bool b)
 {");
-			foreach (Column c in t.Columns)
-			{
-				if (c.Nullable)
-				{
-					if (Utils.CheckIsStringType(c) || Utils.CheckIsNumericType(c) || Utils.CheckIsDateTimeType(c) || Utils.CheckIsGuidType(c))
-					{
-						sb.Append(@"
+            foreach (Column c in t.Columns)
+            {
+                if (c.Nullable)
+                {
+                    if (Utils.CheckIsStringType(c) || Utils.CheckIsNumericType(c) || Utils.CheckIsDateTimeType(c) || Utils.CheckIsGuidType(c))
+                    {
+                        sb.Append(@"
 	_" + Utils.GetEscapeName(c) + @"_TextBox.Enabled = b;");
-					}
-					else if (Utils.CheckIsBooleanType(c))
-					{
-						sb.Append(@"
+                    }
+                    else if (Utils.CheckIsBooleanType(c))
+                    {
+                        sb.Append(@"
 	_" + Utils.GetEscapeName(c) + @"_RadioButtonList.Enabled = b;");
-					}
-					else if (Utils.CheckIsBinaryType(c))
-					{
-						// todo
-					}
-				}
-				else
-				{
-					if (Utils.CheckIsStringType(c) || Utils.CheckIsNumericType(c) || Utils.CheckIsDateTimeType(c) || Utils.CheckIsGuidType(c))
-					{
-						sb.Append(@"
+                    }
+                    else if (Utils.CheckIsBinaryType(c))
+                    {
+                        // todo
+                    }
+                }
+                else
+                {
+                    if (Utils.CheckIsStringType(c) || Utils.CheckIsNumericType(c) || Utils.CheckIsDateTimeType(c) || Utils.CheckIsGuidType(c))
+                    {
+                        sb.Append(@"
 	_" + Utils.GetEscapeName(c) + @"_TextBox.Enabled = b;");
-					}
-					else if (Utils.CheckIsBooleanType(c))
-					{
-						sb.Append(@"
+                    }
+                    else if (Utils.CheckIsBooleanType(c))
+                    {
+                        sb.Append(@"
 	_" + Utils.GetEscapeName(c) + @"_CheckBox.Enabled = b;");
-					}
-					else if (Utils.CheckIsBinaryType(c))
-					{
-					}
-				}
-			}
-			sb.Append(@"
+                    }
+                    else if (Utils.CheckIsBinaryType(c))
+                    {
+                    }
+                }
+            }
+            sb.Append(@"
 }
 void ClearControls()
 {");
-			foreach (Column c in t.Columns)
-			{
-				if (c.Nullable)
-				{
-					if (Utils.CheckIsStringType(c) || Utils.CheckIsNumericType(c) || Utils.CheckIsDateTimeType(c) || Utils.CheckIsGuidType(c))
-					{
-						sb.Append(@"
+            foreach (Column c in t.Columns)
+            {
+                if (c.Nullable)
+                {
+                    if (Utils.CheckIsStringType(c) || Utils.CheckIsNumericType(c) || Utils.CheckIsDateTimeType(c) || Utils.CheckIsGuidType(c))
+                    {
+                        sb.Append(@"
 	_" + Utils.GetEscapeName(c) + @"_TextBox.Text = """";");
-					}
-					else if (Utils.CheckIsBooleanType(c))
-					{
-						sb.Append(@"
+                    }
+                    else if (Utils.CheckIsBooleanType(c))
+                    {
+                        sb.Append(@"
 	_" + Utils.GetEscapeName(c) + @"_RadioButtonList.SelectedIndex = 0;");
-					}
-					else if (Utils.CheckIsBinaryType(c))
-					{
-						// todo
-					}
-				}
-				else
-				{
-					if (Utils.CheckIsStringType(c) || Utils.CheckIsNumericType(c) || Utils.CheckIsDateTimeType(c) || Utils.CheckIsGuidType(c))
-					{
-						sb.Append(@"
+                    }
+                    else if (Utils.CheckIsBinaryType(c))
+                    {
+                        // todo
+                    }
+                }
+                else
+                {
+                    if (Utils.CheckIsStringType(c) || Utils.CheckIsNumericType(c) || Utils.CheckIsDateTimeType(c) || Utils.CheckIsGuidType(c))
+                    {
+                        sb.Append(@"
 	_" + Utils.GetEscapeName(c) + @"_TextBox.Text = """";");
-					}
-					else if (Utils.CheckIsBooleanType(c))
-					{
-						sb.Append(@"
+                    }
+                    else if (Utils.CheckIsBooleanType(c))
+                    {
+                        sb.Append(@"
 	_" + Utils.GetEscapeName(c) + @"_CheckBox.Checked = false;");
-					}
-					else if (Utils.CheckIsBinaryType(c))
-					{
-					}
-				}
-			}
-			sb.Append(@"
+                    }
+                    else if (Utils.CheckIsBinaryType(c))
+                    {
+                    }
+                }
+            }
+            sb.Append(@"
 }");
 
-			#endregion
+            #endregion
 
-			#region return
+            #region return
 
-			gr = new GenResult(GenResultTypes.CodeSegments);
-			gr.CodeSegments = new List<KeyValuePair<string, string>>();
-			gr.CodeSegments.Add(new KeyValuePair<string, string>("CSS Style", result_css));
-			gr.CodeSegments.Add(new KeyValuePair<string, string>("ASPX Code", result_aspx));
-			gr.CodeSegments.Add(new KeyValuePair<string, string>("C# Code", sb.ToString()));
-			return gr;
+            gr = new GenResult(GenResultTypes.CodeSegments);
+            gr.CodeSegments = new List<KeyValuePair<string, string>>();
+            gr.CodeSegments.Add(new KeyValuePair<string, string>("CSS Style", result_css));
+            gr.CodeSegments.Add(new KeyValuePair<string, string>("ASPX Code", result_aspx));
+            gr.CodeSegments.Add(new KeyValuePair<string, string>("C# Code", sb.ToString()));
+            return gr;
 
-			#endregion
-		}
+            #endregion
+        }
 
-	}
+    }
 }
