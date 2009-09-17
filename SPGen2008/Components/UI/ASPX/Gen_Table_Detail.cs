@@ -62,14 +62,18 @@ namespace SPGen2008.Components.UI.ASPX
 
         private string GenTD1(Column c)
         {
+            string cn = Utils.GetEscapeName(c);
+            string cc = Utils.GetCaption(c);
+
             return @"
 			<asp:Label runat=""server""
-				ID=""_" + Utils.GetEscapeName(c) + @"_Label""
-				Text=""" + Utils.GetCaption(c) + @"""
+				ID=""_" + cn + @"_Label""
+				Text=""" + cc + @"""
 			/>";
         }
         private string GenTD2(Column c)
         {
+            string cn = Utils.GetEscapeName(c);
             StringBuilder sb = new StringBuilder();
             if (c.Nullable)
             {
@@ -78,7 +82,7 @@ namespace SPGen2008.Components.UI.ASPX
                     if (c.DataType.MaximumLength >= 100)
                     {
                         sb.Append(@"
-			<asp:TextBox ID=""_" + Utils.GetEscapeName(c) + @"_TextBox"" runat=""server""
+			<asp:TextBox ID=""_" + cn + @"_TextBox"" runat=""server""
 				TextMode=""MultiLine""
 				Text=""""
 				CssClass=""LI_FIELD_CONTENT_TA""
@@ -87,7 +91,7 @@ namespace SPGen2008.Components.UI.ASPX
                     else
                     {
                         sb.Append(@"
-			<asp:TextBox ID=""_" + Utils.GetEscapeName(c) + @"_TextBox"" runat=""server""
+			<asp:TextBox ID=""_" + cn + @"_TextBox"" runat=""server""
 				MaxLength=""" + Utils.GetDbTypeLength(c) + @"""
 				Text=""""
 				CssClass=""LI_FIELD_CONTENT_TB""
@@ -97,7 +101,7 @@ namespace SPGen2008.Components.UI.ASPX
                 else if (Utils.CheckIsNumericType(c))
                 {
                     sb.Append(@"
-			<asp:TextBox ID=""_" + Utils.GetEscapeName(c) + @"_TextBox"" runat=""server""
+			<asp:TextBox ID=""_" + cn + @"_TextBox"" runat=""server""
 				MaxLength=""24""
 				Text=""""
 				CssClass=""LI_FIELD_CONTENT_TB""
@@ -107,7 +111,7 @@ namespace SPGen2008.Components.UI.ASPX
                 {
                     sb.Append(@"
 			<asp:RadioButtonList runat=""server""
-				ID=""_" + Utils.GetEscapeName(c) + @"_RadioButtonList""
+				ID=""_" + cn + @"_RadioButtonList""
 				RepeatDirection=""Horizontal""
 				CssClass=""LI_FIELD_CONTENT_R""
 			>
@@ -119,7 +123,7 @@ namespace SPGen2008.Components.UI.ASPX
                 else if (Utils.CheckIsDateTimeType(c))
                 {
                     sb.Append(@"
-			<asp:TextBox ID=""_" + Utils.GetEscapeName(c) + @"_TextBox"" runat=""server""
+			<asp:TextBox ID=""_" + cn + @"_TextBox"" runat=""server""
 				MaxLength=""24""
 				Text=""""
 				CssClass=""LI_FIELD_CONTENT_TB""
@@ -128,7 +132,7 @@ namespace SPGen2008.Components.UI.ASPX
                 else if (Utils.CheckIsGuidType(c))
                 {
                     sb.Append(@"
-			<asp:TextBox ID=""_" + Utils.GetEscapeName(c) + @"_TextBox"" runat=""server""
+			<asp:TextBox ID=""_" + cn + @"_TextBox"" runat=""server""
 				MaxLength=""36""
 				Text=""""
 				CssClass=""LI_FIELD_CONTENT_TB""
@@ -146,7 +150,7 @@ namespace SPGen2008.Components.UI.ASPX
                     if (c.DataType.MaximumLength >= 100)
                     {
                         sb.Append(@"
-			<asp:TextBox ID=""_" + Utils.GetEscapeName(c) + @"_TextBox"" runat=""server""
+			<asp:TextBox ID=""_" + cn + @"_TextBox"" runat=""server""
 				TextMode=""MultiLine""
 				Text=""""
 				CssClass=""LI_FIELD_CONTENT_TA""
@@ -155,7 +159,7 @@ namespace SPGen2008.Components.UI.ASPX
                     else
                     {
                         sb.Append(@"
-			<asp:TextBox ID=""_" + Utils.GetEscapeName(c) + @"_TextBox"" runat=""server""
+			<asp:TextBox ID=""_" + cn + @"_TextBox"" runat=""server""
 				MaxLength=""" + Utils.GetDbTypeLength(c) + @"""
 				Text=""""
 				CssClass=""LI_FIELD_CONTENT_TB""
@@ -165,7 +169,7 @@ namespace SPGen2008.Components.UI.ASPX
                 else if (Utils.CheckIsNumericType(c))
                 {
                     sb.Append(@"
-			<asp:TextBox ID=""_" + Utils.GetEscapeName(c) + @"_TextBox"" runat=""server""
+			<asp:TextBox ID=""_" + cn + @"_TextBox"" runat=""server""
 				ToolTip=""必填""
 				MaxLength=""24""
 				Text=""""
@@ -176,7 +180,7 @@ namespace SPGen2008.Components.UI.ASPX
                 {
                     sb.Append(@"
 			<asp:CheckBox runat=""server""
-				ID=""_" + Utils.GetEscapeName(c) + @"_CheckBox""
+				ID=""_" + cn + @"_CheckBox""
 				Text=""是"" 
 				CssClass=""LI_FIELD_CONTENT_CB""
 			/>");
@@ -184,7 +188,7 @@ namespace SPGen2008.Components.UI.ASPX
                 else if (Utils.CheckIsDateTimeType(c))
                 {
                     sb.Append(@"
-			<asp:TextBox ID=""_" + Utils.GetEscapeName(c) + @"_TextBox"" runat=""server""
+			<asp:TextBox ID=""_" + cn + @"_TextBox"" runat=""server""
 				ToolTip=""必填""
 				MaxLength=""24""
 				Text=""""
@@ -194,7 +198,7 @@ namespace SPGen2008.Components.UI.ASPX
                 else if (Utils.CheckIsGuidType(c))
                 {
                     sb.Append(@"
-			<asp:TextBox ID=""_" + Utils.GetEscapeName(c) + @"_TextBox"" runat=""server""
+			<asp:TextBox ID=""_" + cn + @"_TextBox"" runat=""server""
 				ToolTip=""必填""
 				MaxLength=""36""
 				Text=""""
@@ -203,23 +207,41 @@ namespace SPGen2008.Components.UI.ASPX
                 }
                 else if (Utils.CheckIsBinaryType(c))
                 {
+                    // todo
                 }
             }
             return sb.ToString();
         }
         private string GenTD3(Column c)
         {
+            string cn = Utils.GetEscapeName(c);
+            string cd = Utils.GetDescription(c);
             return @"
 			<asp:Label runat=""server""
-				ID=""_" + Utils.GetEscapeName(c) + @"_Warning_Label""
+				ID=""_" + cn + @"_Warning_Label""
 				Text=""" + (c.Nullable ? "" : "*") + @"""
 				ForeColor=""Red""
 			/>
 			<asp:Label runat=""server""
-				ID=""_" + Utils.GetEscapeName(c) + @"_Message_Label""
-				Text=""" + Utils.GetDescription(c) + @"""
+				ID=""_" + cn + @"_Message_Label""
+				Text=""" + cd + @"""
 			/>";
         }
+
+
+
+        private string GenTD2_DDL(Column c, Table ft, Column fc)
+        {
+            string cn = Utils.GetEscapeName(c);
+            return @"
+			<asp:DropDownList ID=""_" + cn + @"_DropDownList"" runat=""server""
+			    CssClass=""LI_FIELD_CONTENT_DDL""
+			/>
+";
+        }
+
+
+
 
         #endregion
 
@@ -283,7 +305,7 @@ namespace SPGen2008.Components.UI.ASPX
 	{
 		width:250px;
 	}
-	.LI_FIELD_CONTENT_TA, .LI_FIELD_CONTENT_TB, .LI_FIELD_CONTENT_CB
+	.LI_FIELD_CONTENT_TA, .LI_FIELD_CONTENT_TB, .LI_FIELD_CONTENT_CB, .LI_FIELD_CONTENT_DDL
 	{
 		width:180px;
 	}
@@ -326,11 +348,13 @@ namespace SPGen2008.Components.UI.ASPX
 <!-- " + tn + " (" + tc + ")" + @" -->
 <ul class=""UL_DETAIL"">");
 
-            int i = 0;
-            int maxIdx = t.Columns.Count;
-            while (i < maxIdx)
+            foreach (Column c in t.Columns)
             {
-                Column c = t.Columns[i++];
+                // 如果 c 是外键，则注释
+                bool isForeignKey = Utils.CheckIsForeignKey(c);
+
+                sb.Append(isForeignKey ? @"<%--" : "");
+
                 sb.Append(@"
 	<li class=""LI_FIELD"">
 		<ul class=""UL_FIELD"">
@@ -343,7 +367,29 @@ namespace SPGen2008.Components.UI.ASPX
 		</ul>
 	</li>
 ");
+                sb.Append(isForeignKey ? @"--%>" : "");
             }
+
+            // todo: 多字段外键支持
+            foreach (ForeignKey fk in t.ForeignKeys)
+            {
+                Column c = t.Columns[fk.Columns[0].Name];
+                Table ft = _db.Tables[fk.ReferencedTable, fk.ReferencedTableSchema];
+                Column fc = ft.Columns[fk.Columns[0].ReferencedColumn];
+                sb.Append(@"
+	<li class=""LI_FIELD"">
+		<ul class=""UL_FIELD"">
+			<li class=""LI_FIELD_LABEL"">" + GenTD1(c) + @"			
+			</li>
+			<li class=""LI_FIELD_CONTENT"">" + GenTD2_DDL(c, ft, fc) + @"			
+			</li>
+			<li class=""LI_FIELD_MESSAGE"">" + GenTD3(c) + @"			
+			</li>
+		</ul>
+	</li>
+");
+            }
+
 
             sb.Append(@"
 	<li class=""LI_BUTTON"">
@@ -422,8 +468,12 @@ void SetData(DAL.OO." + tn + @" o)
             {
                 sb.Append(@"
 ");
-
+                bool isForeignKey = Utils.CheckIsForeignKey(c);
                 string cn = Utils.GetEscapeName(c);
+
+                sb.Append(isForeignKey ? @"
+/*
+                     " : "");
 
                 if (c.Nullable)
                 {
@@ -485,7 +535,48 @@ void SetData(DAL.OO." + tn + @" o)
                     }
                 }
 
+                sb.Append(isForeignKey ? @"
+*/
+                     " : "");
             }
+
+            foreach (ForeignKey fk in t.ForeignKeys)
+            {
+                Column c = t.Columns[fk.Columns[0].Name];
+                Table ft = _db.Tables[fk.ReferencedTable, fk.ReferencedTableSchema];
+                Column fc = ft.Columns[fk.Columns[0].ReferencedColumn];
+                Column dc = Utils.GetDisplayColumn(ft);
+
+                string cn = Utils.GetEscapeName(c);
+                string fcn = Utils.GetEscapeName(fc);
+                string ftn = Utils.GetEscapeName(ft);
+                string dcn = Utils.GetEscapeName(dc);
+
+                sb.Append(@"
+                _" + cn + @"_DropDownList.DataSource = DAL.OB." + ftn + @".SelectAll();
+                _" + cn + @"_DropDownList.DataTextField = DAL.DI." + ftn + @"." + dcn + @".ToString();
+                _" + cn + @"_DropDownList.DataValueField = DAL.DI." + ftn + @"." + fcn + @".ToString();
+                _" + cn + @"_DropDownList.DataBind();
+");
+                if (c.Nullable)
+                {
+                    sb.Append(@"
+                _" + cn + @"_DropDownList.Items.Insert(0, """");
+");
+                }
+                sb.Append(@"
+                var " + cn + @"_Value = o." + cn + @" == null ? """" : o." + cn + @".ToString();
+                foreach (ListItem item in _" + cn + @"_DropDownList.Items)
+                {
+                    if (item.Value == " + cn + @"_Value)
+                    {
+                        item.Selected = true;
+                        break;
+                    }
+                }
+");
+            }
+
             sb.Append(@"
 
 	// todo: more control init here
@@ -745,6 +836,8 @@ void ClearControls()
 
             #endregion
         }
+
+
 
     }
 }
