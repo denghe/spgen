@@ -2425,6 +2425,29 @@ namespace SPGen2008
         }
 
 
+
+        /// <summary>
+        /// 检查一个字段是否为所属表的外键字段之一
+        /// </summary>
+        /// <param name="c"></param>
+        /// <returns></returns>
+        public static bool CheckIsForeignKey(Column c)
+        {
+            Table t = (Table)c.Parent;
+            foreach (ForeignKey fk in t.ForeignKeys)
+            {
+                foreach (ForeignKeyColumn fkc in fk.Columns)
+                {
+                    Column o = t.Columns[fkc.Name];
+                    if (c == o) return true;
+                }
+            }
+            return false;
+        }
+
+
+        
+
         #endregion
 
         #region Escape
@@ -3444,6 +3467,30 @@ namespace SPGen2008
             }
             return ss;
         }
+
+
+        /// <summary>
+        /// 返回表的最适合于显示的字段（优先级：第一个限长字段，第一个不限长字段，第一个主键字段）
+        /// todo: 继续完善
+        /// </summary>
+        public static Column GetDisplayColumn(Table t)
+        {
+            foreach (Column c in t.Columns)
+            {
+                if (CheckIsStringType(c) && (c.DataType.MaximumLength > 0 && c.DataType.MaximumLength < 4000)) return c;
+            }
+            foreach (Column c in t.Columns)
+            {
+                if (CheckIsStringType(c)) return c;
+            }
+            foreach (Column c in t.Columns)
+            {
+                if (c.InPrimaryKey) return c;
+            }
+
+            return t.Columns[0];
+        }
+
 
         #endregion
 
