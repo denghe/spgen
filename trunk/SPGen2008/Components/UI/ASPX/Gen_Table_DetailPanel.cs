@@ -87,6 +87,8 @@ namespace SPGen2008.Components.UI.ASPX
             string tbn = Utils.GetEscapeName(t);
 
 
+            string s = "";
+
 
             sb.Append(@"<cc:DockPart ID=""_" + tbn + @"_GridView_DockPart"" runat=""server"" Height=""40"" IsClientClose=""False"" Style=""position: absolute; left: 0px; top: 0px; z-index: 101;"" Title=""" + t.Name + @""" Visible=""True"" Width=""50"" BackColor=""white"">
 	<cc:GVToolbar ID=""_" + tbn + @"_GVToolbar"" runat=""server"" GridViewID=""_" + tbn + @"_GridView"" OnOnDeleteButtonClicked=""_" + tbn + @"_GVToolbar_OnDeleteButtonClicked"" OnOnEditButtonClicked=""_" + tbn + @"_GVToolbar_OnEditButtonClicked"" OnOnInsertButtonClicked=""_" + tbn + @"_GVToolbar_OnInsertButtonClicked"" OnOnRefreshButtonClicked=""_" + tbn + @"_GVToolbar_OnRefreshButtonClicked"" />
@@ -149,7 +151,44 @@ namespace SPGen2008.Components.UI.ASPX
 
 
 
-            string s = "";
+
+
+
+
+
+            sb.Append(@"
+<cc:DockPart ID=""_" + tbn + @"_DetailPanel_DockPart"" runat=""server"" Height=""40"" IsClientClose=""False"" Style=""position: absolute; left: 0px; top: 0px; z-index: 101;"" Title=""" + t.Name + @" Row's Detail"" Visible=""False"" Width=""50"" BackColor=""white"">
+    <cc:DetailPanel ID=""_" + tbn + @"_DetailPanel"" runat=""server"" CssClass=""DetailPanel"" OnOnCancel=""_" + tbn + @"_DetailPanel_OnCancel"" OnOnDelete=""_" + tbn + @"_DetailPanel_OnDelete"" OnOnInsert=""_" + tbn + @"_DetailPanel_OnInsert"" OnOnUpdate=""_" + tbn + @"_DetailPanel_OnUpdate"">");
+            foreach (Column c in t.Columns)
+            {
+                string cn = Utils.GetEscapeName(c);
+                if (c.DataType.SqlDataType == SqlDataType.Bit)
+                    sb.Append(@"
+        <cc:DetailCheckBox ID=""_" + tbn + "_" + cn + @"_DetailTextBox"" Caption=""" + Utils.GetCaption(c) + @":"" FieldName=""" + c.Name + @""" runat=""server"" />");
+                else if (Utils.CheckIsDateTimeType(c))
+                    sb.Append(@"
+        <cc:DetailDateTimeBox ID=""_" + tbn + "_" + cn + @"_DateTimeBox"" Caption=""" + Utils.GetCaption(c) + @":"" FieldName=""" + c.Name + @""" runat=""server"" />");
+                else
+                    sb.Append(@"
+        <cc:DetailTextBox ID=""_" + tbn + "_" + cn + @"_TextBox"" Caption=""" + Utils.GetCaption(c) + @":"" FieldName=""" + c.Name + @""" runat=""server"" />");
+            }
+            sb.Append(@"
+        <cc:DetailHR ID=""_" + tbn + @"_DetailHR"" runat=""server"" />
+        <cc:DetailButtons ID=""_" + tbn + @"_DetailButtons"" runat=""server"" />
+		<cc:DetailMessageBox ID=""_" + tbn + @"_DetailMessageBox"" runat=""server"" />
+    </cc:DetailPanel>
+</cc:DockPart>
+
+
+
+");
+
+
+
+
+
+
+
 
             //先得到从 GridView 取 Row 的语句
             if (pks.Count > 0)
@@ -269,32 +308,8 @@ protected void _" + tbn + @"_GVToolbar_OnEditButtonClicked(object sender, EventA
 
 
 
-            sb.Append(@"
-<cc:DockPart ID=""_" + tbn + @"_DetailPanel_DockPart"" runat=""server"" Height=""40"" IsClientClose=""False"" Style=""position: absolute; left: 0px; top: 0px; z-index: 101;"" Title=""" + t.Name + @" Row's Detail"" Visible=""False"" Width=""50"" BackColor=""white"">
-    <cc:DetailPanel ID=""_" + tbn + @"_DetailPanel"" runat=""server"" CssClass=""DetailPanel"" OnOnCancel=""_" + tbn + @"_DetailPanel_OnCancel"" OnOnDelete=""_" + tbn + @"_DetailPanel_OnDelete"" OnOnInsert=""_" + tbn + @"_DetailPanel_OnInsert"" OnOnUpdate=""_" + tbn + @"_DetailPanel_OnUpdate"">");
-            foreach (Column c in t.Columns)
-            {
-                string cn = Utils.GetEscapeName(c);
-                if (c.DataType.SqlDataType == SqlDataType.Bit)
-                    sb.Append(@"
-        <cc:DetailCheckBox ID=""_" + tbn + "_" + cn + @"_DetailTextBox"" Caption=""" + Utils.GetCaption(c) + @":"" FieldName=""" + c.Name + @""" runat=""server"" />");
-                else if (Utils.CheckIsDateTimeType(c))
-                    sb.Append(@"
-        <cc:DetailDateTimeBox ID=""_" + tbn + "_" + cn + @"_DateTimeBox"" Caption=""" + Utils.GetCaption(c) + @":"" FieldName=""" + c.Name + @""" runat=""server"" />");
-                else
-                    sb.Append(@"
-        <cc:DetailTextBox ID=""_" + tbn + "_" + cn + @"_TextBox"" Caption=""" + Utils.GetCaption(c) + @":"" FieldName=""" + c.Name + @""" runat=""server"" />");
-            }
-            sb.Append(@"
-        <cc:DetailHR ID=""_" + tbn + @"_DetailHR"" runat=""server"" />
-        <cc:DetailButtons ID=""_" + tbn + @"_DetailButtons"" runat=""server"" />
-		<cc:DetailMessageBox ID=""_" + tbn + @"_DetailMessageBox"" runat=""server"" />
-    </cc:DetailPanel>
-</cc:DockPart>
 
 
-
-");
 
 
             sb.Append(@"
