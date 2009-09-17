@@ -142,6 +142,7 @@
     <Compile Include="Components\StoredProcedure\Gen_Table_UpdatePart.cs" />
     <Compile Include="Components\StoredProcedure\Gen_Table_Merge_05.cs" />
     <Compile Include="Components\StoredProcedure\Gen_Table_Insert_WB.cs" />
+    <Compile Include="Components\UI\ASPX\Gen_Table_DetailPanel.cs" />
     <Compile Include="Components\UI\ASPX\Gen_Table_GridView.cs" />
     <Compile Include="Components\UI\ASPX\Gen_View_GridView.cs" />
     <Compile Include="Components\UI\ASPX\Gen_Table_Detail.cs" />
