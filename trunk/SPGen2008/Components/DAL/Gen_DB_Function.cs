@@ -167,6 +167,11 @@ namespace " + ns + @"
 			if(o == DBNull.Value) return null;
 			return (string)o;");
 					}
+					else if(f.DataType.SqlDataType == SqlDataType.Variant)
+					{
+						sb.Append(@"
+			return SQLHelper.ExecuteScalar(cmd);");
+					}
 					else
 					{
 						sb.Append(@"
