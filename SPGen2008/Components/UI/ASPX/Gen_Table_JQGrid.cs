@@ -85,6 +85,18 @@ namespace SPGen2008.Components.UI.ASPX
             List<Column> socs = Utils.GetSortableColumns(t);
             List<Column> sacs = Utils.GetSearchableColumns(t);
 
+            List<Column> ocs = new List<Column>();                      // 实际输出的字段集
+            foreach (Column c in t.Columns) if (Utils.CheckIsBinaryType(c)) continue; else ocs.Add(c);      // 过滤掉不输出的字段
+
+            // find pk's index
+            int pkcidx = 0;
+            for (int i = 0; i < ocs.Count; i++)
+            {
+                if (ocs[i].InPrimaryKey) { pkcidx = i; break; }
+            }
+            Column pkc = ocs[pkcidx];
+
+
             StringBuilder sb = new StringBuilder();
 
             #endregion
@@ -93,13 +105,6 @@ namespace SPGen2008.Components.UI.ASPX
 
             string tbn = t.Name;
 
-            // find pk's index
-            int pkidx = 0;
-            for (int i = 0; i < t.Columns.Count; i++)
-            {
-                if (t.Columns[i].InPrimaryKey) { pkidx = i; break; }
-            }
-            Column pk = t.Columns[pkidx];
 
             sb.Append(@"
 <script type=""text/javascript"">
@@ -111,7 +116,7 @@ namespace SPGen2008.Components.UI.ASPX
 
             url         : ""query.ashx"",
             caption     : ""JSON Mapping"",
-            sortname    : """ + JsEscape(pk.Name) + @""",
+            sortname    : """ + JsEscape(pkc.Name) + @""",
             sortorder   : ""desc"",
             rowNum      : 10,
             imgpath     : ""css/images"",
@@ -119,8 +124,11 @@ namespace SPGen2008.Components.UI.ASPX
 
             colModel    : [");
 
-            foreach (Column c in t.Columns)
+
+            for (int i = 0; i < ocs.Count; i++)
             {
+                Column c = ocs[i];
+
                 string caption = Utils.GetCaption(c);
                 string cn = JsEscape(c.Name);
                 string width = "80";                                       // todo: 根据各种数据类型及其长度来推断出显示宽度
@@ -132,20 +140,21 @@ namespace SPGen2008.Components.UI.ASPX
                 sb.Append(@"
 	            { label: """ + caption + @""", name: """ + cn + @""", index: """ + cn + @""", width: " + width + @", align: """ + align + @""", sortable: " + sortable + @" }");
 
-                if (c != t.Columns[t.Columns.Count - 1]) sb.Append(@",");
+                if (i < ocs.Count - 1) sb.Append(@",");
             }
 
             sb.Append(@"
             ],
-            rowList     : [10, 20, 30],
             viewrecords : true,
+            datatype    : ""json"",
             jsonReader  : {
 	            repeatitems : false,
-	            id          : ""0""
+	            id          : """ + pkcidx.ToString() + @"""
             },
-            datatype    : ""json"",
-            autowidth   : true,
-            height      : '100%'
+            rowList     : [10, 20, 30],
+            height      : ""100%"",
+            autowidth   : true
+
         }).navGrid(""#pager"", {edit: false, add: false, del: false});
     });
 </script>
