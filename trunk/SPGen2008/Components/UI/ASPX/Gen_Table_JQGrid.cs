@@ -111,9 +111,6 @@ namespace SPGen2008.Components.UI.ASPX
 
             StringBuilder sb_js = new StringBuilder();
             sb_js.Append(@"
-
-
-
 <script type=""text/javascript"">
     $().ready(function() {
         
@@ -168,19 +165,16 @@ namespace SPGen2008.Components.UI.ASPX
 
 
 
+
+
+
+
+
 <table id=""table"" class=""scroll"" cellpadding=""0"" cellspacing=""0""></table>
 <div id=""pager"" class=""scroll"" style=""text-align:center;""></div>
-
-
-
-
-
 ");
             StringBuilder sb_cs = new StringBuilder();
             sb_cs.Append(@"
-
-
-
 var response = context.Response;
 var request = context.Request;
 response.ContentType = ""text/plain"";
@@ -246,12 +240,6 @@ var rows = OB." + tn + @".SelectAllPage_Custom(
 // 输出 JQGrid 需要的 JSON
 
 response.Write(rows.ToJson(pageIndex, pageCount, rowCount, DI." + tn + @".id.ToString(), jqGridHelper.DataType.Enhancement));
-
-
-
-
-
-
 ");
 
 
@@ -260,7 +248,6 @@ response.Write(rows.ToJson(pageIndex, pageCount, rowCount, DI." + tn + @".id.ToS
 
             StringBuilder sb_helper = new StringBuilder();
             sb_helper.Append(@"
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -492,7 +479,6 @@ Enhancement: (固定主键位置，支持字段调整显示先后顺序)
     }
 
 }
-
 ");
             #endregion
 
