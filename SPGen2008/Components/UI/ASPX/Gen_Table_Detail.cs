@@ -822,6 +822,11 @@ void EnableControls(bool b)
 {");
             foreach (Column c in t.Columns)
             {
+                bool isForeignKey = Utils.CheckIsForeignKey(c);
+                sb.Append(isForeignKey ? @"
+/*
+                     " : "");
+
                 if (c.Nullable)
                 {
                     if (Utils.CheckIsStringType(c) || Utils.CheckIsNumericType(c) || Utils.CheckIsDateTimeType(c) || Utils.CheckIsGuidType(c))
@@ -855,47 +860,20 @@ void EnableControls(bool b)
                     {
                     }
                 }
+                sb.Append(isForeignKey ? @"
+*/
+                     " : "");
+
             }
-            sb.Append(@"
-}
-void ClearControls()
-{");
-            foreach (Column c in t.Columns)
+
+            foreach (ForeignKey fk in t.ForeignKeys)
             {
-                if (c.Nullable)
-                {
-                    if (Utils.CheckIsStringType(c) || Utils.CheckIsNumericType(c) || Utils.CheckIsDateTimeType(c) || Utils.CheckIsGuidType(c))
-                    {
-                        sb.Append(@"
-    _" + Utils.GetEscapeName(c) + @"_TextBox.Text = """";");
-                    }
-                    else if (Utils.CheckIsBooleanType(c))
-                    {
-                        sb.Append(@"
-    _" + Utils.GetEscapeName(c) + @"_RadioButtonList.SelectedIndex = 0;");
-                    }
-                    else if (Utils.CheckIsBinaryType(c))
-                    {
-                        // todo
-                    }
-                }
-                else
-                {
-                    if (Utils.CheckIsStringType(c) || Utils.CheckIsNumericType(c) || Utils.CheckIsDateTimeType(c) || Utils.CheckIsGuidType(c))
-                    {
-                        sb.Append(@"
-    _" + Utils.GetEscapeName(c) + @"_TextBox.Text = """";");
-                    }
-                    else if (Utils.CheckIsBooleanType(c))
-                    {
-                        sb.Append(@"
-    _" + Utils.GetEscapeName(c) + @"_CheckBox.Checked = false;");
-                    }
-                    else if (Utils.CheckIsBinaryType(c))
-                    {
-                    }
-                }
+                Column c = t.Columns[fk.Columns[0].Name];
+                string cn = Utils.GetEscapeName(c);
+                sb.Append(@"
+    _" + cn + @"_DropDownList.Enabled = b;");
             }
+
             sb.Append(@"
 }");
 
