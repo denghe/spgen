@@ -110,7 +110,7 @@ namespace " + ns + @"
 			/// </summary>
 			public static int GetCount_Custom(OE." + tn + @" exp)
 			{
-				object o = SQLHelper.ExecuteScalar(DC." + tn + @".NewCmd_GetCount_Custom(exp.ToString()));
+				object o = SQLHelper.ExecuteScalar(DC." + tn + @".NewCmd_GetCount_Custom(exp == null ? """" : exp.ToString()));
 				if (o == DBNull.Value) return 0;
 				return (int)o;
 			}
