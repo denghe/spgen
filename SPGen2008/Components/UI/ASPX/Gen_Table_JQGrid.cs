@@ -99,7 +99,7 @@ namespace SPGen2008.Components.UI.ASPX
                 if (ocs[i].InPrimaryKey) { pkcidx = i; break; }
             }
             Column pkc = ocs[pkcidx];
-
+            string pkcn = Utils.GetEscapeName(pkc);
 
 
             #endregion
@@ -239,7 +239,7 @@ var rows = OB." + tn + @".SelectAllPage_Custom(
 
 // 输出 JQGrid 需要的 JSON
 
-response.Write(rows.ToJson(pageIndex, pageCount, rowCount, DI." + tn + @".id.ToString(), jqGridHelper.DataType.Enhancement));
+response.Write(rows.ToJson(pageIndex, pageCount, rowCount, DI." + tn + @"." + pkcn + @".ToString(), jqGridHelper.DataType.Enhancement));
 ");
 
 
