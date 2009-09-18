@@ -139,7 +139,7 @@ namespace SPGen2008.Components.UI.ASPX
                 string caption = Utils.GetCaption(c);
                 string cn = JsEscape(c.Name);
                 string width = "80";                                       // todo: 根据各种数据类型及其长度来推断出显示宽度
-                string align = Utils.CheckIsNumericType(c) ? "right" : "left";
+                string align = Utils.CheckIsNumericType(c) ? "center" : "left"; // todo: 视情况判断显示位置 right
                 string sortable = socs.Contains(c).ToString().ToLower();
 
                 // todo: 格式化日期，货币显示
