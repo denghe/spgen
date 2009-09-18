@@ -198,7 +198,7 @@ var sortDirection = request[""sord""];
 
 // 当前表相关字段的过滤查询
 
-var exps = new List<OE.jqgrid>();
+var exps = new List<OE." + tn + @">();
 var s = """";
 
 ");
@@ -216,7 +216,7 @@ if (s != """") exps.Add(OE." + tn + @"." + cn + @".Like(s));
 
 // 拼接表达式
 
-OE.jqgrid exp = null;
+OE." + tn + @" exp = null;
 if (exps.Count > 0)
 {
     exp = exps[0];
@@ -236,7 +236,7 @@ var rowIndex = pageSize * pageIndex - pageSize;// +1;
 
 // 取符合条件的，当前需要显示的页的数据
 
-var res = OB." + tn + @".SelectAllPage_Custom(
+var rows = OB." + tn + @".SelectAllPage_Custom(
     exp,
     (DI." + tn + @")Enum.Parse(typeof(DI." + tn + @"),
     sortColumn),
@@ -247,7 +247,7 @@ var res = OB." + tn + @".SelectAllPage_Custom(
 
 // 输出 JQGrid 需要的 JSON
 
-response.Write(res.ToJson(pageIndex, pageCount, rowCount, DI.jqgrid.id.ToString(), jqGridHelper.DataType.Enhancement));
+response.Write(rows.ToJson(pageIndex, pageCount, rowCount, DI." + tn + @".id.ToString(), jqGridHelper.DataType.Enhancement));
 
 
 
