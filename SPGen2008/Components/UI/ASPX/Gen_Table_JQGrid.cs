@@ -106,7 +106,7 @@ namespace SPGen2008.Components.UI.ASPX
 
             #region Gen
 
-            string tn = t.Name;
+            string tn = Utils.GetEscapeName(t);
 
 
             StringBuilder sb_js = new StringBuilder();
