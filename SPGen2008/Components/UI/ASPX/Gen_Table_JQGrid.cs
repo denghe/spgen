@@ -55,7 +55,11 @@ namespace SPGen2008.Components.UI.ASPX
 
         public string JsEscape(string s)
         {
-            return s.Replace(@"'", @"\'").Replace(@"""", @"\"""); ;
+            return s.Replace(@"'", @"\'").Replace(@"""", @"\""");
+        }
+        public string CsEscape(string s)
+        {
+            return s.Replace(@"""", @"""""");
         }
 
         public bool Validate(params object[] sqlElements)
@@ -103,10 +107,13 @@ namespace SPGen2008.Components.UI.ASPX
 
             #region Gen
 
-            string tbn = t.Name;
+            string tn = t.Name;
 
 
             sb.Append(@"
+
+
+
 <script type=""text/javascript"">
     $().ready(function() {
         
@@ -163,6 +170,86 @@ namespace SPGen2008.Components.UI.ASPX
 
 <table id=""table"" class=""scroll"" cellpadding=""0"" cellspacing=""0""></table>
 <div id=""pager"" class=""scroll"" style=""text-align:center;""></div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+var response = context.Response;
+var request = context.Request;
+response.ContentType = ""text/plain"";
+
+
+// JQGrid 的固有字段
+
+var pageIndex = int.Parse(request[""page""] ?? ""1"");
+var pageSize = int.Parse(request[""rows""] ?? ""10"");
+var sortColumn = request[""sidx""] ?? @""" + CsEscape(pkc.Name) + @""";
+var sortDirection = request[""sord""];
+
+
+// 当前表相关字段的过滤查询
+
+var exps = new List<OE.jqgrid>();
+var s = """";
+
+");
+
+            foreach (Column c in sacs)
+            {
+                string cn = Utils.GetEscapeName(c);
+                sb.Append(@"
+s = request[""" + CsEscape(c.Name) + @"""] ?? """";
+if (s != """") exps.Add(OE." + tn + @"." + cn + @".Like(s));
+");
+            }
+
+            sb.Append(@"
+
+// 拼接表达式
+
+OE.jqgrid exp = null;
+if (exps.Count > 0)
+{
+    exp = exps[0];
+    for (int i = 1; i < exps.Count; i++) exp.And(exps[i]);
+}
+
+// 取符合条件的记录数
+
+var rowCount = OB." + tn + @".GetCount_Custom(exp);
+
+// 算页码啥的
+
+var pageCount = 0;
+if (rowCount > 0) pageCount = (int)Math.Ceiling((double)rowCount / (double)pageSize);
+if (pageIndex > pageCount) pageIndex = pageCount;
+var rowIndex = pageSize * pageIndex - pageSize;// +1;
+
+// 取符合条件的，当前需要显示的页的数据
+
+var res = OB." + tn + @".SelectAllPage_Custom(
+    exp,
+    (DI." + tn + @")Enum.Parse(typeof(DI." + tn + @"),
+    sortColumn),
+    sortDirection == ""asc"",
+    rowIndex,
+    pageSize
+);
+
+// 输出 JQGrid 需要的 JSON
+
+response.Write(res.ToJson(pageIndex, pageCount, rowCount, DI.jqgrid.id.ToString(), jqGridHelper.DataType.Enhancement));
+
+
 
 
 
