@@ -434,7 +434,7 @@ protected void Page_Load(object sender, EventArgs e)
 	{
 		// todo: init data here
 
-		DAL.OO." + tn + @" o = new DAL.OO." + tn + @"();
+		var o = new OO." + tn + @"();
 
 		// todo: init data here
 
@@ -444,13 +444,13 @@ protected void Page_Load(object sender, EventArgs e)
 
 void _Submit_Button_ServerClick(object sender, EventArgs e)
 {
-	DAL.OO." + tn + @" o = GetData();
+	var o = GetData();
 
 	if (HasErrors) return;
 
 	try
 	{
-		DAL.OB." + tn + @".Insert(o);
+		OB." + tn + @".Insert(o);
 		EnableControls(false);
 		_Submit_Button.Disabled = true;
 
@@ -462,7 +462,7 @@ void _Submit_Button_ServerClick(object sender, EventArgs e)
 	}
 }
 
-void SetData(DAL.OO." + tn + @" o)
+void SetData(OO." + tn + @" o)
 {");
             foreach (Column c in t.Columns)
             {
@@ -480,8 +480,7 @@ void SetData(DAL.OO." + tn + @" o)
                     if (Utils.CheckIsStringType(c))
                     {
                         sb.Append(@"
-	if (o." + cn + @" == null) _" + cn + @"_TextBox.Text = """";
-	else _" + cn + @"_TextBox.Text = o." + cn + @";");
+	_" + cn + @"_TextBox.Text = o." + cn + @" ?? """";");
                     }
                     else if (Utils.CheckIsNumericType(c) || Utils.CheckIsDateTimeType(c) || Utils.CheckIsGuidType(c))
                     {
@@ -553,27 +552,27 @@ void SetData(DAL.OO." + tn + @" o)
                 string dcn = Utils.GetEscapeName(dc);
 
                 sb.Append(@"
-                _" + cn + @"_DropDownList.DataSource = DAL.OB." + ftn + @".SelectAll();
-                _" + cn + @"_DropDownList.DataTextField = DAL.DI." + ftn + @"." + dcn + @".ToString();
-                _" + cn + @"_DropDownList.DataValueField = DAL.DI." + ftn + @"." + fcn + @".ToString();
-                _" + cn + @"_DropDownList.DataBind();
+    _" + cn + @"_DropDownList.DataSource = OB." + ftn + @".SelectAll();
+    _" + cn + @"_DropDownList.DataTextField = DI." + ftn + @"." + dcn + @".ToString();
+    _" + cn + @"_DropDownList.DataValueField = DI." + ftn + @"." + fcn + @".ToString();
+    _" + cn + @"_DropDownList.DataBind();
 ");
                 if (c.Nullable)
                 {
                     sb.Append(@"
-                _" + cn + @"_DropDownList.Items.Insert(0, """");
+    _" + cn + @"_DropDownList.Items.Insert(0, """");
 ");
                 }
                 sb.Append(@"
-                var " + cn + @"_Value = o." + cn + @" == null ? """" : o." + cn + @".ToString();
-                foreach (ListItem item in _" + cn + @"_DropDownList.Items)
-                {
-                    if (item.Value == " + cn + @"_Value)
-                    {
-                        item.Selected = true;
-                        break;
-                    }
-                }
+    var " + cn + @"_Value = o." + cn + @" == null ? """" : o." + cn + @".ToString();
+    foreach (ListItem item in _" + cn + @"_DropDownList.Items)
+    {
+        if (item.Value == " + cn + @"_Value)
+        {
+            item.Selected = true;
+            break;
+        }
+    }
 ");
             }
 
@@ -583,16 +582,20 @@ void SetData(DAL.OO." + tn + @" o)
 }
 
 
-DAL.OO." + tn + @" GetData()
+OO." + tn + @" GetData()
 {
-	DAL.OO." + tn + @" o = new DAL.OO." + tn + @"();
+	var o = new OO." + tn + @"();
+
 ");
 
             foreach (Column c in t.Columns)
             {
-                sb.Append(@"
-");
+                bool isForeignKey = Utils.CheckIsForeignKey(c);
                 string cn = Utils.GetEscapeName(c);
+
+                sb.Append(isForeignKey ? @"
+/*
+                     " : "");
 
                 if (c.Nullable)
                 {
@@ -718,7 +721,80 @@ DAL.OO." + tn + @" GetData()
                     }
                 }
 
+                sb.Append(isForeignKey ? @"
+*/
+                     " : "");
+
             }
+
+            foreach (ForeignKey fk in t.ForeignKeys)
+            {
+                Column c = t.Columns[fk.Columns[0].Name];
+                Table ft = _db.Tables[fk.ReferencedTable, fk.ReferencedTableSchema];
+                Column fc = ft.Columns[fk.Columns[0].ReferencedColumn];
+                Column dc = Utils.GetDisplayColumn(ft);
+
+                string cn = Utils.GetEscapeName(c);
+                string fcn = Utils.GetEscapeName(fc);
+                string ftn = Utils.GetEscapeName(ft);
+                string dcn = Utils.GetEscapeName(dc);
+
+                string typename = Utils.GetDataType(c);
+                if (c.Nullable)
+                {
+                    if (Utils.CheckIsStringType(c))
+                    {
+                        sb.Append(@"
+    o." + cn + @" = _" + cn + @"_DropDownList.SelectedValue == """" ? null : _" + cn + @"_DropDownList.SelectedValue;
+");
+                    }
+                    else if (Utils.CheckIsNumericType(c) || Utils.CheckIsBooleanType(c) || Utils.CheckIsDateTimeType(c))
+                    {
+                        sb.Append(@"
+    o." + cn + @" = _" + cn + @"_DropDownList.SelectedValue == """" ? null : new " + typename + @"?(" + typename + @".Parse(_" + cn + @"_DropDownList.SelectedValue));
+");
+                    }
+                    else if (Utils.CheckIsGuidType(c))
+                    {
+                        sb.Append(@"
+    o." + cn + @" = _" + cn + @"_DropDownList.SelectedValue == """" ? null : new Guid?(new Guid(_" + cn + @"_DropDownList.SelectedValue));
+");
+                    }
+                    else
+                    {
+                        throw new Exception("no handle data type");
+                    }
+
+                }
+                else
+                {
+                    if (Utils.CheckIsStringType(c))
+                    {
+                        sb.Append(@"
+    o." + cn + @" = _" + cn + @"_DropDownList.SelectedValue;
+");
+                    }
+                    else if (Utils.CheckIsNumericType(c) || Utils.CheckIsBooleanType(c) || Utils.CheckIsDateTimeType(c))
+                    {
+                        sb.Append(@"
+    o." + cn + @" = new " + typename + @"?(" + typename + @".Parse(_" + cn + @"_DropDownList.SelectedValue));
+");
+                    }
+                    else if (Utils.CheckIsGuidType(c))
+                    {
+                        sb.Append(@"
+    o." + cn + @" = new Guid?(new Guid(_" + cn + @"_DropDownList.SelectedValue));
+");
+                    }
+                    else
+                    {
+                        throw new Exception("no handle data type");
+                    }
+                }
+
+            }
+
+
             sb.Append(@"
 
 	if (!HasErrors)
