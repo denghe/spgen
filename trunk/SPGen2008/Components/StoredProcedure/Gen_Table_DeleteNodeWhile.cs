@@ -98,7 +98,7 @@ namespace SPGen2008.Components.StoredProdcedure
                 {
                     sb.Append(@"
 -- 针对 表 " + t.ToString() + @"
--- 根据主键值删除一个节点的多行数据
+-- 根据主键值删除一个节点的多行数据, 返回受影响行数
 CREATE PROCEDURE [" + Utils.GetEscapeSqlObjectName(t.Schema) + @"].[usp_" + Utils.GetEscapeSqlObjectName(t.Name) + @"_DeleteNode] (");
                     for (int i = 0; i < pks.Count; i++)
                     {
@@ -177,8 +177,9 @@ BEGIN
                     }
                     sb.Append(@"
               WHERE b.[__DeepLevel__] = @__DeepLevel__ - 1;
-    END
-    DELETE FROM [" + Utils.GetEscapeSqlObjectName(t.Schema) + @"].[" + Utils.GetEscapeSqlObjectName(t.Name) + @"] a
+    END;
+    DELETE FROM [" + Utils.GetEscapeSqlObjectName(t.Schema) + @"].[" + Utils.GetEscapeSqlObjectName(t.Name) + @"]
+      FROM [" + Utils.GetEscapeSqlObjectName(t.Schema) + @"].[" + Utils.GetEscapeSqlObjectName(t.Name) + @"] a
       JOIN @Result b ON ");
                     for (int i = 0; i < fk.Columns.Count; i++)
                     {
@@ -186,7 +187,8 @@ BEGIN
                         if (i > 0) sb.Append(@" AND ");
                         sb.Append(@"a.[" + Utils.GetEscapeSqlObjectName(fkc.ReferencedColumn) + @"] = b.[" + Utils.GetEscapeSqlObjectName(fkc.ReferencedColumn) + @"]");
                     }
-                    sb.Append(@"
+                    sb.Append(@";
+    SELECT @@ROWCOUNT;
 END
 
 
