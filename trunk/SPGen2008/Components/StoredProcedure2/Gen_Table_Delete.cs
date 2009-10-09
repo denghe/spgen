@@ -145,25 +145,30 @@ BEGIN
     END;
 */
 
+    BEGIN TRY
+        DELETE FROM [" + Utils.GetEscapeSqlObjectName(t.Schema) + @"].[" + Utils.GetEscapeSqlObjectName(t.Name) + @"]
+    --    FROM [" + Utils.GetEscapeSqlObjectName(t.Schema) + @"].[" + Utils.GetEscapeSqlObjectName(t.Name) + @"]");
+    			
+			    sb.Append(@"
+    --  OUTPUT Inserted.*	-- 取消注释可返回该行（SQL2005+）");
+			    if (s.Length > 0) sb.Append(@"
+         WHERE " + s);
+			    sb.Append(@"
 
-    DELETE FROM [" + Utils.GetEscapeSqlObjectName(t.Schema) + @"].[" + Utils.GetEscapeSqlObjectName(t.Name) + @"]
---    FROM [" + Utils.GetEscapeSqlObjectName(t.Schema) + @"].[" + Utils.GetEscapeSqlObjectName(t.Name) + @"]");
-			
-			sb.Append(@"
---  OUTPUT Inserted.*	-- 取消注释可返回该行（SQL2005+）");
-			if (s.Length > 0) sb.Append(@"
-     WHERE " + s);
-			sb.Append(@"
-    IF @@ERROR <> 0 OR @@ROWCOUNT = 0
-    BEGIN
+/*
+        @ReturnValue = @@ROWCOUNT;
+        GOTO Cleanup;
+*/
+        RETURN @@ROWCOUNT;
 
+    END TRY
+    BEGIN CATCH
 /*
         @ReturnValue = -3;
         GOTO Cleanup;
 */
-
         RETURN -3;
-    END
+    END CATCH
 
 /*
     --cleanup trans
