@@ -136,7 +136,13 @@ BEGIN
 
 /*
     --prepare trans & error
-    DECLARE @TranStarted bit, @ReturnValue int; SELECT @TranStarted = 0, @ReturnValue = 0; IF @@TRANCOUNT = 0 BEGIN BEGIN TRANSACTION; SET @TranStarted = 1 END;
+    DECLARE @TranStarted bit, @ReturnValue int;
+    SELECT @TranStarted = 0, @ReturnValue = 0;
+    IF @@TRANCOUNT = 0 
+    BEGIN
+        BEGIN TRANSACTION;
+        SET @TranStarted = 1
+    END;
 */
 
 
@@ -161,9 +167,11 @@ BEGIN
 
 /*
     --cleanup trans
-    IF @TranStarted = 1 COMMIT TRANSACTION; RETURN @ReturnValue;
+    IF @TranStarted = 1 COMMIT TRANSACTION;
+    RETURN @ReturnValue;
 Cleanup:
-    IF @TranStarted = 1 ROLLBACK TRANSACTION; RETURN @ReturnValue;
+    IF @TranStarted = 1 ROLLBACK TRANSACTION;
+    RETURN @ReturnValue;
 */
 
     RETURN @@ROWCOUNT;
