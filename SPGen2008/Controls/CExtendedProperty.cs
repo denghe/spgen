@@ -11,9 +11,19 @@ namespace SPGen2008
 {
     public partial class CExtendedProperty : UserControl
     {
+        protected ExtendedProperty _ep = null;
+
         public CExtendedProperty(ExtendedProperty ep)
         {
             InitializeComponent();
+
+            this._ep = ep;
+            this.Load += new EventHandler(CExtendedProperty_Load);
+        }
+
+        void CExtendedProperty_Load(object sender, EventArgs e)
+        {
+            this._Content_richTextBox.Text = this._ep.Value as string;
         }
     }
 }

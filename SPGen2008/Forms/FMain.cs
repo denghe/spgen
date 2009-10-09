@@ -347,6 +347,10 @@ namespace SPGen2008
 						tn.Tag = "User Schema";
 					}
 
+                    tn = node.Nodes.Add("Extended Properties");
+                    tn.SelectedImageKey = tn.ImageKey = "SQL_Folder.png";
+                    tn.Tag = "Extended Properties";
+
 					#endregion
 				}
 				else if (typeof(Database) == tagType && node.Nodes.Count > 0)
@@ -594,6 +598,22 @@ namespace SPGen2008
 							}
 						}
 					}
+
+                    else if (name == "Extended Properties")
+                    {
+                        Database db = (Database)node.Parent.Tag;
+                        if (node.Nodes.Count == 0)
+                        {
+                            List<ExtendedProperty> eps = Utils.GetExtendedProperties(db);
+                            foreach (ExtendedProperty a in eps)
+                            {
+                                TreeNode tn = new TreeNode(a.Name);
+                                tn.SelectedImageKey = tn.ImageKey = "SQL_Schema.png";
+                                tn.Tag = a;
+                                node.Nodes.Add(tn);
+                            }
+                        }
+                    }
 				}
 			}
 			catch (Exception ex)
