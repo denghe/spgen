@@ -220,6 +220,16 @@ namespace SPGen2008.Components
         /// <summary>
         /// 多个自定义表类型. 参数为 Server, Database
         /// </summary>
-        UserDefinedTableTypes = 4096
+        UserDefinedTableTypes = 4096,
+
+        /// <summary>
+        /// 字段　参数为 Server, Database, Column
+        /// </summary>
+        Column = 8192,
+
+        /// <summary>
+        /// 扩展属性　参数为 Server, Database, ExtendProperty
+        /// </summary>
+        ExtendedProperty = 16384
     }
 }
