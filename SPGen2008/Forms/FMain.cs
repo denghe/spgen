@@ -151,7 +151,7 @@ namespace SPGen2008
 				files = Directory.GetFiles(Path.Combine(Environment.CurrentDirectory, "Components"), "*.cs", SearchOption.AllDirectories);
 			}
 			catch { }
-			if (files == null && files.Length == 0) return;
+			if (files == null || files.Length == 0) return;
 
 			// º”‘ÿ≥ı ºªØ
 			CompilerParameters options = new CompilerParameters();
