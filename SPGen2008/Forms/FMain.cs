@@ -378,7 +378,7 @@ namespace SPGen2008
 				}
 				else if (typeof(Column) == tagType)
 				{
-					//
+					// todo
 				}
 				else if (typeof(StoredProcedure) == tagType)
 				{
@@ -396,7 +396,10 @@ namespace SPGen2008
 				}
 				else if (typeof(ExtendedProperty) == tagType)
 				{
-					// todo
+                    ExtendedProperty ep = (ExtendedProperty)tag;
+                    CExtendedProperty cep = new CExtendedProperty(ep);
+                    cep.Dock = DockStyle.Fill;
+                    _SplitContainer.Panel2.Controls.Add(cep);
 				}
 				else if (typeof(string) == tagType)
 				{
