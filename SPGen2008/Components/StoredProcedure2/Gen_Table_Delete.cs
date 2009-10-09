@@ -90,7 +90,10 @@ namespace SPGen2008.Components.StoredProdcedure2
 			sb.Append(@"
 -- 针对 表 " + t.ToString() + @"
 -- 根据主键值删除一行数据
--- 操作成功返回 受影响行数, 失败返回 -1: 主键为空; -2: 主键未找到; -3: 删除失败
+-- 操作成功返回 受影响行数, 失败返回
+-- -1: 主键为空
+-- -2: 主键未找到
+-- -3: 删除失败
 CREATE PROCEDURE [" + Utils.GetEscapeSqlObjectName(t.Schema) + @"].[usp_" + Utils.GetEscapeSqlObjectName(t.Name) + @"_Delete] (");
 			for (int i = 0; i < pks.Count; i++)
 			{
@@ -171,7 +174,10 @@ END
 
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'针对 表 " + t.ToString() + @"
 根据主键值删除一行数据
-操作成功返回 受影响行数, 失败返回 -1: 主键为空; -2: 主键未找到; -3: 删除失败' , @level0type=N'SCHEMA',@level0name=N'" + t.Schema + @"', @level1type=N'PROCEDURE',@level1name=N'usp_" + Utils.GetEscapeSqlObjectName(t.Name) + @"_Delete'
+操作成功返回 受影响行数, 失败返回
+-1: 主键为空; 
+-2: 主键未找到; 
+-3: 删除失败' , @level0type=N'SCHEMA',@level0name=N'" + t.Schema + @"', @level1type=N'PROCEDURE',@level1name=N'usp_" + Utils.GetEscapeSqlObjectName(t.Name) + @"_Delete'
 ");
 
 			#endregion
