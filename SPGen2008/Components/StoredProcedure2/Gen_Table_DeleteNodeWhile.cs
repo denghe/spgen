@@ -19,7 +19,7 @@ namespace SPGen2008.Components.StoredProdcedure2
         {
             this._properties.Add(GenProperties.Name, "Gen_Table_DeleteNodeWhile");
             this._properties.Add(GenProperties.Caption, "删除节点（WHILE版）");
-            this._properties.Add(GenProperties.Group, "生成过程脚本_DELETE类");
+            this._properties.Add(GenProperties.Group, "生成过程脚本_DELETE类（RETURN带错误返回）");
             this._properties.Add(GenProperties.Tips, "生成根据表的主键删除表节点数据的存储过程脚本");
         }
         public SqlElementTypes TargetSqlElementType
