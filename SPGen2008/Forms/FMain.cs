@@ -717,7 +717,17 @@ namespace SPGen2008
 					}
 					else if (typeof(Column) == tagType)
 					{
-						// todo
+                        List<IGenComponent> gens = _gens.FindAll(delegate(IGenComponent o) { return (int)(o.TargetSqlElementType & SqlElementTypes.Column) > 0; });
+                        foreach (IGenComponent gen in gens)
+                        {
+                            IGenComponent g = gen;
+                            g.Server = _server;
+                            g.Database = (Database)node.Parent.Parent.Tag;
+                            if (g.Validate((Column)tag)) CreateContextMenu(cm, (string)g.Properties[GenProperties.Group], (string)g.Properties[GenProperties.Caption], delegate(object s, EventArgs ea)
+                            {
+                                Output(g.Gen((Column)tag));
+                            });
+                        }
 					}
 					else if (typeof(StoredProcedure) == tagType)
 					{
