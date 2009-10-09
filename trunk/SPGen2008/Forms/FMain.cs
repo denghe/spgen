@@ -422,13 +422,13 @@ namespace SPGen2008
 									tn.Nodes.Add(n);
 								}
 
-								//foreach(ExtendedProperty ep in tbl.ExtendedProperties)
-								//{
-								//    TreeNode n = new TreeNode(ep.Name);
-								//    n.SelectedImageKey = n.ImageKey = "SQL_Column.png";
-								//    n.Tag = ep;
-								//    tn.Nodes.Add(n);
-								//}
+                                foreach (ExtendedProperty ep in tbl.ExtendedProperties)
+                                {
+                                    TreeNode n = new TreeNode(ep.Name);
+                                    n.SelectedImageKey = n.ImageKey = "sql_constrain.png";
+                                    n.Tag = ep;
+                                    tn.Nodes.Add(n);
+                                }
 							}
 						}
 						// ...
@@ -446,18 +446,18 @@ namespace SPGen2008
 								tn.Tag = v;
 								node.Nodes.Add(tn);
 
-								//foreach (Column c in v.Columns)
-								//{
-								//    TreeNode n = new TreeNode(c.Name);
-								//    n.SelectedImageKey = n.ImageKey = "SQL_Column.png";
-								//    n.Tag = c;
-								//    tn.Nodes.Add(n);
-								//}
+                                foreach (Column c in v.Columns)
+                                {
+                                    TreeNode n = new TreeNode(c.Name);
+                                    n.SelectedImageKey = n.ImageKey = "SQL_Column.png";
+                                    n.Tag = c;
+                                    tn.Nodes.Add(n);
+                                }
 
 								foreach (ExtendedProperty ep in v.ExtendedProperties)
 								{
 									TreeNode n = new TreeNode(ep.Name);
-									n.SelectedImageKey = n.ImageKey = "SQL_Column.png";
+                                    n.SelectedImageKey = n.ImageKey = "sql_constrain.png";
 									n.Tag = ep;
 									tn.Nodes.Add(n);
 								}
@@ -483,7 +483,7 @@ namespace SPGen2008
 								foreach (ExtendedProperty ep in sp.ExtendedProperties)
 								{
 									TreeNode n = new TreeNode(ep.Name);
-									n.SelectedImageKey = n.ImageKey = "SQL_Column.png";
+                                    n.SelectedImageKey = n.ImageKey = "sql_constrain.png";
 									n.Tag = ep;
 									tn.Nodes.Add(n);
 								}
@@ -516,7 +516,7 @@ namespace SPGen2008
 								foreach (ExtendedProperty ep in fun.ExtendedProperties)
 								{
 									TreeNode n = new TreeNode(ep.Name);
-									n.SelectedImageKey = n.ImageKey = "SQL_Column.png";
+                                    n.SelectedImageKey = n.ImageKey = "sql_constrain.png";
 									n.Tag = ep;
 									tn.Nodes.Add(n);
 								}
@@ -564,13 +564,13 @@ namespace SPGen2008
 									tn.Nodes.Add(n);
 								}
 
-								//foreach (ExtendedProperty ep in tbl.ExtendedProperties)
-								//{
-								//    TreeNode n = new TreeNode(ep.Name);
-								//    n.SelectedImageKey = n.ImageKey = "SQL_Column.png";
-								//    n.Tag = ep;
-								//    tn.Nodes.Add(n);
-								//}
+                                foreach (ExtendedProperty ep in tbl.ExtendedProperties)
+                                {
+                                    TreeNode n = new TreeNode(ep.Name);
+                                    n.SelectedImageKey = n.ImageKey = "sql_constrain.png";
+                                    n.Tag = ep;
+                                    tn.Nodes.Add(n);
+                                }
 							}
 
 						}
@@ -749,7 +749,17 @@ namespace SPGen2008
 					}
 					else if (typeof(ExtendedProperty) == tagType)
 					{
-						// todo
+                        List<IGenComponent> gens = _gens.FindAll(delegate(IGenComponent o) { return (int)(o.TargetSqlElementType & SqlElementTypes.ExtendedProperty) > 0; });
+                        foreach (IGenComponent gen in gens)
+                        {
+                            IGenComponent g = gen;
+                            g.Server = _server;
+                            g.Database = (Database)node.Parent.Parent.Tag;
+                            if (g.Validate((ExtendedProperty)tag)) CreateContextMenu(cm, (string)g.Properties[GenProperties.Group], (string)g.Properties[GenProperties.Caption], delegate(object s, EventArgs ea)
+                            {
+                                Output(g.Gen((ExtendedProperty)tag));
+                            });
+                        }
 					}
 					else if (typeof(string) == tagType)
 					{
