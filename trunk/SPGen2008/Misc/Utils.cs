@@ -41,7 +41,7 @@ namespace SPGen2008
 
         #endregion
 
-        #region Get/Set Description ( Extend Properties )
+        #region Get/Set Description ( Extended Properties )
 
         /// <summary>
         /// 读数据库对象（库，表，视图，过程，函数，字段，参数）的自定义备注（ key = null 则为返回 MS_Description 的内容 ）
@@ -3492,7 +3492,29 @@ namespace SPGen2008
         }
 
 
+
+        /// <summary>
+        /// 返回一个数据对象的扩展属性集合
+        /// </summary>
+        public static List<ExtendedProperty> GetExtendedProperties(Database db)
+        {
+            List<ExtendedProperty> result = new List<ExtendedProperty>();
+            foreach (ExtendedProperty ep in db.ExtendedProperties) result.Add(ep);
+            return result;
+        }
+
+        /// <summary>
+        /// 返回一个数据对象的扩展属性集合
+        /// </summary>
+        public static List<ExtendedProperty> GetExtendedProperties(Table t)
+        {
+            List<ExtendedProperty> result = new List<ExtendedProperty>();
+            foreach (ExtendedProperty ep in t.ExtendedProperties) result.Add(ep);
+            return result;
+        }
+
         #endregion
+
 
     }
 }
