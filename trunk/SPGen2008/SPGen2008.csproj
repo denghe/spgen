@@ -164,6 +164,12 @@
     <Compile Include="Components\UI\SilverLight\Gen_Table_UserControl_Complex.cs" />
     <Compile Include="Components\UI\SilverLight\Gen_Utils_cs.cs" />
     <Compile Include="Components\UI\SilverLight\Gen_View_DataGrid.cs" />
+    <Compile Include="Controls\CExtendedProperty.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls\CExtendedProperty.Designer.cs">
+      <DependentUpon>CExtendedProperty.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls\CUserTableType.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -319,6 +325,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Components\UI\SilverLight\FGen_Database_Config.resx">
       <DependentUpon>FGen_Database_Config.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls\CExtendedProperty.resx">
+      <DependentUpon>CExtendedProperty.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Controls\CStoredProcedure.resx">
       <DependentUpon>CStoredProcedure.cs</DependentUpon>
