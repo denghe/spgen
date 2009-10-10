@@ -36,10 +36,6 @@ namespace SPGen2008
             this._CreateTime_TextBox = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this._DataGridView = new System.Windows.Forms.DataGridView();
-            this.label4 = new System.Windows.Forms.Label();
-            this._Desc_TextBox = new System.Windows.Forms.TextBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this._Caption_TextBox = new System.Windows.Forms.TextBox();
             this._PK = new System.Windows.Forms.DataGridViewImageColumn();
             this._Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this._Caption = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -48,6 +44,10 @@ namespace SPGen2008
             this._Length = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this._AllowNull = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this._IsUnique = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.label4 = new System.Windows.Forms.Label();
+            this._Desc_TextBox = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this._Caption_TextBox = new System.Windows.Forms.TextBox();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this._DataGridView)).BeginInit();
             this.SuspendLayout();
@@ -169,45 +169,6 @@ namespace SPGen2008
             this._DataGridView.TabIndex = 2;
             this._DataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this._DataGridView_CellValueChanged);
             // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(3, 67);
-            this.label4.Margin = new System.Windows.Forms.Padding(3, 9, 3, 0);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(63, 13);
-            this.label4.TabIndex = 0;
-            this.label4.Text = "Description:";
-            // 
-            // _Desc_TextBox
-            // 
-            this.tableLayoutPanel1.SetColumnSpan(this._Desc_TextBox, 3);
-            this._Desc_TextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._Desc_TextBox.Location = new System.Drawing.Point(103, 61);
-            this._Desc_TextBox.Name = "_Desc_TextBox";
-            this._Desc_TextBox.Size = new System.Drawing.Size(862, 20);
-            this._Desc_TextBox.TabIndex = 3;
-            this._Desc_TextBox.TextChanged += new System.EventHandler(this._Desc_TextBox_TextChanged);
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(487, 9);
-            this.label5.Margin = new System.Windows.Forms.Padding(3, 9, 3, 0);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(72, 13);
-            this.label5.TabIndex = 0;
-            this.label5.Text = "DisplayName:";
-            // 
-            // _Caption_TextBox
-            // 
-            this._Caption_TextBox.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._Caption_TextBox.Location = new System.Drawing.Point(587, 3);
-            this._Caption_TextBox.Name = "_Caption_TextBox";
-            this._Caption_TextBox.Size = new System.Drawing.Size(378, 20);
-            this._Caption_TextBox.TabIndex = 4;
-            this._Caption_TextBox.TextChanged += new System.EventHandler(this._Caption_TextBox_TextChanged);
-            // 
             // _PK
             // 
             this._PK.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
@@ -272,6 +233,45 @@ namespace SPGen2008
             this._IsUnique.Resizable = System.Windows.Forms.DataGridViewTriState.True;
             this._IsUnique.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this._IsUnique.ToolTipText = "ÊÇ·ñÊôÓÚÄ³Î¨Ò»¼ü";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(3, 67);
+            this.label4.Margin = new System.Windows.Forms.Padding(3, 9, 3, 0);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(63, 13);
+            this.label4.TabIndex = 0;
+            this.label4.Text = "Description:";
+            // 
+            // _Desc_TextBox
+            // 
+            this.tableLayoutPanel1.SetColumnSpan(this._Desc_TextBox, 3);
+            this._Desc_TextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._Desc_TextBox.Location = new System.Drawing.Point(103, 61);
+            this._Desc_TextBox.Name = "_Desc_TextBox";
+            this._Desc_TextBox.Size = new System.Drawing.Size(862, 20);
+            this._Desc_TextBox.TabIndex = 3;
+            this._Desc_TextBox.TextChanged += new System.EventHandler(this._Desc_TextBox_TextChanged);
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(487, 9);
+            this.label5.Margin = new System.Windows.Forms.Padding(3, 9, 3, 0);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(72, 13);
+            this.label5.TabIndex = 0;
+            this.label5.Text = "DisplayName:";
+            // 
+            // _Caption_TextBox
+            // 
+            this._Caption_TextBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._Caption_TextBox.Location = new System.Drawing.Point(587, 3);
+            this._Caption_TextBox.Name = "_Caption_TextBox";
+            this._Caption_TextBox.Size = new System.Drawing.Size(378, 20);
+            this._Caption_TextBox.TabIndex = 4;
+            this._Caption_TextBox.TextChanged += new System.EventHandler(this._Caption_TextBox_TextChanged);
             // 
             // CTable
             // 

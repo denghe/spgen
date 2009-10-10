@@ -8,6 +8,7 @@ using System.Text;
 using Microsoft.SqlServer;
 using Microsoft.SqlServer.Management.Common;
 using Microsoft.SqlServer.Management.Smo;
+using SPGen2008.Components.Selector;
 
 namespace SPGen2008.Components.StoredProdcedure2
 {
@@ -84,6 +85,11 @@ namespace SPGen2008.Components.StoredProdcedure2
 			StringBuilder sb = new StringBuilder();
 
 			#endregion
+
+            using (FSelector_Columns f = new FSelector_Columns(t))
+            {
+                f.ShowDialog();
+            }
 
 			#region Gen
 

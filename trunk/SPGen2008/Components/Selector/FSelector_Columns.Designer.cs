@@ -29,16 +29,13 @@
         private void InitializeComponent()
         {
             this._DataGridView = new System.Windows.Forms.DataGridView();
-            this._IsPrimaryKey = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this._Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this._Caption = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this._Memo = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this._DataType = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this._Length = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this._AllowNull = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this._Cancel_button = new System.Windows.Forms.Button();
             this._Submit_button = new System.Windows.Forms.Button();
+            this.PrimaryKey = new System.Windows.Forms.DataGridViewImageColumn();
+            this._Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this._Caption = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this._Memo = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this._DataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -55,73 +52,19 @@
             this._DataGridView.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this._DataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this._DataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this._IsPrimaryKey,
+            this.PrimaryKey,
             this._Name,
             this._Caption,
-            this._Memo,
-            this._DataType,
-            this._Length,
-            this._AllowNull});
+            this._Memo});
             this._DataGridView.EditMode = System.Windows.Forms.DataGridViewEditMode.EditOnEnter;
             this._DataGridView.Location = new System.Drawing.Point(12, 12);
-            this._DataGridView.MultiSelect = false;
             this._DataGridView.Name = "_DataGridView";
+            this._DataGridView.ReadOnly = true;
             this._DataGridView.RowHeadersWidth = 26;
             this._DataGridView.RowTemplate.Height = 23;
-            this._DataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
+            this._DataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this._DataGridView.Size = new System.Drawing.Size(819, 382);
             this._DataGridView.TabIndex = 3;
-            // 
-            // _IsPrimaryKey
-            // 
-            this._IsPrimaryKey.HeaderText = "Select";
-            this._IsPrimaryKey.MinimumWidth = 100;
-            this._IsPrimaryKey.Name = "_IsPrimaryKey";
-            this._IsPrimaryKey.ToolTipText = "Multi Choose";
-            // 
-            // _Name
-            // 
-            this._Name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this._Name.HeaderText = "FieldName";
-            this._Name.MinimumWidth = 155;
-            this._Name.Name = "_Name";
-            this._Name.ReadOnly = true;
-            this._Name.Width = 155;
-            // 
-            // _Caption
-            // 
-            this._Caption.HeaderText = "DisplayName";
-            this._Caption.MinimumWidth = 100;
-            this._Caption.Name = "_Caption";
-            // 
-            // _Memo
-            // 
-            this._Memo.HeaderText = "Discription";
-            this._Memo.MinimumWidth = 255;
-            this._Memo.Name = "_Memo";
-            // 
-            // _DataType
-            // 
-            this._DataType.HeaderText = "DataType";
-            this._DataType.MinimumWidth = 100;
-            this._DataType.Name = "_DataType";
-            this._DataType.ReadOnly = true;
-            // 
-            // _Length
-            // 
-            this._Length.HeaderText = "L";
-            this._Length.MinimumWidth = 30;
-            this._Length.Name = "_Length";
-            this._Length.ReadOnly = true;
-            this._Length.ToolTipText = "数据最大长度";
-            // 
-            // _AllowNull
-            // 
-            this._AllowNull.HeaderText = "E";
-            this._AllowNull.MinimumWidth = 20;
-            this._AllowNull.Name = "_AllowNull";
-            this._AllowNull.ReadOnly = true;
-            this._AllowNull.ToolTipText = "是否可空";
             // 
             // pictureBox1
             // 
@@ -155,6 +98,42 @@
             this._Submit_button.Text = "&Submit";
             this._Submit_button.UseVisualStyleBackColor = true;
             // 
+            // PrimaryKey
+            // 
+            this.PrimaryKey.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this.PrimaryKey.HeaderText = "";
+            this.PrimaryKey.MinimumWidth = 27;
+            this.PrimaryKey.Name = "PrimaryKey";
+            this.PrimaryKey.ReadOnly = true;
+            this.PrimaryKey.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.PrimaryKey.Width = 27;
+            // 
+            // _Name
+            // 
+            this._Name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this._Name.HeaderText = "FieldName";
+            this._Name.MinimumWidth = 155;
+            this._Name.Name = "_Name";
+            this._Name.ReadOnly = true;
+            this._Name.Width = 155;
+            // 
+            // _Caption
+            // 
+            this._Caption.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this._Caption.HeaderText = "DisplayName";
+            this._Caption.MinimumWidth = 155;
+            this._Caption.Name = "_Caption";
+            this._Caption.ReadOnly = true;
+            this._Caption.Width = 155;
+            // 
+            // _Memo
+            // 
+            this._Memo.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.Fill;
+            this._Memo.HeaderText = "Discription";
+            this._Memo.MinimumWidth = 255;
+            this._Memo.Name = "_Memo";
+            this._Memo.ReadOnly = true;
+            // 
             // FSelector_Columns
             // 
             this.AcceptButton = this._Submit_button;
@@ -167,6 +146,7 @@
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this._DataGridView);
             this.Name = "FSelector_Columns";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "表--字段选择器";
             this.Load += new System.EventHandler(this.FSelector_Columns_Load);
             ((System.ComponentModel.ISupportInitialize)(this._DataGridView)).EndInit();
@@ -181,13 +161,10 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.Button _Cancel_button;
         private System.Windows.Forms.Button _Submit_button;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn _IsPrimaryKey;
+        private System.Windows.Forms.DataGridViewImageColumn PrimaryKey;
         private System.Windows.Forms.DataGridViewTextBoxColumn _Name;
         private System.Windows.Forms.DataGridViewTextBoxColumn _Caption;
         private System.Windows.Forms.DataGridViewTextBoxColumn _Memo;
-        private System.Windows.Forms.DataGridViewTextBoxColumn _DataType;
-        private System.Windows.Forms.DataGridViewTextBoxColumn _Length;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn _AllowNull;
 
     }
 }
