@@ -1,6 +1,6 @@
 ﻿namespace SPGen2008.Components.Selector
 {
-    partial class FSelector_TableColumns
+    partial class FSelector_Columns
     {
         /// <summary>
         /// Required designer variable.

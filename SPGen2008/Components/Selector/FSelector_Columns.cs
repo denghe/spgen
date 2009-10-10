@@ -8,9 +8,9 @@ using System.Windows.Forms;
 
 namespace SPGen2008.Components.Selector
 {
-    public partial class FSelector_TableColumns : Form
+    public partial class FSelector_Columns : Form
     {
-        public FSelector_TableColumns()
+        public FSelector_Columns()
         {
             InitializeComponent();
         }
