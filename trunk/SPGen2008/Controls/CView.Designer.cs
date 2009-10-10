@@ -36,12 +36,6 @@
             this._CreateTime_TextBox = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
             this._DataGridView = new System.Windows.Forms.DataGridView();
-            this.label4 = new System.Windows.Forms.Label();
-            this._Desc_TextBox = new System.Windows.Forms.TextBox();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this._Caption_TextBox = new System.Windows.Forms.TextBox();
-            this._BaseTable_comboBox = new System.Windows.Forms.ComboBox();
             this._Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this._IsPrimaryKey = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this._Caption = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -49,6 +43,12 @@
             this._DataType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this._Length = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this._AllowNull = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.label4 = new System.Windows.Forms.Label();
+            this._Desc_TextBox = new System.Windows.Forms.TextBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this._Caption_TextBox = new System.Windows.Forms.TextBox();
+            this._BaseTable_comboBox = new System.Windows.Forms.ComboBox();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this._DataGridView)).BeginInit();
             this.SuspendLayout();
@@ -172,6 +172,58 @@
             this._DataGridView.TabIndex = 2;
             this._DataGridView.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this._DataGridView_CellValueChanged);
             // 
+            // _Name
+            // 
+            this._Name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+            this._Name.Frozen = true;
+            this._Name.HeaderText = "FieldName";
+            this._Name.MinimumWidth = 155;
+            this._Name.Name = "_Name";
+            this._Name.ReadOnly = true;
+            this._Name.Width = 155;
+            // 
+            // _IsPrimaryKey
+            // 
+            this._IsPrimaryKey.HeaderText = "PrimaryKey(Changeable)";
+            this._IsPrimaryKey.MinimumWidth = 100;
+            this._IsPrimaryKey.Name = "_IsPrimaryKey";
+            this._IsPrimaryKey.ToolTipText = "是否属于主键";
+            // 
+            // _Caption
+            // 
+            this._Caption.HeaderText = "DisplayName(Changeable)";
+            this._Caption.MinimumWidth = 100;
+            this._Caption.Name = "_Caption";
+            // 
+            // _Memo
+            // 
+            this._Memo.HeaderText = "Discription(Changeable)";
+            this._Memo.MinimumWidth = 255;
+            this._Memo.Name = "_Memo";
+            // 
+            // _DataType
+            // 
+            this._DataType.HeaderText = "DataType";
+            this._DataType.MinimumWidth = 100;
+            this._DataType.Name = "_DataType";
+            this._DataType.ReadOnly = true;
+            // 
+            // _Length
+            // 
+            this._Length.HeaderText = "L";
+            this._Length.MinimumWidth = 30;
+            this._Length.Name = "_Length";
+            this._Length.ReadOnly = true;
+            this._Length.ToolTipText = "数据最大长度";
+            // 
+            // _AllowNull
+            // 
+            this._AllowNull.HeaderText = "E";
+            this._AllowNull.MinimumWidth = 20;
+            this._AllowNull.Name = "_AllowNull";
+            this._AllowNull.ReadOnly = true;
+            this._AllowNull.ToolTipText = "是否可空";
+            // 
             // label4
             // 
             this.label4.AutoSize = true;
@@ -230,58 +282,6 @@
             this._BaseTable_comboBox.Name = "_BaseTable_comboBox";
             this._BaseTable_comboBox.Size = new System.Drawing.Size(182, 21);
             this._BaseTable_comboBox.TabIndex = 4;
-            // 
-            // _Name
-            // 
-            this._Name.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-            this._Name.Frozen = true;
-            this._Name.HeaderText = "FieldName";
-            this._Name.MinimumWidth = 155;
-            this._Name.Name = "_Name";
-            this._Name.ReadOnly = true;
-            this._Name.Width = 155;
-            // 
-            // _IsPrimaryKey
-            // 
-            this._IsPrimaryKey.HeaderText = "PrimaryKey(Changeable)";
-            this._IsPrimaryKey.MinimumWidth = 100;
-            this._IsPrimaryKey.Name = "_IsPrimaryKey";
-            this._IsPrimaryKey.ToolTipText = "是否属于主键";
-            // 
-            // _Caption
-            // 
-            this._Caption.HeaderText = "DisplayName(Changeable)";
-            this._Caption.MinimumWidth = 100;
-            this._Caption.Name = "_Caption";
-            // 
-            // _Memo
-            // 
-            this._Memo.HeaderText = "Discription(Changeable)";
-            this._Memo.MinimumWidth = 255;
-            this._Memo.Name = "_Memo";
-            // 
-            // _DataType
-            // 
-            this._DataType.HeaderText = "DataType";
-            this._DataType.MinimumWidth = 100;
-            this._DataType.Name = "_DataType";
-            this._DataType.ReadOnly = true;
-            // 
-            // _Length
-            // 
-            this._Length.HeaderText = "L";
-            this._Length.MinimumWidth = 30;
-            this._Length.Name = "_Length";
-            this._Length.ReadOnly = true;
-            this._Length.ToolTipText = "数据最大长度";
-            // 
-            // _AllowNull
-            // 
-            this._AllowNull.HeaderText = "E";
-            this._AllowNull.MinimumWidth = 20;
-            this._AllowNull.Name = "_AllowNull";
-            this._AllowNull.ReadOnly = true;
-            this._AllowNull.ToolTipText = "是否可空";
             // 
             // CView
             // 
