@@ -29,9 +29,6 @@
         private void InitializeComponent()
         {
             this._DataGridView = new System.Windows.Forms.DataGridView();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this._Cancel_button = new System.Windows.Forms.Button();
-            this._Submit_button = new System.Windows.Forms.Button();
             this._IsPrimaryKey = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this._Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this._Caption = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -39,6 +36,9 @@
             this._DataType = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this._Length = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this._AllowNull = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this._Cancel_button = new System.Windows.Forms.Button();
+            this._Submit_button = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this._DataGridView)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
@@ -71,38 +71,6 @@
             this._DataGridView.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.CellSelect;
             this._DataGridView.Size = new System.Drawing.Size(819, 382);
             this._DataGridView.TabIndex = 3;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
-                        | System.Windows.Forms.AnchorStyles.Right)));
-            this.pictureBox1.BackColor = System.Drawing.Color.DimGray;
-            this.pictureBox1.Location = new System.Drawing.Point(13, 407);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(818, 1);
-            this.pictureBox1.TabIndex = 4;
-            this.pictureBox1.TabStop = false;
-            // 
-            // _Cancel_button
-            // 
-            this._Cancel_button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this._Cancel_button.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-            this._Cancel_button.Location = new System.Drawing.Point(756, 421);
-            this._Cancel_button.Name = "_Cancel_button";
-            this._Cancel_button.Size = new System.Drawing.Size(75, 23);
-            this._Cancel_button.TabIndex = 5;
-            this._Cancel_button.Text = "&Cancel";
-            this._Cancel_button.UseVisualStyleBackColor = true;
-            // 
-            // _Submit_button
-            // 
-            this._Submit_button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this._Submit_button.Location = new System.Drawing.Point(661, 421);
-            this._Submit_button.Name = "_Submit_button";
-            this._Submit_button.Size = new System.Drawing.Size(75, 23);
-            this._Submit_button.TabIndex = 5;
-            this._Submit_button.Text = "&Submit";
-            this._Submit_button.UseVisualStyleBackColor = true;
             // 
             // _IsPrimaryKey
             // 
@@ -155,7 +123,39 @@
             this._AllowNull.ReadOnly = true;
             this._AllowNull.ToolTipText = "是否可空";
             // 
-            // FSelector_TableColumns
+            // pictureBox1
+            // 
+            this.pictureBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)
+                        | System.Windows.Forms.AnchorStyles.Right)));
+            this.pictureBox1.BackColor = System.Drawing.Color.DimGray;
+            this.pictureBox1.Location = new System.Drawing.Point(13, 407);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(818, 1);
+            this.pictureBox1.TabIndex = 4;
+            this.pictureBox1.TabStop = false;
+            // 
+            // _Cancel_button
+            // 
+            this._Cancel_button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this._Cancel_button.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this._Cancel_button.Location = new System.Drawing.Point(756, 421);
+            this._Cancel_button.Name = "_Cancel_button";
+            this._Cancel_button.Size = new System.Drawing.Size(75, 23);
+            this._Cancel_button.TabIndex = 5;
+            this._Cancel_button.Text = "&Cancel";
+            this._Cancel_button.UseVisualStyleBackColor = true;
+            // 
+            // _Submit_button
+            // 
+            this._Submit_button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this._Submit_button.Location = new System.Drawing.Point(661, 421);
+            this._Submit_button.Name = "_Submit_button";
+            this._Submit_button.Size = new System.Drawing.Size(75, 23);
+            this._Submit_button.TabIndex = 5;
+            this._Submit_button.Text = "&Submit";
+            this._Submit_button.UseVisualStyleBackColor = true;
+            // 
+            // FSelector_Columns
             // 
             this.AcceptButton = this._Submit_button;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -166,8 +166,9 @@
             this.Controls.Add(this._Cancel_button);
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this._DataGridView);
-            this.Name = "FSelector_TableColumns";
+            this.Name = "FSelector_Columns";
             this.Text = "表--字段选择器";
+            this.Load += new System.EventHandler(this.FSelector_Columns_Load);
             ((System.ComponentModel.ISupportInitialize)(this._DataGridView)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);

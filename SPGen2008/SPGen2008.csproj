@@ -110,6 +110,12 @@
     <Compile Include="Components\Selector\FSelector_Columns.Designer.cs">
       <DependentUpon>FSelector_Columns.cs</DependentUpon>
     </Compile>
+    <Compile Include="Components\Selector\FSelector_Table.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Components\Selector\FSelector_Table.Designer.cs">
+      <DependentUpon>FSelector_Table.cs</DependentUpon>
+    </Compile>
     <Compile Include="Components\StoredProcedure2\Gen_Table_Delete.cs" />
     <Compile Include="Components\StoredProcedure2\Gen_Table_DeleteNodeWhile.cs" />
     <Compile Include="Components\StoredProcedure\Gen_Table_DeleteNodeWhile.cs" />
@@ -333,6 +339,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Components\Selector\FSelector_Columns.resx">
       <DependentUpon>FSelector_Columns.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Components\Selector\FSelector_Table.resx">
+      <DependentUpon>FSelector_Table.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Components\UI\SilverLight\FGen_Database_Config.resx">
       <DependentUpon>FGen_Database_Config.cs</DependentUpon>
