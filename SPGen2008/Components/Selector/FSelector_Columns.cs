@@ -36,11 +36,14 @@ namespace SPGen2008.Components.Selector
 
                 foreach (Column c in _t.Columns)
                 {
-                    int i = _DataGridView.Rows.Add((c.InPrimaryKey ? Properties.Resources.SQL_Key : (c.IsForeignKey ? Properties.Resources.SQL_ForeignKey : Properties.Resources.SQL_Empty)), c.Name, Utils.GetCaption(c), Utils.GetDescription(c), c.DataType.Name, c.DataType.MaximumLength, c.Nullable, c.InPrimaryKey || ucns.Contains(c.Name));
+                    int i = _DataGridView.Rows.Add(
+                        (c.InPrimaryKey ? Properties.Resources.SQL_Key : (c.IsForeignKey ? Properties.Resources.SQL_ForeignKey : Properties.Resources.SQL_Empty)),
+                        c.Name, 
+                        Utils.GetCaption(c), 
+                        Utils.GetDescription(c)
+                    );
                     _DataGridView.Rows[i].Tag = c;
                 }
-
-
 
             }
             
