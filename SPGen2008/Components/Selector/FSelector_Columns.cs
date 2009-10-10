@@ -11,13 +11,33 @@ namespace SPGen2008.Components.Selector
 {
     public partial class FSelector_Columns : Form
     {
-        protected Table _t = null;
+        /*
+        示例:
+         
+        List<Column> cs = new List<Column>();
+        using (FSelector_Columns f = new FSelector_Columns(t, ref cs))
+        {
+            f.ShowDialog();
+        }
 
-        public FSelector_Columns(Table t)
+        MessageBox.Show(cs.Count.ToString());
+         
+         */
+
+
+
+
+
+
+        protected Table _t = null;
+        protected List<Column> _cs = null;
+
+        public FSelector_Columns(Table t, ref List<Column> cs)
         {
             InitializeComponent();
 
             _t = t;
+            _cs = cs;
         }
 
         private void FSelector_Columns_Load(object sender, EventArgs e)
@@ -48,5 +68,30 @@ namespace SPGen2008.Components.Selector
             }
             
         }
+
+        private void _Submit_button_Click(object sender, EventArgs e)
+        {
+            if (_DataGridView.SelectedRows.Count == 0)
+            {
+                return;
+            }
+            else
+            {
+                _cs.Clear();
+                foreach (DataGridViewRow dgvr in _DataGridView.SelectedRows)
+                {
+                    _cs.Add((Column)dgvr.Tag);
+                }
+
+                this.Close();
+            }
+        }
+
+        private void _Cancel_button_Click(object sender, EventArgs e)
+        {
+            _cs.Clear();
+        }
+
+
     }
 }

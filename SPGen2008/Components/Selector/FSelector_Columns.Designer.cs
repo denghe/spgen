@@ -87,6 +87,7 @@
             this._Cancel_button.TabIndex = 5;
             this._Cancel_button.Text = "&Cancel";
             this._Cancel_button.UseVisualStyleBackColor = true;
+            this._Cancel_button.Click += new System.EventHandler(this._Cancel_button_Click);
             // 
             // _Submit_button
             // 
@@ -97,6 +98,7 @@
             this._Submit_button.TabIndex = 5;
             this._Submit_button.Text = "&Submit";
             this._Submit_button.UseVisualStyleBackColor = true;
+            this._Submit_button.Click += new System.EventHandler(this._Submit_button_Click);
             // 
             // PrimaryKey
             // 
