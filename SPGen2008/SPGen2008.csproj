@@ -119,6 +119,7 @@
     <Compile Include="Components\StoredProcedure2\Gen_Table_Delete.cs" />
     <Compile Include="Components\StoredProcedure2\Gen_Table_DeleteNodeWhile.cs" />
     <Compile Include="Components\StoredProcedure2\Gen_Table_Insert.cs" />
+    <Compile Include="Components\StoredProcedure2\Gen_Table_Update.cs" />
     <Compile Include="Components\StoredProcedure\Gen_Table_DeleteNodeWhile.cs" />
     <Compile Include="Components\StoredProcedure\Gen_Table_Merge2.cs" />
     <Compile Include="Components\StoredProcedure\Gen_Table_Select.cs">
