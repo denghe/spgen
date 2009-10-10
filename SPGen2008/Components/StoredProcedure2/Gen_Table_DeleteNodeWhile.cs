@@ -203,7 +203,11 @@ END
 -- 下面这几行用于生成智能感知代码，以及强类型返回值，请注意同步修改（SP名称，备注，返回值类型）
 
 EXEC sys.sp_addextendedproperty @name=N'MS_Description', @value=N'针对 表 " + t.ToString() + @"
-根据主键值删除一个节点的多行数据' , @level0type=N'SCHEMA',@level0name=N'" + t.Schema + @"', @level1type=N'PROCEDURE',@level1name=N'usp_" + Utils.GetEscapeSqlObjectName(t.Name) + @"_DeleteNode'
+根据主键值删除一个节点的多行数据
+操作成功返回 受影响行数，失败返回
+-1: 主键为空
+-2: 主键未找到
+-3: 删除失败' , @level0type=N'SCHEMA',@level0name=N'" + t.Schema + @"', @level1type=N'PROCEDURE',@level1name=N'usp_" + Utils.GetEscapeSqlObjectName(t.Name) + @"_DeleteNode'
 
 ");
                     break;
