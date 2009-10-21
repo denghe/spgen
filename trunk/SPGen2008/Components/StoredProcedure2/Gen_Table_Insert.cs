@@ -116,7 +116,6 @@ CREATE PROCEDURE [" + Utils.GetEscapeSqlObjectName(t.Schema) + @"].[usp_" + Util
             sb.Append(@"
 ) AS
 BEGIN
-
     SET NOCOUNT ON;
 ");
             //判断必填字段是否填写了空值
@@ -210,38 +209,45 @@ BEGIN
     END;
 */
 
-    BEGIN TRY
-        INSERT INTO [" + Utils.GetEscapeSqlObjectName(t.Schema) + @"].[" + Utils.GetEscapeSqlObjectName(t.Name) + @"] (");
-                for (int i = 0; i < wcs.Count; i++)
-                {
-                    Column c = wcs[i];
-                    sb.Append(@"
-            " + (i > 0 ? ", " : "  ") + "[" + Utils.GetEscapeSqlObjectName(c.Name) + @"]");
-                }
+    DECLARE @ERROR INT, @ROWCOUNT INT;
+
+    INSERT INTO [" + Utils.GetEscapeSqlObjectName(t.Schema) + @"].[" + Utils.GetEscapeSqlObjectName(t.Name) + @"] (");
+            for (int i = 0; i < wcs.Count; i++)
+            {
+                Column c = wcs[i];
                 sb.Append(@"
-        )
+        " + (i > 0 ? ", " : "  ") + "[" + Utils.GetEscapeSqlObjectName(c.Name) + @"]");
+            }
+            sb.Append(@"
+    )
 --    OUTPUT Inserted.*
-        VALUES (");
-                for (int i = 0; i < wcs.Count; i++)
-                {
-                    Column c = wcs[i];
-                    string cn = Utils.GetEscapeName(c);
-                    sb.Append(@"
-            " + (i > 0 ? ", " : "  ") + "@" + cn);
-                }
+    VALUES (");
+            for (int i = 0; i < wcs.Count; i++)
+            {
+                Column c = wcs[i];
+                string cn = Utils.GetEscapeName(c);
                 sb.Append(@"
-        );");
+        " + (i > 0 ? ", " : "  ") + "@" + cn);
+            }
+            sb.Append(@"
+    );");
                 sb.Append(@"
-        RETURN @@ROWCOUNT;
-    END TRY
-    BEGIN CATCH
+    SELECT @ERROR = @@ERROR, @ROWCOUNT = @@ROWCOUNT;
+    IF @ERROR <> 0 OR @ROWCOUNT = 0
+    BEGIN
 /*
         @ReturnValue = -4;
         GOTO Cleanup;
 */
         RETURN -4;
-    END CATCH
+    END
 
+/*
+    @ReturnValue = @ROWCOUNT;
+    GOTO Cleanup;
+*/
+
+    RETURN @ROWCOUNT;
 
 /*
     --cleanup trans
@@ -251,9 +257,6 @@ Cleanup:
     IF @TranStarted = 1 ROLLBACK TRANSACTION;
     RETURN @ReturnValue;
 */
-
-    RETURN @@ROWCOUNT;
-
 END
 
 

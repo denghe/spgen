@@ -147,30 +147,33 @@ BEGIN
     END;
 */
 
-    BEGIN TRY
-        DELETE FROM [" + Utils.GetEscapeSqlObjectName(t.Schema) + @"].[" + Utils.GetEscapeSqlObjectName(t.Name) + @"]
-    --    FROM [" + Utils.GetEscapeSqlObjectName(t.Schema) + @"].[" + Utils.GetEscapeSqlObjectName(t.Name) + @"]");
-    			
-			    sb.Append(@"
-    --  OUTPUT Inserted.*	-- 取消注释可返回该行（SQL2005+）");
-			    if (s.Length > 0) sb.Append(@"
-         WHERE " + s);
-			    sb.Append(@"
+    DECLARE @ERROR INT, @ROWCOUNT INT;
 
+    DELETE FROM [" + Utils.GetEscapeSqlObjectName(t.Schema) + @"].[" + Utils.GetEscapeSqlObjectName(t.Name) + @"]
+--    FROM [" + Utils.GetEscapeSqlObjectName(t.Schema) + @"].[" + Utils.GetEscapeSqlObjectName(t.Name) + @"]");
+			
+		    sb.Append(@"
+--  OUTPUT Inserted.*	-- 取消注释可返回该行（SQL2005+）");
+		    if (s.Length > 0) sb.Append(@"
+     WHERE " + s);
+		    sb.Append(@"
+
+    SELECT @ERROR = @@ERROR, @ROWCOUNT = @@ROWCOUNT;
+    IF @ERROR <> 0 OR @ROWCOUNT = 0
+    BEGIN
 /*
-        @ReturnValue = @@ROWCOUNT;
+        @ReturnValue = -4;
         GOTO Cleanup;
 */
-        RETURN @@ROWCOUNT;
+        RETURN -4;
+    END
 
-    END TRY
-    BEGIN CATCH
 /*
-        @ReturnValue = -3;
-        GOTO Cleanup;
+    @ReturnValue = @ROWCOUNT;
+    GOTO Cleanup;
 */
-        RETURN -3;
-    END CATCH
+
+    RETURN @ROWCOUNT;
 
 /*
     --cleanup trans
@@ -180,9 +183,6 @@ Cleanup:
     IF @TranStarted = 1 ROLLBACK TRANSACTION;
     RETURN @ReturnValue;
 */
-
-    RETURN @@ROWCOUNT;
-
 END
 
 -- 下面这几行用于生成智能感知代码，以及强类型返回值，请注意同步修改（SP名称，备注，返回值类型）
