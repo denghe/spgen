@@ -287,43 +287,45 @@ BEGIN
     END;
 */
 
-    BEGIN TRY
+    DECLARE @ERROR INT, @ROWCOUNT INT;
 
-        UPDATE [" + Utils.GetEscapeSqlObjectName(t.Schema) + @"].[" + Utils.GetEscapeSqlObjectName(t.Name) + @"]
-           SET ");
-                for (int i = 0; i < wcs.Count; i++)
-                {
-                    Column c = wcs[i];
-                    string cn = Utils.GetEscapeName(c);
-                    sb.Append((i > 0 ? @"
-             , " : "") + Utils.FormatString("[" + Utils.GetEscapeSqlObjectName(c.Name) + @"]", "= @" + cn, 40));
-                }
-                s = "";
-                for (int i = 0; i < pks.Count; i++)
-                {
-                    Column c = pks[i];
-                    string cn = Utils.GetEscapeName(c);
-                    if (i > 0) s += " AND ";
-                    s += @"[" + Utils.GetEscapeSqlObjectName(c.Name) + @"] = @Original_" + cn;
-                }
-                if (s.Length > 0) sb.Append(@"
-         WHERE " + s);
-                sb.Append(@";
-/*
-        @ReturnValue = @@ROWCOUNT;
-        GOTO Cleanup;
-*/
-        RETURN @@ROWCOUNT;
+    UPDATE [" + Utils.GetEscapeSqlObjectName(t.Schema) + @"].[" + Utils.GetEscapeSqlObjectName(t.Name) + @"]
+       SET ");
+            for (int i = 0; i < wcs.Count; i++)
+            {
+                Column c = wcs[i];
+                string cn = Utils.GetEscapeName(c);
+                sb.Append((i > 0 ? @"
+         , " : "") + Utils.FormatString("[" + Utils.GetEscapeSqlObjectName(c.Name) + @"]", "= @" + cn, 40));
+            }
+            s = "";
+            for (int i = 0; i < pks.Count; i++)
+            {
+                Column c = pks[i];
+                string cn = Utils.GetEscapeName(c);
+                if (i > 0) s += " AND ";
+                s += @"[" + Utils.GetEscapeSqlObjectName(c.Name) + @"] = @Original_" + cn;
+            }
+            if (s.Length > 0) sb.Append(@"
+     WHERE " + s);
+            sb.Append(@";
 
-    END TRY
-    BEGIN CATCH
+    SELECT @ERROR = @@ERROR, @ROWCOUNT = @@ROWCOUNT;
+    IF @ERROR <> 0 OR @ROWCOUNT = 0
+    BEGIN
 /*
         @ReturnValue = -6;
         GOTO Cleanup;
 */
         RETURN -6;
-    END CATCH
+    END
 
+/*
+    @ReturnValue = @ROWCOUNT;
+    GOTO Cleanup;
+*/
+
+    RETURN @ROWCOUNT;
 
 /*
     --cleanup trans
@@ -333,9 +335,6 @@ Cleanup:
     IF @TranStarted = 1 ROLLBACK TRANSACTION;
     RETURN @ReturnValue;
 */
-
-    RETURN @@ROWCOUNT;
-
 END
 
 
