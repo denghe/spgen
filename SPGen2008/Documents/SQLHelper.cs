@@ -431,10 +431,10 @@ namespace DAL
 		public static int UpdateData(DataSet ds, string tn, SqlCommand insertCmd, SqlCommand deleteCmd, SqlCommand updateCmd, int? updateBatchSize)
 		{
 			SqlConnection conn = CurrConn;
-			ConnectionState ocs = 0;
+			int ocs = -1;
 			if (conn == null) conn = new SqlConnection(DefaultConnectString);
-			else ocs = conn.State;
-			if (ocs == 0 || ocs == ConnectionState.Closed) conn.Open();
+			else ocs = (int)conn.State;
+			if (ocs == -1 || ocs == (int)ConnectionState.Closed) conn.Open();
 			try
 			{
 				SqlDataAdapter sda = NewDataAdapter(conn, CurrTran, insertCmd, deleteCmd, updateCmd, updateBatchSize);
@@ -442,8 +442,8 @@ namespace DAL
 			}
 			finally
 			{
-				if (ocs == 0 || ocs == ConnectionState.Closed) conn.Close();
-				if (ocs == 0) conn.Dispose();
+				if (ocs == -1 || ocs == (int)ConnectionState.Closed) conn.Close();
+				if (ocs == -1) conn.Dispose();
 			}
 		}
 
@@ -454,10 +454,10 @@ namespace DAL
 		public static int UpdateData(DataTable dt, SqlCommand insertCmd, SqlCommand deleteCmd, SqlCommand updateCmd, int? updateBatchSize)
 		{
 			SqlConnection conn = CurrConn;
-			ConnectionState ocs = 0;
+			int ocs = -1;
 			if (conn == null) conn = new SqlConnection(DefaultConnectString);
-			else ocs = conn.State;
-			if (ocs == 0 || ocs == ConnectionState.Closed) conn.Open();
+			else ocs = (int)conn.State;
+			if (ocs == -1 || ocs == (int)ConnectionState.Closed) conn.Open();
 			try
 			{
 				SqlDataAdapter sda = NewDataAdapter(conn, CurrTran, insertCmd, deleteCmd, updateCmd, updateBatchSize);
@@ -465,8 +465,8 @@ namespace DAL
 			}
 			finally
 			{
-				if (ocs == 0 || ocs == ConnectionState.Closed) conn.Close();
-				if (ocs == 0) conn.Dispose();
+				if (ocs == -1 || ocs == (int)ConnectionState.Closed) conn.Close();
+				if (ocs == -1) conn.Dispose();
 			}
 		}
 
@@ -478,10 +478,10 @@ namespace DAL
 		public static int UpdateData(DataRow[] rows, SqlCommand insertCmd, SqlCommand deleteCmd, SqlCommand updateCmd, int? updateBatchSize)
 		{
 			SqlConnection conn = CurrConn;
-			ConnectionState ocs = 0;
+			int ocs = -1;
 			if (conn == null) conn = new SqlConnection(DefaultConnectString);
-			else ocs = conn.State;
-			if (ocs == 0 || ocs == ConnectionState.Closed) conn.Open();
+			else ocs = (int)conn.State;
+			if (ocs == -1 || ocs == (int)ConnectionState.Closed) conn.Open();
 			try
 			{
 				SqlDataAdapter sda = NewDataAdapter(conn, CurrTran, insertCmd, deleteCmd, updateCmd, updateBatchSize);
@@ -489,8 +489,8 @@ namespace DAL
 			}
 			finally
 			{
-				if (ocs == 0 || ocs == ConnectionState.Closed) conn.Close();
-				if (ocs == 0) conn.Dispose();
+				if (ocs == -1 || ocs == (int)ConnectionState.Closed) conn.Close();
+				if (ocs == -1) conn.Dispose();
 			}
 		}
 
@@ -515,10 +515,10 @@ namespace DAL
 			if (cmd.Connection == null)
 			{
 				SqlConnection conn = CurrConn;
-				ConnectionState ocs = 0;
+				int ocs = -1;
 				if (conn == null) conn = new SqlConnection(DefaultConnectString);
-				else ocs = conn.State;
-				if (ocs == 0 || ocs == ConnectionState.Closed) conn.Open();
+				else ocs = (int)conn.State;
+				if (ocs == -1 || ocs == (int)ConnectionState.Closed) conn.Open();
 				try
 				{
 					cmd.Connection = conn;
@@ -527,8 +527,8 @@ namespace DAL
 				}
 				finally
 				{
-					if (ocs == 0 || ocs == ConnectionState.Closed) conn.Close();
-					if (ocs == 0) conn.Dispose();
+					if (ocs == -1 || ocs == (int)ConnectionState.Closed) conn.Close();
+					if (ocs == -1) conn.Dispose();
 				}
 			}
 			else
@@ -546,10 +546,10 @@ namespace DAL
 			if (cmd.Connection == null)
 			{
 				SqlConnection conn = CurrConn;
-				ConnectionState ocs = 0;
+				int ocs = -1;
 				if (conn == null) conn = new SqlConnection(DefaultConnectString);
-				else ocs = conn.State;
-				if (ocs == 0 || ocs == ConnectionState.Closed) conn.Open();
+				else ocs = (int)conn.State;
+				if (ocs == -1 || ocs == (int)ConnectionState.Closed) conn.Open();
 				try
 				{
 					cmd.Connection = conn;
@@ -558,8 +558,8 @@ namespace DAL
 				}
 				finally
 				{
-					if (ocs == 0 || ocs == ConnectionState.Closed) conn.Close();
-					if (ocs == 0) conn.Dispose();
+					if (ocs == -1 || ocs == (int)ConnectionState.Closed) conn.Close();
+					if (ocs == -1) conn.Dispose();
 				}
 			}
 			else
@@ -577,10 +577,10 @@ namespace DAL
 			if (cmd.Connection == null)
 			{
 				SqlConnection conn = CurrConn;
-				ConnectionState ocs = 0;
+				int ocs = -1;
 				if (conn == null) conn = new SqlConnection(DefaultConnectString);
-				else ocs = conn.State;
-				if (ocs == 0 || ocs == ConnectionState.Closed) conn.Open();
+				else ocs = (int)conn.State;
+				if (ocs == -1 || ocs == (int)ConnectionState.Closed) conn.Open();
 
 				cmd.Connection = conn;
 				if (cmd.Transaction == null) cmd.Transaction = CurrTran;
@@ -602,10 +602,10 @@ namespace DAL
 			if (cmd.Connection == null)
 			{
 				SqlConnection conn = CurrConn;
-				ConnectionState ocs = 0;
+				int ocs = -1;
 				if (conn == null) conn = new SqlConnection(DefaultConnectString);
-				else ocs = conn.State;
-				if (ocs == 0 || ocs == ConnectionState.Closed) conn.Open();
+				else ocs = (int)conn.State;
+				if (ocs == -1 || ocs == (int)ConnectionState.Closed) conn.Open();
 				try
 				{
 					cmd.Connection = conn;
@@ -620,8 +620,8 @@ namespace DAL
 				}
 				finally
 				{
-					if (ocs == 0 || ocs == ConnectionState.Closed) conn.Close();
-					if (ocs == 0) conn.Dispose();
+					if (ocs == -1 || ocs == (int)ConnectionState.Closed) conn.Close();
+					if (ocs == -1) conn.Dispose();
 				}
 			}
 			else
@@ -646,10 +646,10 @@ namespace DAL
 			if (cmd.Connection == null)
 			{
 				SqlConnection conn = CurrConn;
-				ConnectionState ocs = 0;
+				int ocs = -1;
 				if (conn == null) conn = new SqlConnection(DefaultConnectString);
-				else ocs = conn.State;
-				if (ocs == 0 || ocs == ConnectionState.Closed) conn.Open();
+				else ocs = (int)conn.State;
+				if (ocs == -1 || ocs == (int)ConnectionState.Closed) conn.Open();
 				try
 				{
 					cmd.Connection = conn;
@@ -662,8 +662,8 @@ namespace DAL
 				}
 				finally
 				{
-					if (ocs == 0 || ocs == ConnectionState.Closed) conn.Close();
-					if (ocs == 0) conn.Dispose();
+					if (ocs == -1 || ocs == (int)ConnectionState.Closed) conn.Close();
+					if (ocs == -1) conn.Dispose();
 				}
 			}
 			else
@@ -685,10 +685,10 @@ namespace DAL
 			if (cmd.Connection == null)
 			{
 				SqlConnection conn = CurrConn;
-				ConnectionState ocs = 0;
+				int ocs = -1;
 				if (conn == null) conn = new SqlConnection(DefaultConnectString);
-				else ocs = conn.State;
-				if (ocs == 0 || ocs == ConnectionState.Closed) conn.Open();
+				else ocs = (int)conn.State;
+				if (ocs == -1 || ocs == (int)ConnectionState.Closed) conn.Open();
 				try
 				{
 					cmd.Connection = conn;
@@ -701,8 +701,8 @@ namespace DAL
 				}
 				finally
 				{
-					if (ocs == 0 || ocs == ConnectionState.Closed) conn.Close();
-					if (ocs == 0) conn.Dispose();
+					if (ocs == -1 || ocs == (int)ConnectionState.Closed) conn.Close();
+					if (ocs == -1) conn.Dispose();
 				}
 			}
 			else
@@ -736,10 +736,10 @@ namespace DAL
 		{
 			int effect = 0;
 			SqlConnection conn = CurrConn;
-			ConnectionState ocs = 0;
+			int ocs = -1;
 			if (conn == null) conn = new SqlConnection(DefaultConnectString);
-			else ocs = conn.State;
-			if (ocs == 0 || ocs == ConnectionState.Closed) conn.Open();
+			else ocs = (int)conn.State;
+			if (ocs == -1 || ocs == (int)ConnectionState.Closed) conn.Open();
 			try
 			{
 				using (SqlCommand cmd = conn.CreateCommand())
@@ -752,8 +752,8 @@ namespace DAL
 			}
 			finally
 			{
-				if (ocs == 0 || ocs == ConnectionState.Closed) conn.Close();
-				if (ocs == 0) conn.Dispose();
+				if (ocs == -1 || ocs == (int)ConnectionState.Closed) conn.Close();
+				if (ocs == -1) conn.Dispose();
 			}
 			return effect;
 		}
@@ -769,10 +769,10 @@ namespace DAL
 		{
 			object r = null;
 			SqlConnection conn = CurrConn;
-			ConnectionState ocs = 0;
+			int ocs = -1;
 			if (conn == null) conn = new SqlConnection(DefaultConnectString);
-			else ocs = conn.State;
-			if (ocs == 0 || ocs == ConnectionState.Closed) conn.Open();
+			else ocs = (int)conn.State;
+			if (ocs == -1 || ocs == (int)ConnectionState.Closed) conn.Open();
 			try
 			{
 				using (SqlCommand cmd = conn.CreateCommand())
@@ -785,8 +785,8 @@ namespace DAL
 			}
 			finally
 			{
-				if (ocs == 0 || ocs == ConnectionState.Closed) conn.Close();
-				if (ocs == 0) conn.Dispose();
+				if (ocs == -1 || ocs == (int)ConnectionState.Closed) conn.Close();
+				if (ocs == -1) conn.Dispose();
 			}
 			return r;
 		}
@@ -823,10 +823,10 @@ namespace DAL
 		{
 			DataSet ds = null;
 			SqlConnection conn = CurrConn;
-			ConnectionState ocs = 0;
+			int ocs = -1;
 			if (conn == null) conn = new SqlConnection(DefaultConnectString);
-			else ocs = conn.State;
-			if (ocs == 0 || ocs == ConnectionState.Closed) conn.Open();
+			else ocs = (int)conn.State;
+			if (ocs == -1 || ocs == (int)ConnectionState.Closed) conn.Open();
 			try
 			{
 				using (SqlCommand cmd = conn.CreateCommand())
@@ -843,8 +843,8 @@ namespace DAL
 			}
 			finally
 			{
-				if (ocs == 0 || ocs == ConnectionState.Closed) conn.Close();
-				if (ocs == 0) conn.Dispose();
+				if (ocs == -1 || ocs == (int)ConnectionState.Closed) conn.Close();
+				if (ocs == -1) conn.Dispose();
 			}
 			return ds;
 		}
@@ -858,10 +858,10 @@ namespace DAL
 		public static int ExecuteDataSet(DataSet ds, string s)
 		{
 			SqlConnection conn = CurrConn;
-			ConnectionState ocs = 0;
+			int ocs = -1;
 			if (conn == null) conn = new SqlConnection(DefaultConnectString);
-			else ocs = conn.State;
-			if (ocs == 0 || ocs == ConnectionState.Closed) conn.Open();
+			else ocs = (int)conn.State;
+			if (ocs == -1 || ocs == (int)ConnectionState.Closed) conn.Open();
 			try
 			{
 				using (SqlCommand cmd = conn.CreateCommand())
@@ -877,8 +877,8 @@ namespace DAL
 			}
 			finally
 			{
-				if (ocs == 0 || ocs == ConnectionState.Closed) conn.Close();
-				if (ocs == 0) conn.Dispose();
+				if (ocs == -1 || ocs == (int)ConnectionState.Closed) conn.Close();
+				if (ocs == -1) conn.Dispose();
 			}
 		}
 
@@ -900,10 +900,10 @@ namespace DAL
 		public static int ExecuteDataTable(DataTable dt, string s)
 		{
 			SqlConnection conn = CurrConn;
-			ConnectionState ocs = 0;
+			int ocs = -1;
 			if (conn == null) conn = new SqlConnection(DefaultConnectString);
-			else ocs = conn.State;
-			if (ocs == 0 || ocs == ConnectionState.Closed) conn.Open();
+			else ocs = (int)conn.State;
+			if (ocs == -1 || ocs == (int)ConnectionState.Closed) conn.Open();
 			try
 			{
 				using (SqlCommand cmd = conn.CreateCommand())
@@ -919,8 +919,8 @@ namespace DAL
 			}
 			finally
 			{
-				if (ocs == 0 || ocs == ConnectionState.Closed) conn.Close();
-				if (ocs == 0) conn.Dispose();
+				if (ocs == -1 || ocs == (int)ConnectionState.Closed) conn.Close();
+				if (ocs == -1) conn.Dispose();
 			}
 		}
 
