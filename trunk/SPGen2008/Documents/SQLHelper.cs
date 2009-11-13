@@ -106,7 +106,7 @@ namespace DAL
 			return conn;
 		}
         /// <summary>
-        /// 依据公用数据库连接串的内容创建一个线程私有连接，打开并返回
+        /// 依据公用数据库连接串的内容创建一个线程私有连接并返回(可打开)
         /// </summary>
         public static SqlConnection NewConn(bool opened)
         {
@@ -121,7 +121,7 @@ namespace DAL
             return conn;
         }
         /// <summary>
-        /// 依据传入的连接串创建一个线程私有连接，打开并返回
+        /// 依据传入的连接串创建一个线程私有连接并返回(可打开)
         /// </summary>
         public static SqlConnection NewConn(string s, bool opened)
         {
