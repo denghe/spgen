@@ -585,7 +585,7 @@ namespace DAL
 				cmd.Connection = conn;
 				if (cmd.Transaction == null) cmd.Transaction = CurrTran;
 
-				if (ocs == 0 || ocs == ConnectionState.Closed) return cmd.ExecuteReader(CommandBehavior.CloseConnection);
+				if (ocs == -1 || ocs == ConnectionState.Closed) return cmd.ExecuteReader(CommandBehavior.CloseConnection);
 				else return cmd.ExecuteReader();
 			}
 			else
