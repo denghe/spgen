@@ -105,6 +105,37 @@ namespace DAL
             }
 			return conn;
 		}
+        /// <summary>
+        /// 依据公用数据库连接串的内容创建一个线程私有连接，打开并返回
+        /// </summary>
+        public static SqlConnection NewConn(bool opened)
+        {
+            SqlConnection conn = new SqlConnection(DefaultConnectString);
+            conn.Disposed += new EventHandler(sconn_Disposed);
+            lock (_connDict)
+            {
+                _connDict.Add(Thread.CurrentThread.ManagedThreadId, conn);
+            }
+            if (opened)
+                conn.Open();
+            return conn;
+        }
+        /// <summary>
+        /// 依据传入的连接串创建一个线程私有连接，打开并返回
+        /// </summary>
+        public static SqlConnection NewConn(string s, bool opened)
+        {
+            SqlConnection conn = new SqlConnection(s);
+            conn.Disposed += new EventHandler(sconn_Disposed);
+            lock (_connDict)
+            {
+                _connDict.Add(Thread.CurrentThread.ManagedThreadId, conn);
+            }
+            if (opened)
+                conn.Open();
+            return conn;
+        }
+
 
 
 
