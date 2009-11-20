@@ -122,6 +122,7 @@ namespace SPGen2008
             {
                 // 分卷合并读取
                 string s = ep.Value as string;
+                if (s == null) return "";       // for sql2000
                 if (s.Length == 3600) return s + GetDescription(o, key + "_");
                 else return s;
             }
