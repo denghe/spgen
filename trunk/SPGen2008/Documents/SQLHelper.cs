@@ -282,7 +282,7 @@ namespace DAL
 		/// </summary>
 		public static string GetHexString(byte[] bytes)
 		{
-			if (bytes == null || bytes.Length == 0) return "";
+			if (bytes == null || bytes.Length == 0) return "0x";
 			StringBuilder sb = new StringBuilder("0x");
 			foreach (byte b in bytes)
 			{
