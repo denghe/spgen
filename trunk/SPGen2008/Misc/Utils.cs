@@ -2150,7 +2150,8 @@ namespace SPGen2008
         public static bool CheckIsNumericType(UserDefinedFunction f)
         {
             return CheckIsNumericType(GetDatabase(f), f.DataType);
-        }		/// <summary>
+        }
+        /// <summary>
         /// 判断一个数据类型是否为 “数字类”
         /// </summary>
         public static bool CheckIsNumericType(Database db, DataType dt)
