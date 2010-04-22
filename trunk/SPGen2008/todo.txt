@@ -1,4 +1,5 @@
-﻿MaximumLength  -> GetDbTypeLength  (有待核实)
+﻿在创建 Command 的 SqlParameter 对象时, MS 当前的代码生成习惯是  最大长,精度小数位  全是 0  , 考虑照着修改成这样
+
 
 
 
