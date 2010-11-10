@@ -137,8 +137,10 @@ namespace " + ns + @"
 					    {
 						    Column c = pks[i];
 						    string cn = Utils.GetEscapeName(c);
-						    sb.Append(@"
-				    _select_cmd.Parameters.Add(new SqlParameter(""" + cn + @""", " + Utils.GetSqlDbType(c) + @", " + c.DataType.MaximumLength.ToString() + @", ParameterDirection.Input, false, " + c.DataType.NumericPrecision.ToString() + @", " + c.DataType.NumericScale.ToString() + @", """ + cn + @""", DataRowVersion.Current, null));");
+                            string len = c.DataType.NumericScale.ToString();
+                            if (c.DataType.SqlDataType == SqlDataType.Image) len = "0";
+                            sb.Append(@"
+				    _select_cmd.Parameters.Add(new SqlParameter(""" + cn + @""", " + Utils.GetSqlDbType(c) + @", " + len + @", ParameterDirection.Input, false, " + c.DataType.NumericPrecision.ToString() + @", " + c.DataType.NumericScale.ToString() + @", """ + cn + @""", DataRowVersion.Current, null));");
 					    }
 					    sb.Append(@"
 				    return _select_cmd.Clone();
@@ -204,8 +206,10 @@ namespace " + ns + @"
 					{
 						Column c = pks[i];
 						string cn = Utils.GetEscapeName(c);
+                        string len = c.DataType.NumericScale.ToString();
+                        if (c.DataType.SqlDataType == SqlDataType.Image) len = "0"; 
 						sb.Append(@"
-				cmd.Parameters.Add(new SqlParameter(""" + cn + @""", " + Utils.GetSqlDbType(c) + @", " + c.DataType.MaximumLength.ToString() + @", ParameterDirection.Input, false, " + c.DataType.NumericPrecision.ToString() + @", " + c.DataType.NumericScale.ToString() + @", """ + cn + @""", DataRowVersion.Current, null));");
+				cmd.Parameters.Add(new SqlParameter(""" + cn + @""", " + Utils.GetSqlDbType(c) + @", " + len + @", ParameterDirection.Input, false, " + c.DataType.NumericPrecision.ToString() + @", " + c.DataType.NumericScale.ToString() + @", """ + cn + @""", DataRowVersion.Current, null));");
 					}
 					sb.Append(@"
 				cmd.CommandText = sb.ToString();
@@ -344,8 +348,10 @@ namespace " + ns + @"
 						    {
 							    Column c = t.Columns[fk.Columns[i].Name];
 							    string cn = Utils.GetEscapeName(c);
-							    sb.Append(@"
-				    _selectall_by_" + fkn + @"_cmd.Parameters.Add(new SqlParameter(""" + cn + @""", " + Utils.GetSqlDbType(c) + @", " + c.DataType.MaximumLength.ToString() + @", ParameterDirection.Input, false, " + c.DataType.NumericPrecision.ToString() + @", " + c.DataType.NumericScale.ToString() + @", """ + cn + @""", DataRowVersion.Current, null));");
+                                string len = c.DataType.NumericScale.ToString();
+                                if (c.DataType.SqlDataType == SqlDataType.Image) len = "0";
+                                sb.Append(@"
+				    _selectall_by_" + fkn + @"_cmd.Parameters.Add(new SqlParameter(""" + cn + @""", " + Utils.GetSqlDbType(c) + @", " + len + @", ParameterDirection.Input, false, " + c.DataType.NumericPrecision.ToString() + @", " + c.DataType.NumericScale.ToString() + @", """ + cn + @""", DataRowVersion.Current, null));");
 						    }
 						    sb.Append(@"
 				    return _selectall_by_" + fkn + @"_cmd.Clone();
@@ -483,8 +489,10 @@ namespace " + ns + @"
 						{
 							Column c = t.Columns[fk.Columns[i].Name];
 							string cn = Utils.GetEscapeName(c);
-							sb.Append(@"
-				cmd.Parameters.Add(new SqlParameter(""" + cn + @""", " + Utils.GetSqlDbType(c) + @", " + c.DataType.MaximumLength.ToString() + @", ParameterDirection.Input, false, " + c.DataType.NumericPrecision.ToString() + @", " + c.DataType.NumericScale.ToString() + @", """ + cn + @""", DataRowVersion.Current, null));");
+                            string len = c.DataType.NumericScale.ToString();
+                            if (c.DataType.SqlDataType == SqlDataType.Image) len = "0";
+                            sb.Append(@"
+				cmd.Parameters.Add(new SqlParameter(""" + cn + @""", " + Utils.GetSqlDbType(c) + @", " + len + @", ParameterDirection.Input, false, " + c.DataType.NumericPrecision.ToString() + @", " + c.DataType.NumericScale.ToString() + @", """ + cn + @""", DataRowVersion.Current, null));");
 						}
 						sb.Append(@"
 				return cmd;
@@ -574,8 +582,10 @@ SELECT A.* FROM [" + Utils.GetEscapeSqlObjectName(t.Schema) + @"].[" + Utils.Get
 					{
 						Column c = pks[i];
 						string cn = Utils.GetEscapeName(c);
-						sb.Append(@"
-				    _selectnode_cmd.Parameters.Add(new SqlParameter(""" + cn + @""", " + Utils.GetSqlDbType(c) + @", " + c.DataType.MaximumLength.ToString() + @", ParameterDirection.Input, false, " + c.DataType.NumericPrecision.ToString() + @", " + c.DataType.NumericScale.ToString() + @", """ + cn + @""", DataRowVersion.Current, null));");
+                        string len = c.DataType.NumericScale.ToString();
+                        if (c.DataType.SqlDataType == SqlDataType.Image) len = "0";
+                        sb.Append(@"
+				    _selectnode_cmd.Parameters.Add(new SqlParameter(""" + cn + @""", " + Utils.GetSqlDbType(c) + @", " + len + @", ParameterDirection.Input, false, " + c.DataType.NumericPrecision.ToString() + @", " + c.DataType.NumericScale.ToString() + @", """ + cn + @""", DataRowVersion.Current, null));");
 					}
 					sb.Append(@"
 				    return _selectnode_cmd.Clone();
@@ -673,8 +683,10 @@ SELECT "" + sb.ToString() + @"" FROM [" + Utils.GetEscapeSqlObjectName(t.Schema)
 					{
 						Column c = pks[i];
 						string cn = Utils.GetEscapeName(c);
-						sb.Append(@"
-				cmd.Parameters.Add(new SqlParameter(""" + cn + @""", " + Utils.GetSqlDbType(c) + @", " + c.DataType.MaximumLength.ToString() + @", ParameterDirection.Input, false, " + c.DataType.NumericPrecision.ToString() + @", " + c.DataType.NumericScale.ToString() + @", """ + cn + @""", DataRowVersion.Current, null));");
+                        string len = c.DataType.NumericScale.ToString();
+                        if (c.DataType.SqlDataType == SqlDataType.Image) len = "0";
+                        sb.Append(@"
+				cmd.Parameters.Add(new SqlParameter(""" + cn + @""", " + Utils.GetSqlDbType(c) + @", " + len + @", ParameterDirection.Input, false, " + c.DataType.NumericPrecision.ToString() + @", " + c.DataType.NumericScale.ToString() + @", """ + cn + @""", DataRowVersion.Current, null));");
 					}
 					sb.Append(@"
 				return cmd;
@@ -831,8 +843,10 @@ SELECT "" + sb.ToString() + @"" FROM [" + Utils.GetEscapeSqlObjectName(t.Schema)
 					{
 						Column c = pks[i];
 						string cn = Utils.GetEscapeName(c);
-						sb.Append(@"
-	    			_delete_cmd.Parameters.Add(new SqlParameter(""Original_" + cn + @""", " + Utils.GetSqlDbType(c) + @", " + c.DataType.MaximumLength.ToString() + @", ParameterDirection.Input, false, " + c.DataType.NumericPrecision.ToString() + @", " + c.DataType.NumericScale.ToString() + @", """ + cn + @""", DataRowVersion.Original, null));");
+                        string len = c.DataType.NumericScale.ToString();
+                        if (c.DataType.SqlDataType == SqlDataType.Image) len = "0";
+                        sb.Append(@"
+	    			_delete_cmd.Parameters.Add(new SqlParameter(""Original_" + cn + @""", " + Utils.GetSqlDbType(c) + @", " + len + @", ParameterDirection.Input, false, " + c.DataType.NumericPrecision.ToString() + @", " + c.DataType.NumericScale.ToString() + @", """ + cn + @""", DataRowVersion.Original, null));");
 					}
 					sb.Append(@"
 		    		return _delete_cmd.Clone();
@@ -939,8 +953,10 @@ WHERE ");
 					{
 						Column c = pks[i];
 						string cn = Utils.GetEscapeName(c);
-						sb.Append(@"
-				    _deletenode_cmd.Parameters.Add(new SqlParameter(""Original_" + cn + @""", " + Utils.GetSqlDbType(c) + @", " + c.DataType.MaximumLength.ToString() + @", ParameterDirection.Input, false, " + c.DataType.NumericPrecision.ToString() + @", " + c.DataType.NumericScale.ToString() + @", """ + cn + @""", DataRowVersion.Original, null));");
+                        string len = c.DataType.NumericScale.ToString();
+                        if (c.DataType.SqlDataType == SqlDataType.Image) len = "0";
+                        sb.Append(@"
+				    _deletenode_cmd.Parameters.Add(new SqlParameter(""Original_" + cn + @""", " + Utils.GetSqlDbType(c) + @", " + len + @", ParameterDirection.Input, false, " + c.DataType.NumericPrecision.ToString() + @", " + c.DataType.NumericScale.ToString() + @", """ + cn + @""", DataRowVersion.Original, null));");
 					}
 					sb.Append(@"
 				    return _deletenode_cmd.Clone();
@@ -1032,8 +1048,10 @@ WHERE ");
 					{
 						if (pks.Contains(c) && c.DataType.SqlDataType == SqlDataType.UniqueIdentifier && c.DefaultConstraint != null) continue;
 						string cn = Utils.GetEscapeName(c);
-						sb.Append(@"
-				    _insert_cmd.Parameters.Add(new SqlParameter(""" + cn + @""", " + Utils.GetSqlDbType(c) + @", " + c.DataType.MaximumLength.ToString() + @", ParameterDirection.Input, false, " + c.DataType.NumericPrecision.ToString() + @", " + c.DataType.NumericScale.ToString() + @", """ + cn + @""", DataRowVersion.Current, null));");
+                        string len = c.DataType.NumericScale.ToString();
+                        if (c.DataType.SqlDataType == SqlDataType.Image) len = "0";
+                        sb.Append(@"
+				    _insert_cmd.Parameters.Add(new SqlParameter(""" + cn + @""", " + Utils.GetSqlDbType(c) + @", " + len + @", ParameterDirection.Input, false, " + c.DataType.NumericPrecision.ToString() + @", " + c.DataType.NumericScale.ToString() + @", """ + cn + @""", DataRowVersion.Current, null));");
 					}
 					sb.Append(@"
 				    return _insert_cmd.Clone();
@@ -1066,10 +1084,12 @@ WHERE ");
 					foreach (Column c in wcs)
 					{
 						string cn = Utils.GetEscapeName(c);
-						sb.Append(@"
+                        string len = c.DataType.NumericScale.ToString();
+                        if (c.DataType.SqlDataType == SqlDataType.Image) len = "0";
+                        sb.Append(@"
 				if (cols.Contains(DI." + tbn + @"." + cn + @"))
 				{
-					cmd.Parameters.Add(new SqlParameter(""" + cn + @""", " + Utils.GetSqlDbType(c) + @", " + c.DataType.MaximumLength.ToString() + @", ParameterDirection.Input, false, " + c.DataType.NumericPrecision.ToString() + @", " + c.DataType.NumericScale.ToString() + @", """ + cn + @""", DataRowVersion.Current, null));
+					cmd.Parameters.Add(new SqlParameter(""" + cn + @""", " + Utils.GetSqlDbType(c) + @", " + len + @", ParameterDirection.Input, false, " + c.DataType.NumericPrecision.ToString() + @", " + c.DataType.NumericScale.ToString() + @", """ + cn + @""", DataRowVersion.Current, null));
 					sb.Append((isFirst ? """" : "", "") + ""[" + Utils.GetEscapeSqlObjectName(c.Name) + @"]"");
 					sb2.Append((isFirst ? """" : "", "") + ""@" + cn + @""");
 					isFirst = false;
@@ -1108,10 +1128,12 @@ WHERE ");
 					{
 						if (pks.Contains(c) && c.DataType.SqlDataType == SqlDataType.UniqueIdentifier && c.DefaultConstraint != null) continue;
 						string cn = Utils.GetEscapeName(c);
-						sb.Append(@"
+                        string len = c.DataType.NumericScale.ToString();
+                        if (c.DataType.SqlDataType == SqlDataType.Image) len = "0";
+                        sb.Append(@"
 				if (cols.Contains(DI." + tbn + @"." + cn + @"))
 				{
-					cmd.Parameters.Add(new SqlParameter(""" + cn + @""", " + Utils.GetSqlDbType(c) + @", " + c.DataType.MaximumLength.ToString() + @", ParameterDirection.Input, false, " + c.DataType.NumericPrecision.ToString() + @", " + c.DataType.NumericScale.ToString() + @", """ + cn + @""", DataRowVersion.Current, null));
+					cmd.Parameters.Add(new SqlParameter(""" + cn + @""", " + Utils.GetSqlDbType(c) + @", " + len + @", ParameterDirection.Input, false, " + c.DataType.NumericPrecision.ToString() + @", " + c.DataType.NumericScale.ToString() + @", """ + cn + @""", DataRowVersion.Current, null));
 					sb.Append((isFirst ? """" : "", "") + ""[" + Utils.GetEscapeSqlObjectName(c.Name) + @"]"");
 					sb2.Append((isFirst ? """" : "", "") + ""@" + cn + @""");
 					isFirst = false;
@@ -1214,14 +1236,18 @@ WHERE ");
 					{
 						Column c = pks[i];
 						string cn = Utils.GetEscapeName(c);
-						sb.Append(@"
-				    _update_cmd.Parameters.Add(new SqlParameter(""Original_" + cn + @""", " + Utils.GetSqlDbType(c) + @", " + c.DataType.MaximumLength.ToString() + @", ParameterDirection.Input, false, " + c.DataType.NumericPrecision.ToString() + @", " + c.DataType.NumericScale.ToString() + @", """ + cn + @""", DataRowVersion.Original, null));");
+                        string len = c.DataType.NumericScale.ToString();
+                        if (c.DataType.SqlDataType == SqlDataType.Image) len = "0";
+                        sb.Append(@"
+				    _update_cmd.Parameters.Add(new SqlParameter(""Original_" + cn + @""", " + Utils.GetSqlDbType(c) + @", " + len + @", ParameterDirection.Input, false, " + c.DataType.NumericPrecision.ToString() + @", " + c.DataType.NumericScale.ToString() + @", """ + cn + @""", DataRowVersion.Original, null));");
 					    }
 					    foreach (Column c in wcs)
 					    {
 						    string cn = Utils.GetEscapeName(c);
-						    sb.Append(@"
-				    _update_cmd.Parameters.Add(new SqlParameter(""" + cn + @""", " + Utils.GetSqlDbType(c) + @", " + c.DataType.MaximumLength.ToString() + @", ParameterDirection.Input, false, " + c.DataType.NumericPrecision.ToString() + @", " + c.DataType.NumericScale.ToString() + @", """ + cn + @""", DataRowVersion.Current, null));");
+                            string len = c.DataType.NumericScale.ToString();
+                            if (c.DataType.SqlDataType == SqlDataType.Image) len = "0";
+                            sb.Append(@"
+				    _update_cmd.Parameters.Add(new SqlParameter(""" + cn + @""", " + Utils.GetSqlDbType(c) + @", " + len + @", ParameterDirection.Input, false, " + c.DataType.NumericPrecision.ToString() + @", " + c.DataType.NumericScale.ToString() + @", """ + cn + @""", DataRowVersion.Current, null));");
 					    }
 					    sb.Append(@"
 				    return _update_cmd.Clone();
@@ -1299,15 +1325,19 @@ WHERE ");
 					{
 						Column c = pks[i];
 						string cn = Utils.GetEscapeName(c);
-						sb.Append(@"
-				cmd.Parameters.Add(new SqlParameter(""Original_" + cn + @""", " + Utils.GetSqlDbType(c) + @", " + c.DataType.MaximumLength.ToString() + @", ParameterDirection.Input, false, " + c.DataType.NumericPrecision.ToString() + @", " + c.DataType.NumericScale.ToString() + @", """ + cn + @""", DataRowVersion.Original, null));");
+                        string len = c.DataType.NumericScale.ToString();
+                        if (c.DataType.SqlDataType == SqlDataType.Image) len = "0";
+                        sb.Append(@"
+				cmd.Parameters.Add(new SqlParameter(""Original_" + cn + @""", " + Utils.GetSqlDbType(c) + @", " + len + @", ParameterDirection.Input, false, " + c.DataType.NumericPrecision.ToString() + @", " + c.DataType.NumericScale.ToString() + @", """ + cn + @""", DataRowVersion.Original, null));");
 					}
 					for (int i = 0; i < wcs.Count; i++)
 					{
 						Column c = wcs[i];
 						string cn = Utils.GetEscapeName(c);
-						sb.Append(@"
-				if (cols.Contains(DI." + tbn + @"." + cn + @")) cmd.Parameters.Add(new SqlParameter(""" + cn + @""", " + Utils.GetSqlDbType(c) + @", " + c.DataType.MaximumLength.ToString() + @", ParameterDirection.Input, false, " + c.DataType.NumericPrecision.ToString() + @", " + c.DataType.NumericScale.ToString() + @", """ + cn + @""", DataRowVersion.Current, null));");
+                        string len = c.DataType.NumericScale.ToString();
+                        if (c.DataType.SqlDataType == SqlDataType.Image) len = "0";
+                        sb.Append(@"
+				if (cols.Contains(DI." + tbn + @"." + cn + @")) cmd.Parameters.Add(new SqlParameter(""" + cn + @""", " + Utils.GetSqlDbType(c) + @", " + len + @", ParameterDirection.Input, false, " + c.DataType.NumericPrecision.ToString() + @", " + c.DataType.NumericScale.ToString() + @", """ + cn + @""", DataRowVersion.Current, null));");
 					}
 					sb.Append(@"
 				return cmd;
