@@ -1109,6 +1109,7 @@ WHERE ");
 
 					foreach (Column c in wcs)
 					{
+                        if (pks.Contains(c) && c.DataType.SqlDataType == SqlDataType.UniqueIdentifier && c.DefaultConstraint != null) continue;
 						string cn = Utils.GetEscapeName(c);
                         string len = c.DataType.NumericScale.ToString();
                         if (c.DataType.SqlDataType == SqlDataType.Image) len = "0";
