@@ -988,6 +988,14 @@ WHERE ");
 				    _insert_cmd = new SqlCommand(""");
                     if (db.CompatibilityLevel >= CompatibilityLevel.Version90 && t.Triggers.Count == 0)
 					{
+                        foreach (Column c in pks)
+                        {
+                            if (c.DataType.SqlDataType == SqlDataType.UniqueIdentifier && c.DefaultConstraint != null)
+                            {
+                                string cn = Utils.GetEscapeName(c);
+                                sb.Append(@"DECLARE @" + cn + @" uniqueidentifier;SET @" + cn + @" = newid();");
+                            }
+                        }
 						sb.Append(@"INSERT INTO [" + Utils.GetEscapeSqlObjectName(t.Schema) + @"].[" + Utils.GetEscapeSqlObjectName(t.Name) + @"] (");
 						for (int i = 0; i < wcs.Count; i++)
 						{
