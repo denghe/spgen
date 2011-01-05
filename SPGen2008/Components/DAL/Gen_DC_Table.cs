@@ -1086,8 +1086,26 @@ WHERE ");
 
                 if (db.CompatibilityLevel >= CompatibilityLevel.Version90 && t.Triggers.Count == 0)
 				{
+                    s = "";
+                    foreach (Column c in pks)
+                    {
+                        if (c.DataType.SqlDataType == SqlDataType.UniqueIdentifier && c.DefaultConstraint != null)
+                        {
+                            string cn = Utils.GetEscapeName(c);
+                            sb.Append(@"DECLARE @" + cn + @" uniqueidentifier;SET @" + cn + @" = newid();");
+
+                            s += @"
+				sb.Append((isFirst ? """" : "", "") + ""[" + Utils.GetEscapeSqlObjectName(c.Name) + @"]"");
+				sb2.Append((isFirst ? """" : "", "") + ""@" + cn + @""");
+				isFirst = false;
+";
+                        }
+                    }
+
 					sb.Append(@"INSERT INTO [" + Utils.GetEscapeSqlObjectName(t.Schema) + @"].[" + Utils.GetEscapeSqlObjectName(t.Name) + @"] ("");
 				StringBuilder sb2 = new StringBuilder();");
+
+                    sb.Append(s);
 
 					foreach (Column c in wcs)
 					{
