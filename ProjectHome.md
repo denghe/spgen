@@ -1,0 +1,1 @@
+c# code, data access layer, TSQL segments... generator for mssql2000 ~ 2008
